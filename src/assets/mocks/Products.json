@@ -1,0 +1,24 @@
+{
+  "data":{
+     "productos":[
+        {
+           "codigo":1,
+           "descripcion":"Pintura Interior",
+           "precio":150.00,
+           "categoria":{"codigo":1, "descripcion":"Mantenimiento"}
+        },
+        {
+          "codigo":2,
+          "descripcion":"Pintura Exterior",
+          "precio":150.00,
+          "categoria":{"codigo":1, "descripcion":"Mantenimiento"}
+        },
+        {
+          "codigo":3,
+          "descripcion":"Arreglo Humedad",
+          "precio":200.00,
+          "categoria":{"codigo":1, "descripcion":"Mantenimiento"}
+        }
+     ]
+  }
+}

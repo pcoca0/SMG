@@ -1,0 +1,18 @@
+{
+  "data":{
+     "categorias":[
+        {
+           "codigo":1,
+           "descripcion":"Mantenimiento"
+        },
+        {
+          "codigo":2,
+          "descripcion":"Electricidad"
+       },
+       {
+          "codigo":3,
+          "descripcion":"Albañileria"
+       }
+     ]
+  }
+}
