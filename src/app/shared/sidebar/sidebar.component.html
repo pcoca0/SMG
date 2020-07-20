@@ -9,35 +9,49 @@
       </a></div>
     <div class="sidebar-wrapper">
       <ul class="nav">
-        <li class="nav-item active  ">
-          <a class="nav-link" href="./dashboard.html">
+        <li class="nav-item" routerLinkActive="active">
+          <a class="nav-link" [routerLink]="['/gestion']">
             <i class="material-icons">dashboard</i>
             <p>Dashboard</p>
           </a>
         </li>
-        <li class="nav-item nav-item dropdown">
+        <li class="nav-item nav-item dropdown" routerLinkActive="active">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="material-icons">shopping_cart</i>
             Gestión de Servicios
           </a>
           <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" [routerLink]="['/categorias']">
               <i class="material-icons">control_camera</i>
               Categorias
           </a>
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item"  [routerLink]="['/productos']">
               <i class="material-icons">vertical_split</i>
               Productos
             </a>
           </div>
         </li>
-        <!-- <li class="nav-item ">
-          <a class="nav-link" href="./typography.html">
-            <i class="material-icons">library_books</i>
-            <p>Typography</p>
+        <li class="nav-item nav-item dropdown" routerLinkActive="active">
+          <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="material-icons">book
+            </i>
+            Presupuestos
           </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+            <a class="dropdown-item" [routerLink]="['/presupuestos']">
+              <i class="material-icons">article</i>
+              Listar Presupuestos
+          </a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item"  [routerLink]="['/crearPresupuesto']">
+              <i class="material-icons">assignment_turned_in
+              </i>
+              Crear Presupuesto
+            </a>
+          </div>
         </li>
+        <!--
         <li class="nav-item ">
           <a class="nav-link" href="./icons.html">
             <i class="material-icons">bubble_chart</i>

@@ -12,7 +12,15 @@
        {
           "codigo":3,
           "descripcion":"Albañileria"
-       }
+       },
+       {
+        "codigo":4,
+        "descripcion":"Categoria 4 "
+        },
+        {
+          "codigo":5,
+          "descripcion":"Categroia 5"
+        }
      ]
   }
 }

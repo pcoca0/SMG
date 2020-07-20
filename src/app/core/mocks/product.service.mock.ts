@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 
 export class ProductServiceMock implements IProductService {
 
-  categoriesUrl = 'assets/mocks/Catogories.json';
+  categoriesUrl = 'assets/mocks/Categories.json';
   productsUrl = 'assets/mocks/Products.json';
   private catalogCategories: Observable<ICategoryResponse>;
   private catalogProducts: Observable<IProductResponse>;

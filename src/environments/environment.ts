@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   apis: {
     productApi: {
-      url: 'https://portalproductormicrositiosadmin-desa.npapps.lasegunda.com.ar',
+      url: '',
       mock: true
     },
   },
