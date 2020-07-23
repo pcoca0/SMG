@@ -4,6 +4,7 @@ import { ModalService } from 'src/app/core/services/modal.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-add-budget',
@@ -17,10 +18,13 @@ export class AddBudgetComponent implements OnInit {
   productos: Array<IProductItemResponse>;
   presupuesto: Array<IProductItemResponse> = [];
   bsModalRef: BsModalRef;
+  listForm: FormGroup;
+  element: IProductItemResponse;
 
   constructor(
       private modalService: ModalService,
-      private productService: ProductService
+      private productService: ProductService,
+      private fB: FormBuilder
   ) { }
 
   ngOnInit() {
@@ -47,7 +51,22 @@ export class AddBudgetComponent implements OnInit {
       console.log("Precio: "+i.precio),
       console.log("Acumulador: "+ this.totalizador)
       console.log(this.presupuesto.length)
-    })
+    });
   }
 
+  removeElement(i: number){
+    console.log("posicion: "+ i);
+    this.presupuesto.splice(i, 1);
+    this.updateTotaliador();
+  }
+
+  updateElement(i: number){
+    this.element = this.presupuesto[i];
+    console.log("UPDATE: "+ this.element);
+    this.bsModalRef = this.modalService.budgetAdd("Presupuesto", "Productos", this.productos);
+  }
+
+  generateFormsControls(){
+
+  }
 }

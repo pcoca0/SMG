@@ -17,6 +17,9 @@ export class BudgeModalComponent implements OnInit {
   products: Array<IProductItemResponse>;
   itemForm: FormGroup;
   public event: EventEmitter<any> = new EventEmitter();
+  i: number;
+  e: IProductItemResponse;
+
   dropdownSetup: Object = {
     displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
     search: true, //true/false for the search functionlity defaults to false,
@@ -37,9 +40,12 @@ export class BudgeModalComponent implements OnInit {
       private bsModalRef: BsModalRef
       ) {
     this.itemForm = this.fb.group({
-      producto: ['', Validators.required]
+      producto: ['', Validators.required],
+      precio: ['', Validators.required]
     });
+
   }
+
 
   ngOnInit() {
   }
@@ -52,7 +58,17 @@ export class BudgeModalComponent implements OnInit {
 
   sendObject(item: string){
     this.event.emit({data: item, resp: 200});
+  }
 
+  selectProduct(){
+    console.log("Valor sugerido: "+this.itemForm.value.producto.precio);
+    this.itemForm.controls.precio
+    .setValue(this.itemForm.value.producto.precio);
+  }
+
+  updateValorSugerido(){
+    this.itemForm.value.producto.precio = Number(this.itemForm.value.precio);
+    console.log("Cambia o no Cambia" + this.itemForm.value.producto);
   }
 
 }

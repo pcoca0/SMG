@@ -18,12 +18,12 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of presupuesto">
+              <tr *ngFor="let p of presupuesto; index as i; trackBy: trackByFn">
                 <td>{{p.descripcion}}</td>
                 <td class="text-center">{{p.precio}}</td>
                 <td class="text-center">
-                  <button class="btn btn-outline-info"><i class="fa fa-times text-danger"></i></button>
-                  <button class="btn btn-outline-info"><i class="fa fa-edit  text-success"></i></button>
+                  <button class="btn btn-outline-info" (click)="removeElement(i)"><i class="fa fa-times text-danger"></i></button>
+                  <button class="btn btn-outline-info" (click)="updateElement(i)"><i class="fa fa-edit  text-success"></i></button>
                 </td>
               </tr>
 

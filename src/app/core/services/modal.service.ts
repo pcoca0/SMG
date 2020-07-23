@@ -18,8 +18,9 @@ export class ModalService {
     const initialState = {
       title,
       message,
-      products
+      products,
     };
+
     return this.bsModalService.show(BudgeModalComponent, {initialState});
 
     //return new Observable<string>(this.getBudgetModalsubscriber());

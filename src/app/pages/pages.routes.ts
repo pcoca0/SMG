@@ -5,6 +5,7 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
+import { ClientComponent } from './client/client.component';
 
 const pagesRoutes: Routes = [
     {
@@ -15,6 +16,8 @@ const pagesRoutes: Routes = [
           {path: 'productos',   component: ProductComponent },
           {path: 'presupuestos',   component: BudgetComponent },
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
+          {path: 'clientes',   component: ClientComponent },
+
 
           // {path: 'categorias',  component: ProductComponent },
           //   {path: 'graficas',  component: Graficas1Component },

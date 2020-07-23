@@ -9,9 +9,10 @@ import { CategoryComponent } from './category/category.component';
 import { ProductComponent } from './product/product.component';
 import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
+import { ClientComponent } from './client/client.component';
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent],
   imports: [
     CommonModule,
     SharedModule,

@@ -9,7 +9,13 @@
 
       <div class="modal-body text-center">
         <p>Seleccione {{message}}</p>
-          <ngx-select-dropdown [options]="products" [config]="dropdownSetup" formControlName="producto"></ngx-select-dropdown>
+        <p>
+           <ngx-select-dropdown [options]="products" [config]="dropdownSetup" formControlName="producto" (change)="selectProduct()"></ngx-select-dropdown>
+        </p>
+       <p>
+         <label for="">Precio Sugerido</label>
+        <input type="text" value="" class="form-control" formControlName="precio" (change)="updateValorSugerido()">
+       </p>
 
 
       </div>
