@@ -6,6 +6,9 @@ import { AppComponent } from './app.component';
 import { PagesModule } from './pages/pages.module';
 import { RouterModule } from '@angular/router';
 import { CoreModule } from './core/core.module';
+import { ModalModule } from 'ngx-bootstrap/modal';
+import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { CoreModule } from './core/core.module';
     AppRoutingModule,
     RouterModule,
     PagesModule,
-    CoreModule
+    CoreModule,
+    ModalModule.forRoot(),
+    BsDropdownModule.forRoot(),
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
