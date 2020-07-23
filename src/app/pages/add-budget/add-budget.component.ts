@@ -12,7 +12,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 })
 export class AddBudgetComponent implements OnInit {
 
-  totalizador: number = 0.00;;
+  totalizador: number;
   totalizadorParcial: number = 0.00;
   productos: Array<IProductItemResponse>;
   presupuesto: Array<IProductItemResponse> = [];
@@ -31,11 +31,23 @@ export class AddBudgetComponent implements OnInit {
 
   addBudget(){
     this.bsModalRef = this.modalService.budgetAdd("Presupuesto", "Productos", this.productos);
-    this.bsModalRef.content.closeBtnName ="asdasdas";
 
-    this.bsModalRef.content.event.subscribe(resp => {
-      this.presupuesto.push(resp['data'])
+    this.bsModalRef.content.event.subscribe(
+    resp => {
+      this.presupuesto.push(resp['data']),
+      this.updateTotaliador()
     });
+
+  }
+
+  updateTotaliador(){
+    this.totalizador = 0.00;
+    this.presupuesto.forEach( i =>
+     { this.totalizador = this.totalizador + i.precio,
+      console.log("Precio: "+i.precio),
+      console.log("Acumulador: "+ this.totalizador)
+      console.log(this.presupuesto.length)
+    })
   }
 
 }

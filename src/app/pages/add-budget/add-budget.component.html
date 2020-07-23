@@ -21,24 +21,24 @@
               <tr *ngFor="let p of presupuesto">
                 <td>{{p.descripcion}}</td>
                 <td class="text-center">{{p.precio}}</td>
-                <td class="text-center">200</td>
-                <td class="text-center"><i class="fa fa-times text-danger"></i></td>
-                <td class="text-center"><i class="fa fa-check text-success"></i></td>
+                <td class="text-center">
+                  <button class="btn btn-outline-info"><i class="fa fa-times text-danger"></i></button>
+                  <button class="btn btn-outline-info"><i class="fa fa-edit  text-success"></i></button>
+                </td>
               </tr>
 
               <tr>
                 <td>TOTAL</td>
                 <td class="text-center">
-                  <td class="text-center">${{totalizadorParcial}}</td>
-                <td class="text-center">${{totalizador}}</td>
+                  <td class="text-center">${{totalizador}}</td>
               </tr>
               <tr>
                 <td class="text-center"></td>
                 <td class="text-center">
-                  <a href="#" class="btn btn-round btn-fill btn-default disabled">Current Version</a>
+                  <a href="#" class="btn btn-round btn-fill btn-default disabled">Generar PDF</a>
                 </td>
                 <td class="text-center">
-                  <a target="_blank" href="http://www.creative-tim.com/product/material-dashboard-pro/?ref=md-free-upgrade-live" class="btn btn-round btn-fill btn-info">Upgrade to PRO</a>
+                  <a target="_blank"class="btn btn-round btn-fill btn-info">Guardar</a>
                 </td>
               </tr>
             </tbody>
