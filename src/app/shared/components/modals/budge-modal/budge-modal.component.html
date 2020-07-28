@@ -5,7 +5,7 @@
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <form [formGroup]="itemForm" (ngSubmit)="addToBudget()">
+      <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
 
       <div class="modal-body text-center">
         <p>Seleccione {{message}}</p>
@@ -14,7 +14,7 @@
         </p>
        <p>
          <label for="">Precio Sugerido</label>
-        <input type="text" value="" class="form-control" formControlName="precio" (change)="updateValorSugerido()">
+        <input type="text" value="" class="form-control" formControlName="precio" (change)="updatePriceValue()">
        </p>
 
 

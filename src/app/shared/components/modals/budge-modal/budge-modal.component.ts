@@ -19,6 +19,7 @@ export class BudgeModalComponent implements OnInit {
   public event: EventEmitter<any> = new EventEmitter();
   i: number;
   e: IProductItemResponse;
+  action: string;
 
   dropdownSetup: Object = {
     displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
@@ -48,27 +49,54 @@ export class BudgeModalComponent implements OnInit {
 
 
   ngOnInit() {
+    if ( this.e ) {
+      console.log( this.e)
+      // this.itemForm.value.producto.se = this.e;
+      this.itemForm.patchValue({
+        producto: this.e,
+        precio: this.e.precio
+
+      });
+    }
   }
 
-  addToBudget(){
-    console.log( "add to modal component" + this.itemForm.value.producto);
-    this.sendObject(this.itemForm.value.producto);
-    this.bsModalRef.hide();
-  }
+  // addToBudget(){
+  //   console.log( "add to modal component" + this.itemForm.value.producto);
+  //   this.sendObject(this.itemForm.value.producto);
+  //   this.bsModalRef.hide();
+  // }
 
-  sendObject(item: string){
-    this.event.emit({data: item, resp: 200});
+  sendObject(item: string, pos?: number) {
+    this.event.emit({data: item, position: pos, res: 200});
   }
 
   selectProduct(){
-    console.log("Valor sugerido: "+this.itemForm.value.producto.precio);
+    console.log("Valor sugerido: " + this.itemForm.value.producto.precio);
     this.itemForm.controls.precio
     .setValue(this.itemForm.value.producto.precio);
   }
 
-  updateValorSugerido(){
+  updatePriceValue(){
     this.itemForm.value.producto.precio = Number(this.itemForm.value.precio);
     console.log("Cambia o no Cambia" + this.itemForm.value.producto);
   }
+
+  onSubmit(){
+  switch (this.action) {
+    case 'add':
+      console.log( "add to modal component" + this.itemForm.value.producto);
+      this.sendObject(this.itemForm.value.producto);
+      this.bsModalRef.hide();
+      break;
+    case 'edit':
+      console.log( "Edit to modal component" + this.itemForm.value.producto);
+      this.sendObject(this.itemForm.value.producto, this.i);
+      this.bsModalRef.hide();
+      break;
+
+    default:
+      break;
+  }
+}
 
 }

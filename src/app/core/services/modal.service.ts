@@ -19,24 +19,38 @@ export class ModalService {
       title,
       message,
       products,
+      action: 'add'
     };
 
     return this.bsModalService.show(BudgeModalComponent, {initialState});
-
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  private getBudgetModalsubscriber(){
-    return(observer) => {
-      const suscription = this.bsModalService.onHidden.subscribe((reason: string) =>
-      {
-        observer.complete();
-      });
-      return {
-        unsubscribe() {
-          suscription.unsubscribe();
-        }
-      };
-    }
+  budgetEdit(title: string, message: string, products: Array<IProductItemResponse>, e?: IProductItemResponse,  pos?: number){
+    const initialState = {
+      title,
+      message,
+      products,
+      action: 'edit',
+      pos,
+      e
+    };
+
+    return this.bsModalService.show(BudgeModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
   }
+
+  // private getBudgetModalsubscriber(){
+  //   return(observer) => {
+  //     const suscription = this.bsModalService.onHidden.subscribe((reason: string) =>
+  //     {
+  //       observer.complete();
+  //     });
+  //     return {
+  //       unsubscribe() {
+  //         suscription.unsubscribe();
+  //       }
+  //     };
+  //   }
+  // }
 }
