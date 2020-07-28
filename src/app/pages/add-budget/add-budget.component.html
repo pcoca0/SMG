@@ -3,9 +3,37 @@
     <div class="card">
       <div class="card-header card-header-primary">
         <h4 class="card-title">Presupuesto</h4>
+      </div>
+      <div class="card-body">
+        <span>Presupuesto número: 11111 </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span>
+      </div>
+    </div>
+      <div class="card">
+        <div class="card-header card-header-success">
+          <h4 class="card-title">Cliente</h4>
+          <p class="card-category">Seleccione un Cliente</p>
+        </div>
+        <div class="card-body">
+          <form>
+            <div class="row">
+                <div class="form-group col-lg-8 col-md-8 col-sm-12">
+                  <ngx-select-dropdown [options]="clients" [config]="dropdownSetup" formControlName="producto" (change)="selectProduct()"></ngx-select-dropdown>
+                </div>
+                <div class="form-group col-lg-4 col-md-4 col-sm-12">
+                  <button class="btn btn-outline-info float-right" (click)="addBudget()">Nuevo Cliente</button>
+                </div>
+            </div>
+            <div class="clearfix"></div>
+          </form>
+        </div>
+      </div>
+      <div class="card">
+      <div class="card-header card-header-success">
+        <h4 class="card-title">Productos</h4>
         <p class="card-category"></p>
         <button class="btn btn-info float-right" (click)="addBudget()">Agregar Producto</button>
       </div>
+
       <div class="card-body">
         <div class="table-responsive table-upgrade">
           <table class="table">
@@ -45,6 +73,6 @@
           </table>
         </div>
       </div>
-    </div>
+      </div>
   </div>
 </div>
