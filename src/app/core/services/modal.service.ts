@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { IProductItemResponse } from '../interfaces/responses/product.response';
 import { IClientItemResponse } from '../interfaces/responses/client.response';
 import { ClientModalComponent } from 'src/app/shared/components/modals/client-modal/client-modal.component';
+import { ICategoryItemResponse } from '../interfaces/responses/category.response';
+import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -79,6 +81,31 @@ export class ModalService {
     };
 
     return  this.bsModalService.show(ClientModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  categoryAdd(title: string, message: string, category?: ICategoryItemResponse){
+    const initialState = {
+      title,
+      message,
+      category,
+      action: 'add'
+    };
+
+    return  this.bsModalService.show(CategoryModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  categoryEdit(title: string, message: string, category?: ICategoryItemResponse, pos?: number){
+    const initialState = {
+      title,
+      message,
+      category,
+      action: 'edit',
+      pos
+    };
+
+    return  this.bsModalService.show(CategoryModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 }

@@ -13,10 +13,11 @@ import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { ClientModalComponent } from './components/modals/client-modal/client-modal.component';
 import { ClientViewComponent } from './components/client-view/client-view.component';
+import { CategoryModalComponent } from './components/modals/category-modal/category-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -35,11 +36,13 @@ import { ClientViewComponent } from './components/client-view/client-view.compon
     NgxBootstrapModule,
     SelectDropDownModule,
     ClientModalComponent,
-    ClientViewComponent
+    ClientViewComponent,
+    CategoryModalComponent
     ],
   entryComponents: [
    BudgeModalComponent,
-   ClientModalComponent
+   ClientModalComponent,
+   CategoryModalComponent
   ]
 })
 export class SharedModule { }
