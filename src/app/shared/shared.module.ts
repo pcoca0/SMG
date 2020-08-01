@@ -11,10 +11,12 @@ import { SearchComponent } from './components/search/search.component';
 import { BudgeModalComponent } from './components/modals/budge-modal/budge-modal.component';
 import { NgxBootstrapModule } from './ngx-bootstrap/ngx-bootstrap.module';
 import { SelectDropDownModule } from 'ngx-select-dropdown';
+import { ClientModalComponent } from './components/modals/client-modal/client-modal.component';
+import { ClientViewComponent } from './components/client-view/client-view.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -31,10 +33,13 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
     FilterPipe,
     BudgeModalComponent,
     NgxBootstrapModule,
-    SelectDropDownModule
-  ],
+    SelectDropDownModule,
+    ClientModalComponent,
+    ClientViewComponent
+    ],
   entryComponents: [
-   BudgeModalComponent
+   BudgeModalComponent,
+   ClientModalComponent
   ]
 })
 export class SharedModule { }

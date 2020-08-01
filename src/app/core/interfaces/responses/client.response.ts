@@ -7,9 +7,9 @@ export interface IClientResponse {
 
 export interface IClientItemResponse {
  codigo: number;
- rezonSocial: string;
+ razonSocial: string;
  apellido: string;
  nombre: string;
- direccion: string;
+ domicilio: string;
  nro: number;
 }

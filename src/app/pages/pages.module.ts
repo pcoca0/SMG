@@ -10,6 +10,7 @@ import { ProductComponent } from './product/product.component';
 import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent],
@@ -17,6 +18,7 @@ import { ClientComponent } from './client/client.component';
     CommonModule,
     SharedModule,
     RouterModule,
+    ReactiveFormsModule,
     PAGES_ROUTES
   ]
 })

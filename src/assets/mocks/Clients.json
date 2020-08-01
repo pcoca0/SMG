@@ -4,26 +4,30 @@
         {
            "codigo":1,
            "razonSocial":"Empresa 1",
-           "Apellido":"Apellido",
-           "Nombre":"Nombre"
+           "apellido":"apellido",
+           "nombre":"Nombre",
+           "domicilio":"Domicilio"
         },
         {
           "codigo":2,
           "razonSocial":"Empresa 2",
-          "Apellido":"Apellido",
-          "Nombre":"Nombre"
+          "apellido":"apellido",
+          "nombre":"Nombre",
+          "domicilio":"Domicilio"
         },
         {
           "codigo":3,
           "razonSocial":"Empresa 3",
-          "Apellido":"Apellido",
-          "Nombre":"Nombre"
+          "apellido":"apellido",
+          "nombre":"Nombre",
+          "domicilio":"Domicilio"
          },
         {
           "codigo":4,
           "razonSocial":"Empresa 4",
-          "Apellido":"Apellido",
-          "Nombre":"Nombre"
+          "apellido":"apellido",
+          "nombre":"Nombre",
+          "domicilio":"Domicilio"
         }
      ]
   }

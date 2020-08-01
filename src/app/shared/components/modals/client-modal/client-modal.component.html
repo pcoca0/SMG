@@ -1,0 +1,50 @@
+<div class="modal-content">
+  <div class="modal-header">
+    <h5 class="modal-title">{{title}}</h5>
+    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  <div class="modal-body text-center">
+  <form [formGroup]="formClient" (ngSubmit)="onSubmit()">
+    <div class="card-body">
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Razón Social</label>
+              <input type="text"  formControlName="razonSocial" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Apellido</label>
+              <input type="text" formControlName="apellido" class="form-control">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Nombre</label>
+              <input type="email" formControlName="nombre" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Domicilio</label>
+              <input type="text" formControlName="domicilio" class="form-control">
+            </div>
+          </div>
+        </div>
+
+        <div class="clearfix"></div>
+  </div>
+  <div class="modal-footer">
+    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+  </div>
+</form>
+</div>

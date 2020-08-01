@@ -3,6 +3,8 @@ import { BsModalService, BsModalRef } from 'ngx-bootstrap/modal';
 import { BudgeModalComponent } from 'src/app/shared/components/modals/budge-modal/budge-modal.component';
 import { Observable } from 'rxjs';
 import { IProductItemResponse } from '../interfaces/responses/product.response';
+import { IClientItemResponse } from '../interfaces/responses/client.response';
+import { ClientModalComponent } from 'src/app/shared/components/modals/client-modal/client-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -53,4 +55,30 @@ export class ModalService {
   //     };
   //   }
   // }
+
+  clientAdd(title: string, message: string, client?: IClientItemResponse){
+    const initialState = {
+      title,
+      message,
+      client,
+      action: 'add'
+    };
+
+    return  this.bsModalService.show(ClientModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  clientEdit(title: string, message: string, client: IClientItemResponse, view: boolean, pos?: number){
+    const initialState = {
+      title,
+      message,
+      client,
+      action: 'edit',
+      pos,
+      view
+    };
+
+    return  this.bsModalService.show(ClientModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
 }

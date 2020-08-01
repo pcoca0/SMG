@@ -4,9 +4,10 @@ import { ModalService } from 'src/app/core/services/modal.service';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { FormBuilder, FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IClientItemResponse } from 'src/app/core/interfaces/responses/client.response';
 import { ClientService } from 'src/app/core/services/client.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-add-budget',
@@ -24,6 +25,9 @@ export class AddBudgetComponent implements OnInit {
   listForm: FormGroup;
   element: IProductItemResponse;
   clients: Array<IClientItemResponse>;
+  client: IClientItemResponse;
+  clientView: IClientItemResponse;
+
 
   dropdownSetup: Object = {
     displayKey:'razonSocial', //if objects array passed which key to be displayed defaults to description
@@ -46,7 +50,11 @@ export class AddBudgetComponent implements OnInit {
       private productService: ProductService,
       private clientService: ClientService,
       private fB: FormBuilder
-  ) { }
+  ) {
+    this.listForm = this.fB.group({
+      client: ['', Validators.required]
+    });
+  }
 
   ngOnInit() {
     this.productService.getProducts().subscribe(
@@ -58,21 +66,43 @@ export class AddBudgetComponent implements OnInit {
     );
   }
 
-  addBudget(){
+  addBudgetItem(){
     this.bsModalRef = this.modalService.budgetAdd("Presupuesto", "Productos", this.productos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       this.presupuesto.push(resp['data']),
-      this.updateTotalizador()
+      this.updateTotalizador();
     });
  }
+
+
+ addNewClient(){
+  console.log("Por agregar una cliente");
+  this.bsModalRef = this.modalService.clientAdd("Cliente", "Productos", this.client);
+  this.bsModalRef.content.event.subscribe(
+  resp => {
+    this.clientView = resp.data,
+    console.log("Nuevo Cliente: " +this.clientView.apellido)
+    //this.clients.push(this.client),
+    //this.options = [...this.options, {id: 34, description: 'Adding new item'}];
+    //lo tengo que hacer asi por el change detec
+    this.clients = [...this.clients, this.clientView],
+    this.listForm.controls.client.setValue(this.clientView),
+    console.log(this.clientView)
+  });
+}
+
+  selectClient(){
+  this.clientView = this.listForm.value.client;
+  console.log(this.clientView);
+  }
 
 
   updateTotalizador(){
     this.totalizador = 0.00;
     this.presupuesto.forEach( i =>
      { this.totalizador = this.totalizador + i.precio,
-      console.log("Precio: "+i.precio),
+      console.log("Precio: "+ i.precio),
       console.log("Acumulador: "+ this.totalizador)
       console.log(this.presupuesto.length)
     });
@@ -96,6 +126,10 @@ export class AddBudgetComponent implements OnInit {
   }
 
   generateFormsControls(){
+
+  }
+
+  saveBudget(){
 
   }
 }
