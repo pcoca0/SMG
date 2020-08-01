@@ -7,6 +7,7 @@ import { IClientItemResponse } from '../interfaces/responses/client.response';
 import { ClientModalComponent } from 'src/app/shared/components/modals/client-modal/client-modal.component';
 import { ICategoryItemResponse } from '../interfaces/responses/category.response';
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
+import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -106,6 +107,33 @@ export class ModalService {
     };
 
     return  this.bsModalService.show(CategoryModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  productAdd(title: string, message: string, product: IProductItemResponse, categories: Array<ICategoryItemResponse>){
+    const initialState = {
+      title,
+      message,
+      product,
+      categories,
+      action: 'add',
+    };
+
+    return  this.bsModalService.show(ProducModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  productEdit(title: string, message: string, product: IProductItemResponse, categories: Array<ICategoryItemResponse>, pos?: number){
+    const initialState = {
+      title,
+      message,
+      product,
+      categories,
+      action: 'edit',
+      pos
+    };
+
+    return  this.bsModalService.show(ProducModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 }

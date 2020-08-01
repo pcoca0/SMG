@@ -14,10 +14,11 @@ import { SelectDropDownModule } from 'ngx-select-dropdown';
 import { ClientModalComponent } from './components/modals/client-modal/client-modal.component';
 import { ClientViewComponent } from './components/client-view/client-view.component';
 import { CategoryModalComponent } from './components/modals/category-modal/category-modal.component';
+import { ProducModalComponent } from './components/modals/produc-modal/produc-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -37,12 +38,14 @@ import { CategoryModalComponent } from './components/modals/category-modal/categ
     SelectDropDownModule,
     ClientModalComponent,
     ClientViewComponent,
-    CategoryModalComponent
+    CategoryModalComponent,
+    ProducModalComponent
     ],
   entryComponents: [
    BudgeModalComponent,
    ClientModalComponent,
-   CategoryModalComponent
+   CategoryModalComponent,
+   ProducModalComponent
   ]
 })
 export class SharedModule { }
