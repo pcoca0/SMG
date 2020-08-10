@@ -3,6 +3,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { ICategoryResponse, ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ICategoryRequest } from 'src/app/core/interfaces/requests/category.request';
 
 @Component({
   selector: 'app-category',
@@ -16,6 +17,8 @@ export class CategoryComponent implements OnInit {
   filterMatch: string = '';
   bsModalRef: BsModalRef;
   category: ICategoryItemResponse;
+  categoryNew: ICategoryItemResponse;
+
 
   constructor(
     private productService: ProductService,
@@ -34,9 +37,11 @@ export class CategoryComponent implements OnInit {
     this.filterMatch = term;
   }
 
-  removeCategory(i){
+  removeCategory(i: number){
       console.log("posicion: "+ i);
+      let id =  this.categorias[i].id;
       this.categorias.splice(i, 1);
+      this.productService.deleteCategory(id).subscribe();
   }
 
   addNewCategory(){
@@ -44,20 +49,27 @@ export class CategoryComponent implements OnInit {
     this.bsModalRef = this.modalService.categoryAdd("Categorias", "Productos", this.category);
     this.bsModalRef.content.event.subscribe(
     resp => {
-      this.categorias.push(resp.data)
+             this.productService.addCategory(resp.data).subscribe(
+                  c => {
+                        this.categoryNew = c.data.categorias[0],
+                        this.categorias.push(this.categoryNew)
+                       }
+             )
+
     });
   }
 
   editCategory(i: number){
     console.log("Por editar una Categoria");
-    let codigo = this.categorias[i].codigo;
+    let id = this.categorias[i].id;
     this.bsModalRef = this.modalService.categoryEdit("Categorias", "Productos", this.categorias[i], i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
       this.category = resp.data,
-      this.category.codigo = codigo,
-      this.categorias.splice(i, 1, this.category)
+      this.category.id = id,
+      this.categorias.splice(i, 1, this.category),
+      this.productService.putCategory(this.category.id, this.category ).subscribe()
     });
   }
 

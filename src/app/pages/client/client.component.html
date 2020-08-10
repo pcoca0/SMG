@@ -24,7 +24,7 @@
         </thead>
         <tbody>
           <tr *ngFor="let c of clientes | filter: filterMatch;  let i = index; trackBy:trackBy">
-            <td>{{c.codigo}}</td>
+            <td>{{c.id}}</td>
             <td>{{c.razonSocial}}</td>
             <td>{{c.apellido}}-{{c.nombre}}</td>
             <td>{{c.domicilio}}</td>

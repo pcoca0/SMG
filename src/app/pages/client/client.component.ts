@@ -40,25 +40,35 @@ export class ClientComponent implements OnInit {
     this.bsModalRef = this.modalService.clientAdd("Cliente", "Productos", this.clientNew);
     this.bsModalRef.content.event.subscribe(
     resp => {
-      this.clientes.push(resp.data)
+          this.clientService.addClient(resp.data).subscribe(
+          c => {
+                this.clientNew = c.data.clientes[0],
+                this.clientes.push(this.clientNew)
+              }
+          )
     });
   }
 
   removeClient(i: number){
     console.log("posicion: "+ i);
+    let id = this.clientes[i].id;
     this.clientes.splice(i, 1);
+    this.clientService.deleteClient(id).subscribe();
+
   }
 
   editClient(i: number){
     console.log("Por editar una cliente");
-    let codigo = this.clientes[i].codigo;
+    let id = this.clientes[i].id;
     this.bsModalRef = this.modalService.clientEdit("Cliente", "Productos", this.clientes[i], false, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data);
       this.client = resp.data,
-      this.client.codigo = codigo,
-      this.clientes.splice(i, 1, this.client)
+      this.client.id = id,
+      this.clientes.splice(i, 1, this.client),
+      this.clientService.putClient(this.client.id, this.client ).subscribe()
+
     });
   }
   viewClient(i: number){

@@ -6,6 +6,6 @@ export interface ICategoryResponse {
 
 
 export interface ICategoryItemResponse {
- codigo: number;
+ id: string;
  descripcion: string;
 }
