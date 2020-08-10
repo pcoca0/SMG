@@ -21,8 +21,7 @@ export class ClientComponent implements OnInit {
 
   constructor(
     private clientService: ClientService,
-    private modalService: ModalService,
-
+    private modalService: ModalService
   ) { }
 
   ngOnInit() {

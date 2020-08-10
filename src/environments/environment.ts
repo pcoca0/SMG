@@ -6,8 +6,8 @@ export const environment = {
   production: false,
   apis: {
     productApi: {
-      url: '',
-      mock: true
+      url: 'https://apibackendjava.herokuapp.com/',
+      mock: false
     },
   },
 };
