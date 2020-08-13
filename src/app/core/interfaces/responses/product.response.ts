@@ -7,7 +7,7 @@ export interface IProductResponse {
 }
 
 export interface IProductItemResponse {
- codigo: number;
+ id: string;
  descripcion: string;
  precio: number;
  categoria: ICategoryItemResponse;

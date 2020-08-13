@@ -6,7 +6,7 @@ export interface IClientResponse {
 }
 
 export interface IClientItemResponse {
- codigo: number;
+ id: string;
  razonSocial: string;
  apellido: string;
  nombre: string;
