@@ -25,12 +25,8 @@
     "@angular/platform-browser": "~8.0.3",
     "@angular/platform-browser-dynamic": "~8.0.3",
     "@angular/router": "~8.0.3",
-<<<<<<< HEAD
     "bootstrap": "^4.5.2",
-=======
-    "bootstrap": "^4.5.0",
     "cors": "^2.8.5",
->>>>>>> 8669cf219f914d27451fdccf48a72f4732ea4a82
     "express": "^4.17.1",
     "jquery": "^3.5.1",
     "ngx-bootstrap": "^5.6.1",
@@ -66,12 +62,7 @@
     "typescript": "~3.4.3"
   },
   "engines": {
-<<<<<<< HEAD
     "node": "10.14.2",
     "npm": "6.4.1"
-=======
-    "node": "12.4.0",
-    "npm": "6.9.0"
->>>>>>> 8669cf219f914d27451fdccf48a72f4732ea4a82
   }
 }
