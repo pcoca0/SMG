@@ -18,7 +18,7 @@ export class AddBudgetComponent implements OnInit {
 
   today: number =  Date.now();
   totalizador: number;
-  totalizadorParcial: number = 0.00;
+  totalizadorParcial = 0;
   productos: Array<IProductItemResponse>;
   presupuesto: Array<IProductItemResponse> = [];
   bsModalRef: BsModalRef;
