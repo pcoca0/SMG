@@ -1,35 +1,37 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service';
 import { ICategoryResponse, ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ICategoryRequest } from 'src/app/core/interfaces/requests/category.request';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-category',
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
-export class CategoryComponent implements OnInit {
+export class CategoryComponent implements OnInit, OnDestroy {
 
   today: number = Date.now();
   categorias: Array<ICategoryItemResponse>;
-  filterMatch: string = '';
+  filterMatch = '';
   bsModalRef: BsModalRef;
+  categoryRequest: ICategoryRequest;
   category: ICategoryItemResponse;
   categoryNew: ICategoryItemResponse;
-
+  private suscriptions: Subscription[] = [];
 
   constructor(
     private productService: ProductService,
     private modalService: ModalService
-  ) { }e
+  ) { }
 
   ngOnInit() {
-    this.productService.getCategories().subscribe(
+    this.suscriptions.push(this.productService.getCategories().subscribe(
       resp => (this.categorias = resp.data.categorias,
         console.log(resp.data.categorias))
-    )
+    ));
   }
 
   search(term: string){
@@ -41,7 +43,7 @@ export class CategoryComponent implements OnInit {
       console.log("posicion: "+ i);
       let id =  this.categorias[i].id;
       this.categorias.splice(i, 1);
-      this.productService.deleteCategory(id).subscribe();
+      this.suscriptions.push(this.productService.deleteCategory(id).subscribe());
   }
 
   addNewCategory(){
@@ -54,7 +56,7 @@ export class CategoryComponent implements OnInit {
                         this.categoryNew = c.data.categorias[0],
                         this.categorias.push(this.categoryNew)
                        }
-             )
+             );
 
     });
   }
@@ -66,11 +68,16 @@ export class CategoryComponent implements OnInit {
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
-      this.category = resp.data,
+      this.categoryRequest = resp.data,
       this.category.id = id,
       this.categorias.splice(i, 1, this.category),
-      this.productService.putCategory(this.category.id, this.category ).subscribe()
+      this.suscriptions.push(this.productService.putCategory(this.category.id, this.categoryRequest ).subscribe());
     });
+  }
+
+
+  ngOnDestroy(): void {
+    this.suscriptions.forEach(suscription => suscription.unsubscribe());
   }
 
 }

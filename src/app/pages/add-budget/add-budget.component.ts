@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.response';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { ProductService } from 'src/app/core/services/product.service';
@@ -8,13 +8,15 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IClientItemResponse } from 'src/app/core/interfaces/responses/client.response';
 import { ClientService } from 'src/app/core/services/client.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { Subscription } from 'rxjs';
+import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
 
 @Component({
   selector: 'app-add-budget',
   templateUrl: './add-budget.component.html',
   styleUrls: ['./add-budget.component.scss']
 })
-export class AddBudgetComponent implements OnInit {
+export class AddBudgetComponent implements OnInit, OnDestroy {
 
   today: number =  Date.now();
   totalizador: number;
@@ -27,9 +29,11 @@ export class AddBudgetComponent implements OnInit {
   clients: Array<IClientItemResponse>;
   client: IClientItemResponse;
   clientView: IClientItemResponse;
+  budgetRequest: IBudgetRequest;
+  private suscriptions: Subscription[] = [];
 
 
-  dropdownSetup: Object = {
+  dropdownSetup: object = {
     displayKey:'razonSocial', //if objects array passed which key to be displayed defaults to description
     search: true, //true/false for the search functionlity defaults to false,
     height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
@@ -57,13 +61,12 @@ export class AddBudgetComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe(
-      resp => { this.productos = resp.data.productos,
-                console.log(resp.data.productos )} );
-    this.clientService.getClients().subscribe(
-      resp => {this.clients = resp.data.clientes,
-               console.log(this.clients)}
-    );
+    this.suscriptions.push(this.productService.getProducts().subscribe(
+                            resp => { this.productos = resp.data.productos,
+                                      console.log(resp.data.productos ); } ));
+    this.suscriptions.push(this.clientService.getClients().subscribe(
+                            resp => {this.clients = resp.data.clientes,
+                                     console.log(this.clients); }));
   }
 
   addBudgetItem(){
@@ -103,7 +106,7 @@ export class AddBudgetComponent implements OnInit {
     this.presupuesto.forEach( i =>
      { this.totalizador = this.totalizador + i.precio,
       console.log("Precio: "+ i.precio),
-      console.log("Acumulador: "+ this.totalizador)
+      console.log("Acumulador: "+ this.totalizador),
       console.log(this.presupuesto.length)
     });
   }
@@ -116,11 +119,10 @@ export class AddBudgetComponent implements OnInit {
 
   updateElement(i: number){
     console.log( this.presupuesto[i]);
-    //this.bsModalRef = this.modalService.budgetAdd("Presupuesto", "Productos", this.productos, this.presupuesto[i]);
     this.bsModalRef = this.modalService.budgetEdit("Presupuesto", "Editar Producto", this.productos, this.presupuesto[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
-        this.presupuesto.splice(i,1,resp.data)
+        this.presupuesto.splice(i, 1, resp.data),
         this.updateTotalizador()
       });
   }
@@ -130,6 +132,10 @@ export class AddBudgetComponent implements OnInit {
   }
 
   saveBudget(){
+    
+  }
 
+ ngOnDestroy(): void {
+    this.suscriptions.forEach( suscription => suscription.unsubscribe());
   }
 }

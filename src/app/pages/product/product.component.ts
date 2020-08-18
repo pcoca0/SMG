@@ -1,25 +1,27 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ProductService } from 'src/app/core/services/product.service';
 import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.response';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { IProductRequest } from 'src/app/core/interfaces/requests/product.request';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit {
+export class ProductComponent implements OnInit, OnDestroy {
 
   productos: Array<IProductItemResponse>;
-  filterMatch: string = '';
+  filterMatch: '';
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
   product: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
-  productRequest: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
+  productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
   productNew: IProductItemResponse;
+  private suscriptions: Subscription[] = [];
 
 
   constructor(
@@ -28,14 +30,14 @@ export class ProductComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productService.getProducts().subscribe(
-      resp => (this.productos = resp.data.productos,
-        console.log(resp.data.productos))
-    );
-    this.productService.getCategories().subscribe(
-      resp => (this.categorias = resp.data.categorias,
-        console.log(resp.data.categorias))
-    )
+    this.suscriptions.push(this.productService.getProducts().subscribe(
+                            resp => (this.productos = resp.data.productos,
+                              console.log(resp.data.productos))
+                          ));
+    this.suscriptions.push(this.productService.getCategories().subscribe(
+                          resp => (this.categorias = resp.data.categorias,
+                            console.log(resp.data.categorias))
+                          ));
   }
 
   search(term: string){
@@ -54,7 +56,6 @@ export class ProductComponent implements OnInit {
 
    constructorRequestEdit(resp: any){
     console.log(resp);
-    console.log("hola");
     this.productRequest.descripcion = resp.descripcion;
     this.productRequest.categoria.id = resp.category.id;
     this.productRequest.precio = resp.precio;
@@ -64,20 +65,19 @@ export class ProductComponent implements OnInit {
 
 
    addNewProduct(){
-    let pos;
     console.log("Por agregar una Producto");
     this.bsModalRef = this.modalService.productAdd("Categorias", "Productos", this.product, this.categorias);
     this.bsModalRef.content.event.subscribe(
 
     resp => {
               console.log(resp.data),
-              this.productService.addProduct ( this.constructorRequest(resp.data)).subscribe(
-              c => {
-                 this.productNew = c.data.productos[0],
-                 console.log(this.productNew),
-                 this.productos.push(this.productNew)
-             }
- )
+              this.suscriptions.push(this.productService.addProduct( this.constructorRequest(resp.data)).subscribe(
+                  c => {
+                     this.productNew = c.data.productos[0],
+                     console.log(this.productNew),
+                     this.productos.push(this.productNew)
+                 }
+             ));
     });
   }
 
@@ -90,15 +90,13 @@ export class ProductComponent implements OnInit {
     resp => {
       console.log(resp.data),
       console.log(id);
-      this.product = this.constructorRequestEdit(resp.data),
-      this.product.id = id,
-      // console.log(this.product),
-      // /*to do refactor*/
-      // this.product.categoria.id = resp.data.category.id;
-      // console.log(this.product),
+      this.productRequest = this.constructorRequest(resp.data),
+      this.productRequest.id = id,
       this.productos.splice(i, 1, this.product),
-      this.productService.putProduct(this.product.id, this.product ).subscribe()
-
+      this.suscriptions.push( this.productService.putProduct(id, this.productRequest).subscribe(
+                              response => this.productos.splice(i, 1, response.data.productos[0]
+                            )
+      ));
     });
   }
 
@@ -106,8 +104,11 @@ export class ProductComponent implements OnInit {
     console.log("posicion: "+ i);
     let id = this.productos[i].id;
     this.productos.splice(i, 1);
-    this.productService.deleteProduct(id).subscribe();
+    this.suscriptions.push(this.productService.deleteProduct(id).subscribe());
+  }
 
-}
+  ngOnDestroy(): void {
+    this.suscriptions.forEach(suscription => suscription.unsubscribe());
+  }
 
 }

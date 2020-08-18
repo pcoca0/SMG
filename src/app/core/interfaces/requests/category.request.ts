@@ -1,3 +1,8 @@
 export interface ICategoryRequest {
-  codigo: number;
+  id: string;
+  razonSocial: string;
+  apellido: string;
+  nombre: string;
+  domicilio: string;
+  nro: number;
 }

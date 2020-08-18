@@ -13,9 +13,9 @@ export class DashboardComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.productService.getCategories().subscribe(
-      resp => console.log(resp)
-    )
+    // this.productService.getCategories().subscribe(
+    //   resp => console.log(resp)
+    // )
   }
 
 }

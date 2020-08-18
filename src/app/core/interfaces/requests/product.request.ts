@@ -1,3 +1,9 @@
+import { ICategoryItemResponse } from '../responses/category.response';
+import { ICategoryRequest } from './category.request';
+
 export interface IProductRequest {
-  codigo: number;
+  id: string;
+  descripcion: string;
+  precio: number;
+  categoria: ICategoryRequest;
 }

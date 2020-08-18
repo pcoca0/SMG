@@ -6,6 +6,7 @@ import { IProductResponse, IProductItemResponse } from '../interfaces/responses/
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { ICategoryRequest } from '../interfaces/requests/category.request';
+import { IProductRequest } from '../interfaces/requests/product.request';
 
 
 @Injectable()
@@ -21,10 +22,10 @@ export class ProductService implements IProductService {
     return this.http.get(this.apiUrl + this.categoriesPath) as Observable<ICategoryResponse>;
   }
 
-  addCategory(categoria:ICategoryItemResponse): Observable<ICategoryResponse> {
+  addCategory(categoria: ICategoryRequest): Observable<ICategoryResponse> {
     return this.http.post(this.apiUrl + `api/categoria/add`, categoria) as Observable<ICategoryResponse>;
   }
-  putCategory(id: string, categoria : ICategoryItemResponse): Observable<ICategoryResponse> {
+  putCategory(id: string, categoria: ICategoryRequest): Observable<ICategoryResponse> {
     return this.http.put(this.apiUrl + `api/categoria/${id}/update`, categoria) as Observable<ICategoryResponse>;
   }
   deleteCategory(id: string): Observable<ICategoryResponse> {
@@ -35,10 +36,10 @@ export class ProductService implements IProductService {
     return this.http.get(this.apiUrl + this.productsPath) as Observable<IProductResponse>;
   }
 
-  addProduct(producto: IProductItemResponse): Observable<IProductResponse> {
+  addProduct(producto: IProductRequest): Observable<IProductResponse> {
     return this.http.post(this.apiUrl + `api/producto/add`, producto) as Observable<IProductResponse>;
   }
-  putProduct(id: string, producto : IProductItemResponse): Observable<IProductResponse> {
+  putProduct(id: string, producto: IProductRequest): Observable<IProductResponse> {
     return this.http.put(this.apiUrl + `api/producto/${id}/update`, producto) as Observable<IProductResponse>;
   }
   deleteProduct(id: string): Observable<IProductResponse> {
