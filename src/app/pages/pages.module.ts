@@ -11,6 +11,8 @@ import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+
 
 @NgModule({
   declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent],
@@ -19,7 +21,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     SharedModule,
     RouterModule,
     ReactiveFormsModule,
-    PAGES_ROUTES
+    PAGES_ROUTES,
+    SweetAlert2Module
   ]
 })
 export class PagesModule { }

@@ -6,6 +6,8 @@ import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/categor
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { IProductRequest } from 'src/app/core/interfaces/requests/product.request';
 import { Subscription } from 'rxjs';
+import Swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-product',
@@ -75,7 +77,13 @@ export class ProductComponent implements OnInit, OnDestroy {
                   c => {
                      this.productNew = c.data.productos[0],
                      console.log(this.productNew),
-                     this.productos.push(this.productNew)
+                     this.productos.push(this.productNew),
+                     Swal.fire({
+                      title: 'Error!',
+                      text: 'Do you want to continue',
+                      icon: 'error',
+                      confirmButtonText: 'Cool'
+                    })
                  }
              ));
     });

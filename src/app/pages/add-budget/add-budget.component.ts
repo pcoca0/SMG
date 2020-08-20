@@ -30,7 +30,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   clients: Array<IClientItemResponse>;
   client: IClientItemResponse;
   clientView: IClientItemResponse;
-  budgetRequest: IBudgetRequest = {'cliente': null, 'productos': []  };
+  budgetRequest: IBudgetRequest = {cliente: null, productos: []};
   private suscriptions: Subscription[] = [];
 
 
