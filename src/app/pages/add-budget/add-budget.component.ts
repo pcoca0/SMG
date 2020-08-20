@@ -10,6 +10,7 @@ import { ClientService } from 'src/app/core/services/client.service';
 import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Subscription } from 'rxjs';
 import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
+import { BudgetService } from '../../core/services/budget.service';
 
 @Component({
   selector: 'app-add-budget',
@@ -29,7 +30,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   clients: Array<IClientItemResponse>;
   client: IClientItemResponse;
   clientView: IClientItemResponse;
-  budgetRequest: IBudgetRequest;
+  budgetRequest: IBudgetRequest = {'cliente': null, 'productos': []  };
   private suscriptions: Subscription[] = [];
 
 
@@ -53,6 +54,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       private modalService: ModalService,
       private productService: ProductService,
       private clientService: ClientService,
+      private budgetService: BudgetService,
       private fB: FormBuilder
   ) {
     this.listForm = this.fB.group({
@@ -62,11 +64,13 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.suscriptions.push(this.productService.getProducts().subscribe(
-                            resp => { this.productos = resp.data.productos,
-                                      console.log(resp.data.productos ); } ));
+                            resp => { this.productos = resp.data.productos
+                                    //console.log(resp.data.productos); 
+                                    } ));
     this.suscriptions.push(this.clientService.getClients().subscribe(
-                            resp => {this.clients = resp.data.clientes,
-                                     console.log(this.clients); }));
+                            resp => {this.clients = resp.data.clientes
+                                    // console.log(this.clients);
+                                     }));
   }
 
   addBudgetItem(){
@@ -132,7 +136,18 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   saveBudget(){
-    
+    console.log("Hola como va");
+
+    //this.budgetRequest.fecha = this.today;
+    this.budgetRequest.cliente = this.clientView;
+    this.budgetRequest.productos = this.productos;
+    this.budgetRequest.total = this.today;
+    console.log(this.budgetRequest);
+    this.suscriptions.push(
+      this.budgetService.addBudget(this.budgetRequest).subscribe(
+        resp => console.log(resp)
+      )
+    );
   }
 
  ngOnDestroy(): void {

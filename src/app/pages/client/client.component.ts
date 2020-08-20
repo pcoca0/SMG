@@ -14,7 +14,7 @@ import { IClientRequest } from '../../core/interfaces/requests/client.request';
 export class ClientComponent implements OnInit, OnDestroy {
 
   today: number = Date.now();
-  filterMatch: '';
+  filterMatch: string = '';
   clientes: Array<IClientItemResponse>;
   bsModalRef: BsModalRef;
   public event: EventEmitter<any> = new EventEmitter();
