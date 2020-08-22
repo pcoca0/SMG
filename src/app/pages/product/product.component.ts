@@ -7,6 +7,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { IProductRequest } from 'src/app/core/interfaces/requests/product.request';
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
+import { SwalService } from 'src/app/core/services/swal.service';
 
 
 @Component({
@@ -17,7 +18,7 @@ import Swal from 'sweetalert2';
 export class ProductComponent implements OnInit, OnDestroy {
 
   productos: Array<IProductItemResponse>;
-  filterMatch: '';
+  filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
   product: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
@@ -28,7 +29,9 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   constructor(
     private productService: ProductService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private swalService: SwalService
+
   ) { }
 
   ngOnInit() {
@@ -43,7 +46,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
   search(term: string){
-     //console.log("Recibiendo: "+ term)
      this.filterMatch = term;
    }
 
@@ -67,52 +69,52 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 
    addNewProduct(){
-    console.log("Por agregar una Producto");
-    this.bsModalRef = this.modalService.productAdd("Categorias", "Productos", this.product, this.categorias);
+    console.log('Por agregar una Producto');
+    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.categorias);
     this.bsModalRef.content.event.subscribe(
-
     resp => {
-              console.log(resp.data),
               this.suscriptions.push(this.productService.addProduct( this.constructorRequest(resp.data)).subscribe(
-                  c => {
-                     this.productNew = c.data.productos[0],
+                  response => {
+                     this.productNew = response.data.productos[0],
                      console.log(this.productNew),
                      this.productos.push(this.productNew),
-                     Swal.fire({
-                      title: 'Error!',
-                      text: 'Do you want to continue',
-                      icon: 'error',
-                      confirmButtonText: 'Cool'
-                    })
-                 }
+                     this.swalService.success(`Producto creado con éxito`)
+                   },
+                  error => this.swalService.error(`No se ha podido crear el producto.`)
              ));
     });
   }
 
   editProduct(i: number){
-    console.log("Por editar una Categoria");
-    let id = this.productos[i].id;
+    console.log('Por editar una Categoria');
+    const id = this.productos[i].id;
     console.log(id);
-    this.bsModalRef = this.modalService.productEdit("Categorias", "Productos",  this.productos[i], this.categorias, i);
+    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[i], this.categorias, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
       console.log(id);
       this.productRequest = this.constructorRequest(resp.data),
       this.productRequest.id = id,
-      this.productos.splice(i, 1, this.product),
       this.suscriptions.push( this.productService.putProduct(id, this.productRequest).subscribe(
-                              response => this.productos.splice(i, 1, response.data.productos[0]
+                              response => {
+                                           this.productos.splice(i, 1, response.data.productos[0]),
+                                           this.swalService.success(`Producto editado con éxito`)
+                                          },
+                              error =>  this.swalService.error(`No se ha podido editar el producto.`)
                             )
-      ));
+      );
     });
   }
 
-  removeProduct(i){
-    console.log("posicion: "+ i);
-    let id = this.productos[i].id;
+  removeProduct(i) {
+    console.log('posicion: ' + i);
+    const id = this.productos[i].id;
     this.productos.splice(i, 1);
-    this.suscriptions.push(this.productService.deleteProduct(id).subscribe());
+    this.suscriptions.push(this.productService.deleteProduct(id).subscribe(
+      response => this.swalService.success(`Producto eliminado con éxito`),
+      error => this.swalService.error(`No se ha podido eliminar el producto.`)
+    ));
   }
 
   ngOnDestroy(): void {

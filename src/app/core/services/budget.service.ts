@@ -17,7 +17,7 @@ export class BudgetService{
 
   constructor(private http: HttpClient) { }
 
-  getBudget(): Observable<IBudgetResponse> {
+  getBudgets(): Observable<IBudgetResponse> {
     return this.http.get(this.apiUrl + this.budgetPath) as Observable<IBudgetResponse>;
   }
   addBudget(presupuesto: IBudgetRequest): Observable<IBudgetResponse> {

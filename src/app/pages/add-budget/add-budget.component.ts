@@ -2,15 +2,14 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.response';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { ProductService } from 'src/app/core/services/product.service';
-import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IClientItemResponse } from 'src/app/core/interfaces/responses/client.response';
 import { ClientService } from 'src/app/core/services/client.service';
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Subscription } from 'rxjs';
 import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
 import { BudgetService } from '../../core/services/budget.service';
+import { SwalService } from '../../core/services/swal.service';
 
 @Component({
   selector: 'app-add-budget',
@@ -55,7 +54,8 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       private productService: ProductService,
       private clientService: ClientService,
       private budgetService: BudgetService,
-      private fB: FormBuilder
+      private fB: FormBuilder,
+      private swalService: SwalService
   ) {
     this.listForm = this.fB.group({
       client: ['', Validators.required]
@@ -65,16 +65,14 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.suscriptions.push(this.productService.getProducts().subscribe(
                             resp => { this.productos = resp.data.productos
-                                    //console.log(resp.data.productos); 
                                     } ));
     this.suscriptions.push(this.clientService.getClients().subscribe(
                             resp => {this.clients = resp.data.clientes
-                                    // console.log(this.clients);
                                      }));
   }
 
   addBudgetItem(){
-    this.bsModalRef = this.modalService.budgetAdd("Presupuesto", "Productos", this.productos);
+    this.bsModalRef = this.modalService.budgetAdd('Presupuesto', 'Productos', this.productos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       this.presupuesto.push(resp['data']),
@@ -84,12 +82,12 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
 
  addNewClient(){
-  console.log("Por agregar una cliente");
-  this.bsModalRef = this.modalService.clientAdd("Cliente", "Productos", this.client);
+  console.log('Por agregar una cliente');
+  this.bsModalRef = this.modalService.clientAdd('Cliente', 'Productos', this.client);
   this.bsModalRef.content.event.subscribe(
   resp => {
     this.clientView = resp.data,
-    console.log("Nuevo Cliente: " +this.clientView.apellido)
+    console.log('Nuevo Cliente: ' + this.clientView.apellido)
     //this.clients.push(this.client),
     //this.options = [...this.options, {id: 34, description: 'Adding new item'}];
     //lo tengo que hacer asi por el change detec
@@ -99,31 +97,31 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   });
 }
 
-  selectClient(){
+  selectClient() {
   this.clientView = this.listForm.value.client;
   console.log(this.clientView);
   }
 
 
-  updateTotalizador(){
+  updateTotalizador() {
     this.totalizador = 0.00;
-    this.presupuesto.forEach( i =>
-     { this.totalizador = this.totalizador + i.precio,
-      console.log("Precio: "+ i.precio),
-      console.log("Acumulador: "+ this.totalizador),
+    this.presupuesto.forEach( i => {
+      this.totalizador = this.totalizador + i.precio,
+      console.log('Precio: ' + i.precio),
+      console.log('Acumulador: ' + this.totalizador),
       console.log(this.presupuesto.length)
     });
   }
 
-  removeElement(i: number){
-    console.log("posicion: "+ i);
+  removeElement(i: number) {
+    console.log('posicion: ' + i);
     this.presupuesto.splice(i, 1);
     this.updateTotalizador();
   }
 
-  updateElement(i: number){
+  updateElement(i: number) {
     console.log( this.presupuesto[i]);
-    this.bsModalRef = this.modalService.budgetEdit("Presupuesto", "Editar Producto", this.productos, this.presupuesto[i], i );
+    this.bsModalRef = this.modalService.budgetEdit('Presupuesto', 'Editar Producto', this.productos, this.presupuesto[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
         this.presupuesto.splice(i, 1, resp.data),
@@ -135,17 +133,15 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
   }
 
-  saveBudget(){
-    console.log("Hola como va");
-
-    //this.budgetRequest.fecha = this.today;
+  saveBudget() {
     this.budgetRequest.cliente = this.clientView;
     this.budgetRequest.productos = this.productos;
     this.budgetRequest.total = this.today;
     console.log(this.budgetRequest);
     this.suscriptions.push(
       this.budgetService.addBudget(this.budgetRequest).subscribe(
-        resp => console.log(resp)
+        response => this.swalService.success(`Presupuesto creado con éxito`),
+        error => this.swalService.error(`No se ha podido crear el presupuesto.`)
       )
     );
   }

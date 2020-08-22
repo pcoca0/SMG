@@ -14,4 +14,5 @@ export interface IBudgetItemResponse {
     cliente: IClientItemResponse;
     productos: IProductItemResponse[];
     nro: number;
+    total: number;
   }
