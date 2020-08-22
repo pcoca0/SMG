@@ -16,6 +16,7 @@ const pagesRoutes: Routes = [
           {path: 'productos',   component: ProductComponent },
           {path: 'presupuestos',   component: BudgetComponent },
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
+          {path: 'editarPresupuesto/:id',   component: AddBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
 
 

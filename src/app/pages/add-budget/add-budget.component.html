@@ -1,26 +1,27 @@
-<div class="row">
+<div class="row" id="document">
   <div class="col-md-8 ml-auto mr-auto">
     <div class="card">
       <div class="card-header card-header-primary">
         <h4 class="card-title">Presupuesto</h4>
       </div>
       <div class="card-body">
-        <span>Presupuesto número: 11111 </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span>
+        <span *ngIf="flagEdit">Presupuesto número: {{budgetRequest.numero}} </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span>
       </div>
     </div>
       <div class="card">
         <div class="card-header card-header-success">
           <h4 class="card-title">Cliente</h4>
-          <p class="card-category">Seleccione un Cliente</p>
+          <!-- <div class="card-category">Seleccione un Cliente</div> -->
+          <button class="btn btn-info float-right" (click)="addNewClient()">  <i class="material-icons">person_add</i></button>
+
         </div>
         <div class="card-body">
           <form [formGroup]="listForm" (ngSubmit)="saveBudget()">
             <div class="row">
-                <div class="form-group col-lg-8 col-md-8 col-sm-12 pt-1">
+                <div class="form-group col-lg-12 col-md-12 col-sm-12 pt-1">
                   <ngx-select-dropdown [options]="clients" [config]="dropdownSetup" formControlName="client" (change)="selectClient()"></ngx-select-dropdown>
                 </div>
                 <div class="form-group col-lg-4 col-md-4 col-sm-12 text-center">
-                  <button class="btn btn-outline-info" (click)="addNewClient()">  <i class="material-icons">person_add</i></button>
                 </div>
             </div>
             <div class="row">
@@ -51,7 +52,7 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let p of presupuesto; index as i">
+              <tr *ngFor="let p of budgetRequest.productos; index as i">
                 <td>{{p.descripcion}}</td>
                 <td class="text-center">{{p.precio}}</td>
                 <td class="text-center">
@@ -68,10 +69,11 @@
               <tr>
                 <td class="text-center"></td>
                 <td class="text-center">
-                  <a href="#" class="btn btn-round btn-fill btn-default disabled">Generar PDF</a>
+                  <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="makePDF()">Generar PDF</button>
                 </td>
                 <td class="text-center">
-                  <button target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>
+                  <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>
+                  <button  *ngIf="flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar los cambios</button>
                 </td>
               </tr>
             </tbody>

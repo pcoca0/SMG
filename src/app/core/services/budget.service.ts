@@ -20,6 +20,11 @@ export class BudgetService{
   getBudgets(): Observable<IBudgetResponse> {
     return this.http.get(this.apiUrl + this.budgetPath) as Observable<IBudgetResponse>;
   }
+
+  getBudget(id: string): Observable<IBudgetResponse> {
+    return this.http.get(this.apiUrl + `api/presupuesto/${id}`) as Observable<IBudgetResponse>;
+  }
+
   addBudget(presupuesto: IBudgetRequest): Observable<IBudgetResponse> {
     return this.http.post(this.apiUrl + `api/presupuesto/add`, presupuesto) as Observable<IBudgetResponse>;
   }

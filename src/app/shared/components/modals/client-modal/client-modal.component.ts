@@ -69,4 +69,8 @@ export class ClientModalComponent implements OnInit {
         break;
     }
   }
+
+  close() {
+    this.bsModalRef.hide();
+  }
 }

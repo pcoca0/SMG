@@ -10,6 +10,9 @@ import { Subscription } from 'rxjs';
 import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
 import { BudgetService } from '../../core/services/budget.service';
 import { SwalService } from '../../core/services/swal.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { jsPDF } from 'jspdf';
+
 
 @Component({
   selector: 'app-add-budget',
@@ -30,6 +33,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   client: IClientItemResponse;
   clientView: IClientItemResponse;
   budgetRequest: IBudgetRequest = {cliente: null, productos: []};
+  flagEdit = false;
   private suscriptions: Subscription[] = [];
 
 
@@ -55,7 +59,9 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       private clientService: ClientService,
       private budgetService: BudgetService,
       private fB: FormBuilder,
-      private swalService: SwalService
+      private swalService: SwalService,
+      private activateRoute: ActivatedRoute,
+      private router: Router
   ) {
     this.listForm = this.fB.group({
       client: ['', Validators.required]
@@ -69,14 +75,29 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     this.suscriptions.push(this.clientService.getClients().subscribe(
                             resp => {this.clients = resp.data.clientes
                                      }));
+    if (this.activateRoute.snapshot.paramMap.get('id')) {
+      this.flagEdit = true;
+      this.suscriptions.push(this.budgetService.getBudget(this.activateRoute.snapshot.paramMap.get('id')).subscribe(
+                  resp => {
+                            this.client = resp.data.presupuestos[0].cliente,
+                            this.budgetRequest = resp.data.presupuestos[0],
+                            this.clientView =  resp.data.presupuestos[0].cliente,
+                            this.listForm.controls.client.setValue( resp.data.presupuestos[0].cliente)
+                 }));
+    }
+
   }
 
-  addBudgetItem(){
+  addBudgetItem() {
     this.bsModalRef = this.modalService.budgetAdd('Presupuesto', 'Productos', this.productos);
     this.bsModalRef.content.event.subscribe(
     resp => {
-      this.presupuesto.push(resp['data']),
-      this.updateTotalizador();
+          if (this.budgetRequest.productos.find(p => p.id === resp['data'].id)){
+            this.swalService.warning(`El producto seleccionado ya esta en la lista.`);  
+          } else {
+          this.budgetRequest.productos.push(resp['data']);
+          this.updateTotalizador();
+          }
     });
  }
 
@@ -86,19 +107,23 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   this.bsModalRef = this.modalService.clientAdd('Cliente', 'Productos', this.client);
   this.bsModalRef.content.event.subscribe(
   resp => {
-    this.clientView = resp.data,
-    console.log('Nuevo Cliente: ' + this.clientView.apellido)
-    //this.clients.push(this.client),
-    //this.options = [...this.options, {id: 34, description: 'Adding new item'}];
-    //lo tengo que hacer asi por el change detec
-    this.clients = [...this.clients, this.clientView],
-    this.listForm.controls.client.setValue(this.clientView),
-    console.log(this.clientView)
+    this.suscriptions.push(this.clientService.addClient(resp.data).subscribe(
+                    response => {
+                     this.clientView = response.data.clientes[0],
+                    //this.clients.push(this.client),
+                    //this.options = [...this.options, {id: 34, description: 'Adding new item'}];
+                    //lo tengo que hacer asi por el change detec
+                    this.clients = [...this.clients, this.clientView],
+                    this.listForm.controls.client.setValue(this.clientView),
+                    this.budgetRequest.cliente = this.clientView,
+                    console.log(this.clientView)
+  }));
   });
 }
 
   selectClient() {
   this.clientView = this.listForm.value.client;
+  this.budgetRequest.cliente = this.clientView;
   console.log(this.clientView);
   }
 
@@ -115,16 +140,16 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
   removeElement(i: number) {
     console.log('posicion: ' + i);
-    this.presupuesto.splice(i, 1);
+    this.budgetRequest.productos.splice(i, 1);
     this.updateTotalizador();
   }
 
   updateElement(i: number) {
     console.log( this.presupuesto[i]);
-    this.bsModalRef = this.modalService.budgetEdit('Presupuesto', 'Editar Producto', this.productos, this.presupuesto[i], i );
+    this.bsModalRef = this.modalService.budgetEdit('Presupuesto', 'Editar Producto', this.productos, this.budgetRequest.productos[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
-        this.presupuesto.splice(i, 1, resp.data),
+        this.budgetRequest.productos.splice(i, 1, resp.data),
         this.updateTotalizador()
       });
   }
@@ -134,19 +159,65 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   saveBudget() {
-    this.budgetRequest.cliente = this.clientView;
-    this.budgetRequest.productos = this.productos;
     this.budgetRequest.total = this.today;
     console.log(this.budgetRequest);
-    this.suscriptions.push(
-      this.budgetService.addBudget(this.budgetRequest).subscribe(
-        response => this.swalService.success(`Presupuesto creado con éxito`),
-        error => this.swalService.error(`No se ha podido crear el presupuesto.`)
-      )
-    );
+    if (this.flagEdit) {
+      this.suscriptions.push(
+        this.budgetService.putBudget(this.budgetRequest.id, this.budgetRequest).subscribe(
+          response => this.swalService.success(`Presupuesto editado con éxito`),
+          error => this.swalService.error(`No se ha podido editar el presupuesto.`)
+        )
+      );
+    } else {
+      this.suscriptions.push(
+        this.budgetService.addBudget(this.budgetRequest).subscribe(
+          response => {
+                        this.swalService.success(`Presupuesto creado con éxito`),
+                        this.router.navigate(['editarPresupuesto', response.data.presupuestos[0].id]);
+                      },
+          error => this.swalService.error(`No se ha podido crear el presupuesto.`)
+        )
+      );
+    }
   }
 
  ngOnDestroy(): void {
     this.suscriptions.forEach( suscription => suscription.unsubscribe());
+  }
+
+  makePDF(): void {
+    // console.log('imprime');
+
+    // const  PDF = new jsPDF('p', 'pt', 'a4');
+    // const width = PDF.internal.pageSize.getWidth();
+    // const height = PDF.internal.pageSize.getHeight();
+    // const margins = {
+    //   top: 60,
+    //   bottom: 80,
+    //   left: 40,
+    //   width: 522
+    // };
+
+    // PDF.fromHTML(
+    //   document.getElementById('document'), // HTML string or DOM elem ref.
+    //   margins.left, // x coord
+    //   margins.top, {
+    //     // y coord
+    //     width: margins.width // max width of content on PDF
+    //   },
+    //   (dispose: any) => {
+    //     // dispose: object with X, Y of the last line add to the PDF
+    //     // this allow the insertion of new lines after html
+    //     //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
+    //     PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
+    //   },
+    //   margins
+    // );
+   
+// Default export is a4 paper, portrait, using millimeters for units
+const doc = new jsPDF();
+
+doc.text("Hello world!", 10, 10);
+doc.save("a4.pdf");
   }
 }

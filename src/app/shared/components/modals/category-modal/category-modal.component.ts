@@ -59,4 +59,8 @@ export class CategoryModalComponent implements OnInit {
     }
   }
 
+  close() {
+    this.bsModalRef.hide();
+  }
+
 }

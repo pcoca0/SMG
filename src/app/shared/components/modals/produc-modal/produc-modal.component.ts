@@ -39,13 +39,17 @@ export class ProducModalComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.product);
-      if(this.product){
-        this.formProduct.patchValue({
-        descripcion: this.product.descripcion,
-        precio: this.product.precio,
-        category: this.product.categoria
-        });
-     }
+    if (this.product){
+      this.formProduct.patchValue({
+      descripcion: this.product.descripcion,
+      precio: this.product.precio,
+      category: this.product.categoria
+      });
+    }
+  }
+
+  close() {
+    this.bsModalRef.hide();
   }
 
   sendObject(item: string, pos?: number) {

@@ -99,4 +99,8 @@ export class BudgeModalComponent implements OnInit {
   }
 }
 
+close() {
+  this.bsModalRef.hide();
+}
+
 }

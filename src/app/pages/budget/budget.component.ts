@@ -37,7 +37,7 @@ export class BudgetComponent implements OnInit, OnDestroy {
   addNewBudget(){
     this.router.navigate(['crearPresupuesto'])
   }
-  removeBuget(i){
+  removeBuget(i: number) {
     console.log(' posicion: ' + i);
     const id =  this.presupuestos[i].id;
     this.presupuestos.splice(i, 1);
@@ -48,6 +48,10 @@ export class BudgetComponent implements OnInit, OnDestroy {
                   },
       error => this.swalService.error(`No se ha podido eliminar el presupuesto.`)
     ));
+  }
+  editBuget(id: string) {
+    console.log('id budget' + id);
+    this.router.navigate(['editarPresupuesto', id]);
   }
 
   ngOnDestroy(): void {
