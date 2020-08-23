@@ -186,38 +186,38 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   makePDF(): void {
-    // console.log('imprime');
+    console.log('imprime');
 
-    // const  PDF = new jsPDF('p', 'pt', 'a4');
-    // const width = PDF.internal.pageSize.getWidth();
-    // const height = PDF.internal.pageSize.getHeight();
-    // const margins = {
-    //   top: 60,
-    //   bottom: 80,
-    //   left: 40,
-    //   width: 522
-    // };
+    const  PDF = new jsPDF('p', 'pt', 'a4');
+    const width = PDF.internal.pageSize.getWidth();
+    const height = PDF.internal.pageSize.getHeight();
+    const margins = {
+      top: 60,
+      bottom: 80,
+      left: 40,
+      width: 522
+    };
 
-    // PDF.fromHTML(
-    //   document.getElementById('document'), // HTML string or DOM elem ref.
-    //   margins.left, // x coord
-    //   margins.top, {
-    //     // y coord
-    //     width: margins.width // max width of content on PDF
-    //   },
-    //   (dispose: any) => {
-    //     // dispose: object with X, Y of the last line add to the PDF
-    //     // this allow the insertion of new lines after html
-    //     //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
-    //     PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
-    //   },
-    //   margins
-    // );
+    PDF.fromHTML(
+      document.getElementById('document'), // HTML string or DOM elem ref.
+      margins.left, // x coord
+      margins.top, {
+        // y coord
+        width: margins.width // max width of content on PDF
+      },
+      (dispose: any) => {
+        // dispose: object with X, Y of the last line add to the PDF
+        // this allow the insertion of new lines after html
+        //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
+        PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
+      },
+      margins
+    );
    
 // Default export is a4 paper, portrait, using millimeters for units
-const doc = new jsPDF();
+// const doc = new jsPDF();
 
-doc.text("Hello world!", 10, 10);
-doc.save("a4.pdf");
+// doc.text("Hello world!", 10, 10);
+// doc.save("a4.pdf");
   }
 }
