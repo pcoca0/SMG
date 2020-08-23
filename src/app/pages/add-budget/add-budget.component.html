@@ -69,7 +69,9 @@
               <tr>
                 <td class="text-center"></td>
                 <td class="text-center">
-                  <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="makePDF()">Generar PDF</button>
+                  <!-- <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="makePDF()">Generar PDF</button> -->
+                  <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="imprimirPDF()">Generar PDF</button>
+
                 </td>
                 <td class="text-center">
                   <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>

@@ -12,10 +12,11 @@ import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
+import { ReportBudgetComponent } from './report-budget/report-budget.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent],
   imports: [
     CommonModule,
     SharedModule,

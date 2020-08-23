@@ -6,6 +6,7 @@ import { ProductComponent } from './product/product.component';
 import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
+import { ReportBudgetComponent } from './report-budget/report-budget.component';
 
 const pagesRoutes: Routes = [
     {
@@ -17,6 +18,7 @@ const pagesRoutes: Routes = [
           {path: 'presupuestos',   component: BudgetComponent },
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
           {path: 'editarPresupuesto/:id',   component: AddBudgetComponent },
+          {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
 
 

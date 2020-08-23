@@ -11,7 +11,7 @@ import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
 import { BudgetService } from '../../core/services/budget.service';
 import { SwalService } from '../../core/services/swal.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { jsPDF } from 'jspdf';
+import * as jsPDF from 'jspdf';
 
 
 @Component({
@@ -185,39 +185,38 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     this.suscriptions.forEach( suscription => suscription.unsubscribe());
   }
 
-  makePDF(): void {
-    console.log('imprime');
+  // makePDF(): void {
+  //   console.log('imprime');
 
-    const  PDF = new jsPDF('p', 'pt', 'a4');
-    const width = PDF.internal.pageSize.getWidth();
-    const height = PDF.internal.pageSize.getHeight();
-    const margins = {
-      top: 60,
-      bottom: 80,
-      left: 40,
-      width: 522
-    };
+  //   const  PDF = new jsPDF('p', 'pt', 'a4');
+  //   const width = PDF.internal.pageSize.getWidth();
+  //   const height = PDF.internal.pageSize.getHeight();
+  //   const margins = {
+  //     top: 60,
+  //     bottom: 80,
+  //     left: 40,
+  //     width: 522
+  //   };
 
-    PDF.fromHTML(
-      document.getElementById('document'), // HTML string or DOM elem ref.
-      margins.left, // x coord
-      margins.top, {
-        // y coord
-        width: margins.width // max width of content on PDF
-      },
-      (dispose: any) => {
-        // dispose: object with X, Y of the last line add to the PDF
-        // this allow the insertion of new lines after html
-        //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
-        PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
-      },
-      margins
-    );
-   
-// Default export is a4 paper, portrait, using millimeters for units
-// const doc = new jsPDF();
-
-// doc.text("Hello world!", 10, 10);
-// doc.save("a4.pdf");
+  //   PDF.fromHTML(
+  //     document.getElementById('document'), // HTML string or DOM elem ref.
+  //     margins.left, // x coord
+  //     margins.top, {
+  //       // y coord
+  //       width: margins.width // max width of content on PDF
+  //     },
+  //     (dispose: any) => {
+  //       // dispose: object with X, Y of the last line add to the PDF
+  //       // this allow the insertion of new lines after html
+  //       //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
+  //       PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
+  //     },
+  //     margins
+  //   );
+  // }
+  
+  imprimirPDF(){
+    this.router.navigate(['imprimirPresupuesto', this.budgetRequest.id]);
   }
+
 }
