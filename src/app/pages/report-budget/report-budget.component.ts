@@ -12,11 +12,13 @@ import * as jsPDF from 'jspdf';
   templateUrl: './report-budget.component.html',
   styleUrls: ['./report-budget.component.scss']
 })
-export class ReportBudgetComponent implements OnInit, OnDestroy { 
+export class ReportBudgetComponent implements OnInit, OnDestroy {
 
   today: number =  Date.now();
   budget: IBudgetItemResponse;
   private suscriptions: Subscription[] = [];
+  headerBase64: any;
+  footerBase64: any;
 
   constructor(
 
@@ -31,16 +33,47 @@ export class ReportBudgetComponent implements OnInit, OnDestroy {
     this.suscriptions.push(this.budgetService.getBudget(this.activateRoute.snapshot.paramMap.get('id')).subscribe(
     resp => this.budget = resp.data.presupuestos[0]
     ));
+
+    this.getBase64ImageFromUrl('assets/img/header.jpg')
+    .then(result => this.headerBase64 = result)
+    .catch(err => console.error(err));
+    this.getBase64ImageFromUrl('assets/img/footer.jpg')
+    .then(result => this.footerBase64 = result)
+    .catch(err => console.error(err));
   }
 
-  makePDF(): void {
-    console.log('imprime');
+  private async getBase64ImageFromUrl(imageUrl) {
+    let res = await fetch(imageUrl);
+    let blob = await res.blob();
 
-    const  PDF = new jsPDF();
-    const width = PDF.internal.pageSize.getWidth();
-    const height = PDF.internal.pageSize.getHeight();
+    return new Promise((resolve, reject) => {
+      let reader  = new FileReader();
+      reader.addEventListener('load', function () {
+          resolve(reader.result);
+      }, false);
+
+      reader.onerror = () => {
+        return reject(this);
+      };
+      reader.readAsDataURL(blob);
+    });
+  }
+  //inserto en todas las paginas del pdf.
+  setHeaderAndFooter(PDF: jsPDF, count: number, width: number, height: number ){
+    for (let index = 1; index <= count; index++) {
+      console.log("pagina: "+index);
+      PDF.setPage(index);
+      PDF.addImage(this.headerBase64, 'JPEG', 0, 0, width, 80);
+      PDF.addImage(this.footerBase64, 'JPEG', 0, height - 80, width, 80);
+    }
+  };
+
+  makePDF(): void {
+    const  PDF = new jsPDF('p', 'pt', 'a4');
+    var width = PDF.internal.pageSize.getWidth();
+    var height = PDF.internal.pageSize.getHeight();
     const margins = {
-      top: 60,
+      top: 80,
       bottom: 80,
       left: 40,
       width: 522
@@ -56,7 +89,7 @@ export class ReportBudgetComponent implements OnInit, OnDestroy {
       (dispose: any) => {
         // dispose: object with X, Y of the last line add to the PDF
         // this allow the insertion of new lines after html
-        //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
+        this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
         PDF.save(`${this?.budget?.id || 'Report sin título'}.pdf`);
       },
       margins
