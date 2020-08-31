@@ -23,7 +23,7 @@ import { ReportBudgetComponent } from './report-budget/report-budget.component';
     RouterModule,
     ReactiveFormsModule,
     PAGES_ROUTES,
-    SweetAlert2Module
+    SweetAlert2Module,
   ]
 })
 export class PagesModule { }

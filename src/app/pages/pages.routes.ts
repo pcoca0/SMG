@@ -7,17 +7,18 @@ import { BudgetComponent } from './budget/budget.component';
 import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
 import { ReportBudgetComponent } from './report-budget/report-budget.component';
+import { AuthGuardService as guard } from '../core/guards/auth-guard.service';
 
 const pagesRoutes: Routes = [
     {
         path: '', component: PagesComponent,
         children: [
           {path: '', component: DashboardComponent},
-          {path: 'categorias',  component: CategoryComponent },
+          {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
           {path: 'productos',   component: ProductComponent },
-          {path: 'presupuestos',   component: BudgetComponent },
+          {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'rol']}},
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
-          {path: 'editarPresupuesto/:id',   component: AddBudgetComponent },
+          {path: 'editarPresupuesto/:id',   component: AddBudgetComponent, canActivate: [guard], data: {expectedRol: ['admin']}  },
           {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
 

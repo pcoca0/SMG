@@ -1,28 +1,29 @@
-<div class="row" id="document">
+<div class="row" id="document" style="color: #000 !important">
     <div class="col-12 ">
       <div class="card">
         <div class="card-header">
-          <h4 class="card-title">Presupuesto número:<b>{{budget?.numero}}</b></h4>
+          <h4 class="card-title" style="color: #000;"><b></b>Presupuesto número:<b>{{budget?.numero}}</b></h4>
         </div>
         <div class="col-12">
-          <div class="col-6 pull-right">Fecha: <b>{{today | date:'h:mm a z'}}</b></div>
+          <div class="col-6" style="color: #000;">Fecha: <b>{{today | date}}</b></div>
         </div>
-      </div>
+      </div>    
         <div class="card">
-          <div class="card-header card-header-success">
-            <h4 class="card-title">Cliente</h4>
-            <!-- <div class="card-category">Seleccione un Cliente</div> -->
-          </div>
           <div class="card-body" style="font-size: 1em;">
-              <div class="row">
-                <div class="col-lg-12">
-                <app-client-view [client]="budget?.cliente"></app-client-view>
-              </div>
-              </div>
-              <div class="clearfix"></div>
+            <h4 class="" style="color: #000;">Cliente</h4>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h5 style="color: #000;" class="card-title">Raz&oacute;n Social : <small>{{budget?.cliente.razonSocial}}</small></h5>
+                        <h5 style="color: #000;" class="card-title">Apellido y Nombre:  <small>{{budget?.cliente.apellido}}, {{budget?.cliente.nombre}}</small></h5>
+                        <h5 style="color: #000;" class="card-title">Dirección:  <small>{{budget?.cliente.domicilio}}</small></h5>
+                    </div>
+                </div>
           </div>
         </div>
+       
         <div class="card">
+            <div class="card-body" style="font-size: 1em;">
+            <h4 style="color: #000;">Productos</h4>
           <table class="table">
             <thead>
               <tr>
@@ -37,12 +38,12 @@
               </tr>
 
               <tr>
-                <td>TOTAL</td>
-                <td>0</td>
+                <td>Total</td>
+                <td>{{budget?.total}}</td>
               </tr>
             </tbody>
           </table>
-
+          </div>
         </div>
   </div>
   </div>

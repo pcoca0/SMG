@@ -43,8 +43,8 @@ export class ReportBudgetComponent implements OnInit, OnDestroy {
   }
 
   private async getBase64ImageFromUrl(imageUrl) {
-    let res = await fetch(imageUrl);
-    let blob = await res.blob();
+    const res = await fetch(imageUrl);
+    const blob = await res.blob();
 
     return new Promise((resolve, reject) => {
       let reader  = new FileReader();
@@ -61,7 +61,7 @@ export class ReportBudgetComponent implements OnInit, OnDestroy {
   //inserto en todas las paginas del pdf.
   setHeaderAndFooter(PDF: jsPDF, count: number, width: number, height: number ){
     for (let index = 1; index <= count; index++) {
-      console.log("pagina: "+index);
+      console.log('pagina ' + index);
       PDF.setPage(index);
       PDF.addImage(this.headerBase64, 'JPEG', 0, 0, width, 80);
       PDF.addImage(this.footerBase64, 'JPEG', 0, height - 80, width, 80);
@@ -70,10 +70,11 @@ export class ReportBudgetComponent implements OnInit, OnDestroy {
 
   makePDF(): void {
     const  PDF = new jsPDF('p', 'pt', 'a4');
-    var width = PDF.internal.pageSize.getWidth();
-    var height = PDF.internal.pageSize.getHeight();
+    PDF.setTextColor(0, 0, 0);
+    const width = PDF.internal.pageSize.getWidth();
+    const height = PDF.internal.pageSize.getHeight();
     const margins = {
-      top: 80,
+      top: 100,
       bottom: 80,
       left: 40,
       width: 522
