@@ -12,7 +12,7 @@ import { environment } from 'src/environments/environment';
 export class AuthService {
 
   //authURL = 'http://localhost:8080/auth/';
-  authURL = environment.apis.productApi.url + `/auth/`;
+  authURL = environment.apis.productApi.url + `auth/`;
 
 
   constructor(
