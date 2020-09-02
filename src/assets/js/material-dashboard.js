@@ -51,7 +51,7 @@ var seq2 = 0,
 
 $(document).ready(function() {
 
-  $('body').bootstrapMaterialDesign();
+  // $('body').bootstrapMaterialDesign();
 
   $sidebar = $('.sidebar');
 
@@ -459,7 +459,7 @@ md = {
 
       nav_content = '<ul class="nav navbar-nav nav-mobile-menu">' + nav_content + '</ul>';
 
-      navbar_form = $('nav').find('.navbar-form').get(0).outerHTML;
+      navbar_form = $('nav').find('.navbar-form').get(0)?.outerHTML;
 
       $sidebar_nav = $sidebar_wrapper.find(' > .nav');
 
@@ -551,7 +551,7 @@ md = {
       viewRender: function(view, element) {
         // We make sure that we activate the perfect scrollbar when the view isn't on Month
         if (view.name != 'month') {
-          $(element).find('.fc-scroller').perfectScrollbar();
+          // $(element).find('.fc-scroller').perfectScrollbar();
         }
       },
       header: {

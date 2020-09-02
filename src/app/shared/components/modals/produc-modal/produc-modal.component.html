@@ -24,12 +24,11 @@
           </div>
           <div class="col-md-12">
             <div class="form-group">
-            <select class="selectpicker" data-style="select-with-transition" title="Single Select" formControlName="category">
-               <option disabled>Seleccione Categoria</option>
-               <option *ngFor="let c of categories"   value="2">{{c.descripcion}}</option>
-            </select>
+              <label class="bmd-label-floating">Seleccione un Categoria</label>
+              <ngx-select-dropdown [options]="categories" [config]="dropdownSetup" formControlName="category" (change)="selectCategory()"></ngx-select-dropdown>
            </div>
           </div>
+
         </div>
 
         <div class="clearfix"></div>

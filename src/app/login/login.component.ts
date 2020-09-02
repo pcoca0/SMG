@@ -4,6 +4,7 @@ import { AuthService } from '../core/services/auth.service';
 import { Router } from '@angular/router';
 import { UserLogin } from '../core/models/user-login';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -20,6 +21,7 @@ export class LoginComponent implements OnInit {
   roles: string[] = [];
   errorMsj: string;
   formLogin: FormGroup;
+  private suscriptions: Subscription[] = [];
 
 
   constructor(
@@ -44,7 +46,7 @@ export class LoginComponent implements OnInit {
 
   onLogin(): void {
     this.usuarioLogin = new UserLogin(this.formLogin.value.usuario, this.formLogin.value.password);
-    this.authService.login(this.usuarioLogin).subscribe(
+    this.suscriptions.push(this.authService.login(this.usuarioLogin).subscribe(
       data =>
        { this.isLogged = true;
          this.isLoginFail = false;
@@ -63,6 +65,6 @@ export class LoginComponent implements OnInit {
             this.errorMsj = err.error.error;
             console.log(this.errorMsj);
           }
-    );
+    ));
   }
 }

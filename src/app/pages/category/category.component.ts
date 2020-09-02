@@ -6,6 +6,7 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ICategoryRequest } from 'src/app/core/interfaces/requests/category.request';
 import { Subscription } from 'rxjs';
 import { SwalService } from '../../core/services/swal.service';
+import { TokenService } from '../../core/services/token.service';
 
 @Component({
   selector: 'app-category',
@@ -21,12 +22,14 @@ export class CategoryComponent implements OnInit, OnDestroy {
   categoryRequest: ICategoryRequest;
   category: ICategoryItemResponse;
   categoryNew: ICategoryItemResponse;
+  isAdmin: boolean = false;
   private suscriptions: Subscription[] = [];
 
   constructor(
     private productService: ProductService,
     private modalService: ModalService,
-    private swalService: SwalService
+    private swalService: SwalService,
+    private tokenService: TokenService
   ) { }
 
   ngOnInit() {
@@ -34,6 +37,10 @@ export class CategoryComponent implements OnInit, OnDestroy {
       resp => (this.categorias = resp.data.categorias,
         console.log(resp.data.categorias))
     ));
+    this.tokenService.getAuthorities().forEach(
+      rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
+    );
+
   }
 
   search(term: string) {

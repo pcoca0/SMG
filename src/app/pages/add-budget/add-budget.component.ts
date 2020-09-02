@@ -82,8 +82,9 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
                             this.client = resp.data.presupuestos[0].cliente,
                             this.budgetRequest = resp.data.presupuestos[0],
                             this.clientView =  resp.data.presupuestos[0].cliente,
-                            this.listForm.controls.client.setValue( resp.data.presupuestos[0].cliente)
-                 }));
+                            this.listForm.controls.client.setValue( resp.data.presupuestos[0].cliente),
+                            this.totalizador =  resp.data.presupuestos[0]?.total || 0 
+                          }));
     }
 
   }
@@ -93,7 +94,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     this.bsModalRef.content.event.subscribe(
     resp => {
           if (this.budgetRequest.productos.find(p => p.id === resp['data'].id)){
-            this.swalService.warning(`El producto seleccionado ya esta en la lista.`);  
+            this.swalService.warning(`El producto seleccionado ya esta en la lista.`)
           } else {
           this.budgetRequest.productos.push(resp['data']);
           this.updateTotalizador();
@@ -129,8 +130,9 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
 
   updateTotalizador() {
+    console.log("subida");
     this.totalizador = 0.00;
-    this.presupuesto.forEach( i => {
+    this.budgetRequest.productos.forEach( i => {
       this.totalizador = this.totalizador + i.precio,
       console.log('Precio: ' + i.precio),
       console.log('Acumulador: ' + this.totalizador),
@@ -145,7 +147,6 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   updateElement(i: number) {
-    console.log( this.presupuesto[i]);
     this.bsModalRef = this.modalService.budgetEdit('Presupuesto', 'Editar Producto', this.productos, this.budgetRequest.productos[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
@@ -159,7 +160,8 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   saveBudget() {
-    this.budgetRequest.total = this.today;
+    this.budgetRequest.total = this.totalizador;
+    this.budgetRequest.fecha = new Date();
     console.log(this.budgetRequest);
     if (this.flagEdit) {
       this.suscriptions.push(

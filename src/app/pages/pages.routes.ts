@@ -14,11 +14,11 @@ const pagesRoutes: Routes = [
         path: '', component: PagesComponent,
         children: [
           {path: '', component: DashboardComponent},
-          {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
+          {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']} },
           {path: 'productos',   component: ProductComponent },
-          {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'rol']}},
+          {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
-          {path: 'editarPresupuesto/:id',   component: AddBudgetComponent, canActivate: [guard], data: {expectedRol: ['admin']}  },
+          {path: 'editarPresupuesto/:id',   component: AddBudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
           {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
 

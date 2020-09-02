@@ -8,6 +8,7 @@ import { IProductRequest } from 'src/app/core/interfaces/requests/product.reques
 import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { SwalService } from 'src/app/core/services/swal.service';
+import { TokenService } from 'src/app/core/services/token.service';
 
 
 @Component({
@@ -24,13 +25,16 @@ export class ProductComponent implements OnInit, OnDestroy {
   product: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
   productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
   productNew: IProductItemResponse;
+  isAdmin: boolean = false;
   private suscriptions: Subscription[] = [];
 
 
   constructor(
     private productService: ProductService,
     private modalService: ModalService,
-    private swalService: SwalService
+    private swalService: SwalService,
+    private tokenService: TokenService
+
 
   ) { }
 
@@ -43,6 +47,9 @@ export class ProductComponent implements OnInit, OnDestroy {
                           resp => (this.categorias = resp.data.categorias,
                             console.log(resp.data.categorias))
                           ));
+    this.tokenService.getAuthorities().forEach(
+      rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
+    );
   }
 
   search(term: string){
@@ -94,7 +101,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     resp => {
       console.log(resp.data),
       console.log(id);
-      this.productRequest = this.constructorRequest(resp.data),
+      this.productRequest = this.constructorRequestEdit(resp.data),
       this.productRequest.id = id,
       this.suscriptions.push( this.productService.putProduct(id, this.productRequest).subscribe(
                               response => {
