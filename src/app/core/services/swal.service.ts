@@ -51,4 +51,27 @@ export class SwalService {
     });
     return true;
   }
+
+  question(
+    resp = false ,
+    confirmButton = true): boolean {
+    Swal.fire({
+        title: 'Estas seguro que quieres borrar este elemento?',
+    text: 'No podras revertir los cambios',
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#3085d6',
+    cancelButtonColor: '#d33',
+    confirmButtonText: 'Si, deseo borralo!'
+    }).then((result) => {
+      if (result.value) {
+        Swal.fire(
+          'Borrado!',
+          'El elemento fue borrado con exito.',
+          'success'
+        );
+        return result.isConfirmed;
+      } 
+    });
+    }
 }

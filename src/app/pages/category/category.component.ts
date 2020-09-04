@@ -52,7 +52,9 @@ export class CategoryComponent implements OnInit, OnDestroy {
       const id =  this.categorias[i].id;
       this.suscriptions.push(this.productService.deleteCategory(id).subscribe(
         response => {
-                      this.swalService.success(`Categoria eliminada con éxito`),
+                      //this.swalService.success(`Categoria eliminada con éxito`),
+                      const x = this.swalService.question();
+                      console.log(x)
                       this.categorias.splice(i, 1);
                     },
         error => this.swalService.error(`No se ha podido eliminar la Categoria.`)
