@@ -4,6 +4,7 @@ import { SwalService } from '../../core/services/swal.service';
 import { IBudgetItemResponse } from '../../core/interfaces/responses/budget.response';
 import { Subscription } from 'rxjs';
 import { Routes, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-budget',
@@ -40,14 +41,28 @@ export class BudgetComponent implements OnInit, OnDestroy {
   removeBuget(i: number) {
     console.log(' posicion: ' + i);
     const id =  this.presupuestos[i].id;
-    this.presupuestos.splice(i, 1);
-    this.suscriptions.push(this.budgetService.deleteBudget(id).subscribe(
-      response => {
-                    this.presupuestos.splice(i, 1),
-                    this.swalService.success(`Presupuesto eliminado con éxito`)
-                  },
-      error => this.swalService.error(`No se ha podido eliminar el presupuesto.`)
-    ));
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir este cambio',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#DF1B1A',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.value) { // Llamar servicio
+        this.suscriptions.push(this.budgetService.deleteBudget(id).subscribe(
+          response => {
+              this.presupuestos.splice(i, 1),
+              this.swalService.success('Eliminado!', `Presupuesto eliminado con éxito`, 3000);
+            },
+            error => {
+              this.swalService.error(`No se ha podido eliminar el presupuesto.`)
+            })
+        );
+      }
+    });
   }
   editBuget(id: string) {
     console.log('id budget' + id);

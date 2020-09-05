@@ -14,7 +14,7 @@ const pagesRoutes: Routes = [
         path: '', component: PagesComponent,
         children: [
           {path: '', component: DashboardComponent},
-          {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']} },
+          {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
           {path: 'productos',   component: ProductComponent },
           {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearPresupuesto',   component: AddBudgetComponent },

@@ -7,6 +7,7 @@ import { ICategoryRequest } from 'src/app/core/interfaces/requests/category.requ
 import { Subscription } from 'rxjs';
 import { SwalService } from '../../core/services/swal.service';
 import { TokenService } from '../../core/services/token.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-category',
@@ -47,18 +48,30 @@ export class CategoryComponent implements OnInit, OnDestroy {
     this.filterMatch = term;
   }
 
-  removeCategory(i: number) {
-      console.log(' posicion: ' + i);
-      const id =  this.categorias[i].id;
-      this.suscriptions.push(this.productService.deleteCategory(id).subscribe(
-        response => {
-                      //this.swalService.success(`Categoria eliminada con éxito`),
-                      const x = this.swalService.question();
-                      console.log(x)
-                      this.categorias.splice(i, 1);
-                    },
-        error => this.swalService.error(`No se ha podido eliminar la Categoria.`)
-      ));
+  removeCategory(i: number): void {
+    const id =  this.categorias[i].id;
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir este cambio',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#DF1B1A',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.value) { // Llamar servicio
+        this.suscriptions.push(this.productService.deleteCategory(id).subscribe(
+            response => {
+              this.categorias.splice(i, 1);
+              this.swalService.success('Eliminado!', `La categoria ha sido eliminado exitosamente`, 3000);
+            },
+            error => {
+              this.swalService.error(`Error al eliminar la categoria`);
+            })
+        );
+      }
+    });
   }
 
   addNewCategory(){

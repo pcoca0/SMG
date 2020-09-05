@@ -15,10 +15,11 @@ import { ClientModalComponent } from './components/modals/client-modal/client-mo
 import { ClientViewComponent } from './components/client-view/client-view.component';
 import { CategoryModalComponent } from './components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from './components/modals/produc-modal/produc-modal.component';
+import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent ],
   imports: [
     CommonModule,
     RouterModule,

@@ -117,11 +117,28 @@ export class ProductComponent implements OnInit, OnDestroy {
   removeProduct(i) {
     console.log('posicion: ' + i);
     const id = this.productos[i].id;
-    this.productos.splice(i, 1);
-    this.suscriptions.push(this.productService.deleteProduct(id).subscribe(
-      response => this.swalService.success(`Producto eliminado con éxito`),
-      error => this.swalService.error(`No se ha podido eliminar el producto.`)
-    ));
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir este cambio',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#DF1B1A',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.value) { // Llamar servicio
+        this.suscriptions.push(this.productService.deleteProduct(id).subscribe(
+          response => {
+              this.productos.splice(i, 1),
+              this.swalService.success(`Producto eliminado con éxito`)
+            },
+            error => {
+              this.swalService.error(`No se ha podido eliminar el producto.`)
+            })
+        );
+      }
+    });
   }
 
   ngOnDestroy(): void {
