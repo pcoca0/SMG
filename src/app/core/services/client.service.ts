@@ -8,7 +8,7 @@ import { environment } from 'src/environments/environment';
 @Injectable({
   providedIn: 'root'
 })
-export class ClientService implements IClientService{
+export class ClientService implements IClientService {
 
 
   apiUrl = environment.apis.productApi.url;

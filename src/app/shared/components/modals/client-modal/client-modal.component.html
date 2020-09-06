@@ -10,32 +10,85 @@
   <form [formGroup]="formClient" (ngSubmit)="onSubmit()">
     <div class="card-body">
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-12 col-md-6">
             <div class="form-group">
               <label class="bmd-label-floating">Razón Social</label>
               <input type="text"  formControlName="razonSocial" class="form-control">
             </div>
           </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Telefono</label>
+              <input type="text"  formControlName="telefono" class="form-control">
+            </div>
+          </div>
         </div>
         <div class="row">
-          <div class="col-md-6">
+          <div class="col-sm-12 col-md-6">
             <div class="form-group">
               <label class="bmd-label-floating">Apellido</label>
               <input type="text" formControlName="apellido" class="form-control">
             </div>
           </div>
-          <div class="col-md-6">
+          <div class="col-sm-12 col-md-6">
             <div class="form-group">
               <label class="bmd-label-floating">Nombre</label>
-              <input type="email" formControlName="nombre" class="form-control">
+              <input type="text" formControlName="nombre" class="form-control">
             </div>
           </div>
         </div>
         <div class="row">
-          <div class="col-md-12">
+          <div class="col-sm-12 col-md-6">
             <div class="form-group">
-              <label class="bmd-label-floating">Domicilio</label>
-              <input type="text" formControlName="domicilio" class="form-control">
+              <label class="bmd-label-floating">Calle</label>
+              <input type="text" formControlName="calle" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Nro.</label>
+              <input type="text" formControlName="nro" class="form-control">
+            </div>
+          </div>
+        </div>
+       
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label class="bmd-label-floating">Seleccione un Localidad</label>
+            <ngx-select-dropdown [options]="locations" [config]="dropdownSetup" formControlName="localidad" (change)="selectLocation()"></ngx-select-dropdown>
+         </div>
+        </div>
+         <div class="col-sm-12">
+          <div class="form-group">
+            <label class="bmd-label-floating">Tipo Cliente</label>
+            <ngx-select-dropdown [options]="clientCategories" [config]="dropdownSetup" formControlName="categoriaCliente" (change)="selectLocation()"></ngx-select-dropdown>
+         </div>
+        </div>
+        <div class="col-sm-12">
+          <div class="form-group">
+            <label class="bmd-label-floating">Seleccione un Perfil</label>
+            <ngx-select-dropdown [options]="profilesAFIP" [config]="dropdownSetup" formControlName="perfilAFIP" (change)="selectProfileAFIP()"></ngx-select-dropdown>
+         </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Email</label>
+              <input type="email" formControlName="email" class="form-control">
+            </div>
+          </div>
+          <div class="col-sm-12 col-md-6">
+            <div class="form-group">
+              <label class="bmd-label-floating">Contacto</label>
+              <input type="text" formControlName="contacto" class="form-control">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Nota"</label>
+              <textarea type="text" formControlName="nota" class="form-control"></textarea>
             </div>
           </div>
         </div>

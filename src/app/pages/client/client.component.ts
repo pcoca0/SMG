@@ -6,6 +6,9 @@ import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
 import { IClientRequest } from '../../core/interfaces/requests/client.request';
 import { SwalService } from '../../core/services/swal.service';
+import { UtilsService } from '../../core/services/utils.service';
+import { ILocation, IProfileAFIP, IClientCategory } from '../../core/interfaces/utils';
+import { ClientCategoryService } from '../../core/services/client-category.service';
 
 @Component({
   selector: 'app-client',
@@ -17,6 +20,9 @@ export class ClientComponent implements OnInit, OnDestroy {
   today: number = Date.now();
   filterMatch: string;
   clientes: Array<IClientItemResponse>;
+  localidades: Array<ILocation>;
+  perfilesAFIP: Array<IProfileAFIP>;
+  categoriasCliente: Array<IClientCategory>;
   bsModalRef: BsModalRef;
   public event: EventEmitter<any> = new EventEmitter();
   clientRequest: IClientRequest;
@@ -28,13 +34,19 @@ export class ClientComponent implements OnInit, OnDestroy {
   constructor(
     private clientService: ClientService,
     private modalService: ModalService,
-    private swalService: SwalService
+    private swalService: SwalService,
+    private utilsService: UtilsService,
+    private clientCategoryService: ClientCategoryService
+
   ) { }
 
   ngOnInit() {
-    this.suscriptions.push(this.clientService.getClients().subscribe(
-                          resp => this.clientes = resp.data.clientes
-                          ));
+    this.suscriptions.push(
+      this.clientService.getClients().subscribe(resp => this.clientes = resp.data.clientes),
+      this.utilsService.getLocalidades().subscribe(respL => this.localidades = respL),
+      this.utilsService.getPerfilesAFIP().subscribe(respP => this.perfilesAFIP = respP),
+      this.clientCategoryService.getClientCategories().subscribe(respC => this.categoriasCliente = respC?.data?.['categoriasCliente'])
+      );
   }
   search(term: string) {
     this.filterMatch = term;
@@ -42,7 +54,8 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   addNewClient() {
     console.log('Por agregar una cliente');
-    this.bsModalRef = this.modalService.clientAdd('Cliente', 'Productos', this.clientNew);
+    this.bsModalRef = this.modalService.clientAdd('Cliente', 'Clientes', this.clientNew, this.perfilesAFIP, 
+                                                  this.localidades, this.categoriasClientes);
     this.bsModalRef.content.event.subscribe(
     resp => {
           this.suscriptions.push(this.clientService.addClient(resp.data).subscribe(

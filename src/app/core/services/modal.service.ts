@@ -8,6 +8,7 @@ import { ClientModalComponent } from 'src/app/shared/components/modals/client-mo
 import { ICategoryItemResponse } from '../interfaces/responses/category.response';
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
+import { IProfileAFIP, ILocation, IClientCategory } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -59,11 +60,16 @@ export class ModalService {
   //   }
   // }
 
-  clientAdd(title: string, message: string, client?: IClientItemResponse){
+  clientAdd(title: string, message: string, client?: IClientItemResponse, profilesAFIP?: Array<IProfileAFIP>,
+            locations?: Array<ILocation>, clientCategories?: Array<IClientCategory>
+    ){
     const initialState = {
       title,
       message,
       client,
+      profilesAFIP,
+      locations,
+      clientCategories,
       action: 'add'
     };
 

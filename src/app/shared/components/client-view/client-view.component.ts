@@ -17,8 +17,8 @@ export class ClientViewComponent implements OnInit {
     this.formView = this.fb.group({
         nombre: ['', Validators.required],
         apellido: ['', Validators.required],
-        direccion: ['', Validators.required]
-
+        calle: ['', Validators.required],
+        nro: ['', Validators.required]
     });
   }
 
@@ -28,10 +28,12 @@ export class ClientViewComponent implements OnInit {
       this.formView.patchValue({
         nombre: this.client.nombre,
         apellido: this.client.apellido,
-        direccion: this.client.domicilio
-      })
+        calle: this.client.calle,
+        nro: this.client.nro
+
+      });
     }
-  console.log(this.client);
+    console.log(this.client);
   }
 
 }
