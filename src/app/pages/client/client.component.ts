@@ -55,7 +55,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   addNewClient() {
     console.log('Por agregar una cliente');
     this.bsModalRef = this.modalService.clientAdd('Cliente', 'Clientes', this.clientNew, this.perfilesAFIP, 
-                                                  this.localidades, this.categoriasClientes);
+                                                  this.localidades, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
           this.suscriptions.push(this.clientService.addClient(resp.data).subscribe(
