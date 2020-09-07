@@ -29,7 +29,7 @@ export class ClientViewComponent implements OnInit {
         nombre: this.client.nombre,
         apellido: this.client.apellido,
         calle: this.client.calle,
-        nro: this.client.nro
+        numero: this.client.numero
 
       });
     }

@@ -6,7 +6,7 @@ export interface IClientRequest {
   apellido: string;
   nombre: string;
   calle: string;
-  nro: number;
+  numero: number;
   telefono: string;
   localidad: ILocation;
   perfilAFIP: IProfileAFIP;

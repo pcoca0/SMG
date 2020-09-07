@@ -77,11 +77,15 @@ export class ModalService {
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  clientEdit(title: string, message: string, client: IClientItemResponse, view: boolean, pos?: number){
+  clientEdit(title: string, message: string, client: IClientItemResponse,profilesAFIP?: Array<IProfileAFIP>,
+             locations?: Array<ILocation>, clientCategories?: Array<IClientCategory>, view?: boolean, pos?: number){
     const initialState = {
       title,
       message,
       client,
+      profilesAFIP,
+      locations,
+      clientCategories,
       action: 'edit',
       pos,
       view

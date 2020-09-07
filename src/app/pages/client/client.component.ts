@@ -9,6 +9,7 @@ import { SwalService } from '../../core/services/swal.service';
 import { UtilsService } from '../../core/services/utils.service';
 import { ILocation, IProfileAFIP, IClientCategory } from '../../core/interfaces/utils';
 import { ClientCategoryService } from '../../core/services/client-category.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-client',
@@ -54,7 +55,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   addNewClient() {
     console.log('Por agregar una cliente');
-    this.bsModalRef = this.modalService.clientAdd('Cliente', 'Clientes', this.clientNew, this.perfilesAFIP, 
+    this.bsModalRef = this.modalService.clientAdd('Cliente', 'Clientes', this.clientNew, this.perfilesAFIP,
                                                   this.localidades, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
@@ -72,17 +73,35 @@ export class ClientComponent implements OnInit, OnDestroy {
   removeClient(i: number){
     console.log('posicion: ' + i);
     const id = this.clientes[i].id;
-    this.clientes.splice(i, 1);
-    this.suscriptions.push(this.clientService.deleteClient(id).subscribe(
-      response => this.swalService.success(`Cliente eliminado con éxito`),
-      error => this.swalService.error(`No se ha podido eliminar el cliente.`)
-    ));
+    Swal.fire({
+      title: '¿Estás seguro?',
+      text: 'No podrás revertir este cambio',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#DF1B1A',
+      cancelButtonText: 'Cancelar',
+      confirmButtonText: 'Si, eliminar'
+    }).then((result) => {
+      if (result.value) { // Llamar servicio
+        this.suscriptions.push(this.clientService.deleteClient(id).subscribe(
+            response => {
+              this.clientes.splice(i, 1);
+              this.swalService.success('Eliminado!', `El Cliente ha sido eliminado exitosamente`, 3000);
+            },
+            error => {
+              this.swalService.error(`Error al eliminar el cliente`);
+            })
+        );
+      }
+    });
   }
 
   editClient(i: number){
     console.log('Por editar una cliente');
     const id = this.clientes[i].id;
-    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i], false, i);
+    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i],this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, false, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data);
@@ -100,7 +119,8 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   viewClient(i: number){
     console.log('Por editar una cliente');
-    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i], true, i);
+    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i],this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, true, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
 

@@ -47,7 +47,7 @@ export class ClientModalComponent implements OnInit {
       apellido: ['', Validators.required],
       nombre: ['', Validators.required],
       calle: ['', Validators.required],
-      nro: ['', Validators.required],
+      numero: ['', Validators.required],
       localidad: ['', Validators.required],
       perfilAFIP: ['', Validators.required],
       telefono: ['', Validators.required],
@@ -59,28 +59,26 @@ export class ClientModalComponent implements OnInit {
     });
   }
   ngOnInit() {
-    if(this.client){
+    if (this.client) {
       this.formClient.patchValue({
         razonSocial: this.client.razonSocial,
         apellido: this.client.apellido,
         nombre: this.client.nombre,
         calle: this.client.calle,
-        nro: this.client.nro,
+        numero: this.client.numero,
         localidad: this.client.localidad,
         perfilAFIP: this.client.perfilAFIP,
         telefono: this.client.telefono,
         email: this.client.email,
         contacto: this.client.contacto,
         nota: this.client.nota,
-        categoriaCliente: this.client.calle
+        categoriaCliente: this.client.categoriaCliente
 
       });
     }
   }
 
-  
   selectLocation() { }
-  
   selectProfileAFIP() { }
 
   sendObject(item: string, pos?: number) {
