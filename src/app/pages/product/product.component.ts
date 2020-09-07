@@ -11,7 +11,6 @@ import { SwalService } from 'src/app/core/services/swal.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { IClientCategory, IPriceClientCategory } from '../../core/interfaces/utils';
 import { ClientCategoryService } from '../../core/services/client-category.service';
-import { IClientCategory } from 'src/app/core/interfaces/utils';
 
 
 @Component({
@@ -25,13 +24,13 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
-  productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
+  product: IProductItemResponse = { id:'', descripcion:'', precio: 0, iva: 0, stock: 0, precios: []};
+  productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, iva: 0, stock: 0, precios: []};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   categoriasCliente: Array<IClientCategory>;
   preciosCategoriasCliente: Array<IPriceClientCategory> = [];
-  precioCategoriaCliente: IPriceClientCategory = {id: '',  clientCategory: {id:'',descripcion:''} , precio: ''};
+  precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id:'',descripcion:''} , precio: 0 };
   private suscriptions: Subscription[] = [];
 
 
@@ -56,7 +55,7 @@ export class ProductComponent implements OnInit, OnDestroy {
           this.precioCategoriaCliente.precio = 0,
           this.preciosCategoriasCliente.push(this.precioCategoriaCliente)
     });
- 
+
     this.tokenService.getAuthorities().forEach(
       rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
     );

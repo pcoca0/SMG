@@ -28,7 +28,7 @@
               <input type="text"  formControlName="stock" class="form-control">
             </div>
           </div>
-          <div class="row" *ngFor="let cp of categoriesPrice">
+          <div class="row" *ngFor="let cp of product.precios">
            <div class="col-md-6">
              <div class="form-group">
                <input type="text"  formControlName="stock" class="form-control">
@@ -38,12 +38,6 @@
              <div class="form-group">
                <input type="text"  formControlName="stock" class="form-control">
              </div>
-           </div>
-          </div>
-          <div class="col-md-12">
-            <div class="form-group">
-              <label class="bmd-label-floating">Seleccione un Categoria</label>
-              <ngx-select-dropdown [options]="categories" [config]="dropdownSetup" formControlName="category" (change)="selectCategory()"></ngx-select-dropdown>
            </div>
           </div>
 
