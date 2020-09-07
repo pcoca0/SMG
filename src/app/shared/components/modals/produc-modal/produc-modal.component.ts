@@ -43,17 +43,20 @@ export class ProducModalComponent implements OnInit {
     this.formProduct = this.fb.group({
       descripcion: ['', Validators.required],
       precio: [0, Validators.required],
+      iva: ['', Validators.required],
+      stock: ['', Validators.required],
       category: ['', Validators.required]
     });
   }
 
   ngOnInit() {
     console.log(this.product);
-    if (this.product){
+    if (this.product) {
       this.formProduct.patchValue({
       descripcion: this.product.descripcion,
-      precio: this.product.precio,
-      category: this.product.categoria
+      iva: this.product.iva,
+      stock: this.product.stock,
+
       });
     }
   }

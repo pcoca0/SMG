@@ -16,3 +16,9 @@ export interface IClientResponse {
         categoriasClientes: Array<IClientCategory>;
     };
 }
+
+export interface IPriceClientCategory {
+  id: string;
+  categoriaCliente: IClientCategory;
+  precio: number;
+}

@@ -9,6 +9,9 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { TokenService } from 'src/app/core/services/token.service';
+import { IClientCategory, IPriceClientCategory } from '../../core/interfaces/utils';
+import { ClientCategoryService } from '../../core/services/client-category.service';
+import { IClientCategory } from 'src/app/core/interfaces/utils';
 
 
 @Component({
@@ -25,7 +28,10 @@ export class ProductComponent implements OnInit, OnDestroy {
   product: IProductItemResponse = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
   productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, categoria: {id:'',descripcion:''}};
   productNew: IProductItemResponse;
-  isAdmin: boolean = false;
+  isAdmin: boolean = true;
+  categoriasCliente: Array<IClientCategory>;
+  preciosCategoriasCliente: Array<IPriceClientCategory> = [];
+  precioCategoriaCliente: IPriceClientCategory = {id: '',  clientCategory: {id:'',descripcion:''} , precio: ''};
   private suscriptions: Subscription[] = [];
 
 
@@ -33,20 +39,24 @@ export class ProductComponent implements OnInit, OnDestroy {
     private productService: ProductService,
     private modalService: ModalService,
     private swalService: SwalService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private clientCategoryService: ClientCategoryService
 
 
   ) { }
 
   ngOnInit() {
-    this.suscriptions.push(this.productService.getProducts().subscribe(
-                            resp => (this.productos = resp.data.productos,
-                              console.log(resp.data.productos))
-                          ));
-    this.suscriptions.push(this.productService.getCategories().subscribe(
-                          resp => (this.categorias = resp.data.categorias,
-                            console.log(resp.data.categorias))
-                          ));
+    this.suscriptions.push(
+                this.productService.getProducts().subscribe(resp => this.productos = resp.data.productos),
+                this.clientCategoryService.getClientCategories().subscribe(respC =>
+                                           this.categoriasCliente = respC?.data?.['categoriasCliente'])
+              );
+    this.categoriasCliente.forEach( cc => {
+          this.precioCategoriaCliente.categoriaCliente = cc,
+          this.precioCategoriaCliente.precio = 0,
+          this.preciosCategoriasCliente.push(this.precioCategoriaCliente)
+    });
+ 
     this.tokenService.getAuthorities().forEach(
       rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
     );
@@ -59,7 +69,7 @@ export class ProductComponent implements OnInit, OnDestroy {
    constructorRequest(resp: any){
      console.log(resp);
      this.productRequest.descripcion = resp.descripcion;
-     this.productRequest.categoria.id = this.categorias[Number(resp.category)].id;
+    //  this.productRequest.categoria.id = this.categorias[Number(resp.category)].id;
      this.productRequest.precio = resp.precio;
      console.log(this.productRequest);
      return this.productRequest;
@@ -68,7 +78,7 @@ export class ProductComponent implements OnInit, OnDestroy {
    constructorRequestEdit(resp: any){
     console.log(resp);
     this.productRequest.descripcion = resp.descripcion;
-    this.productRequest.categoria.id = resp.category.id;
+    // this.productRequest.categoria.id = resp.category.id;
     this.productRequest.precio = resp.precio;
     console.log(this.productRequest);
     return this.productRequest;
@@ -77,7 +87,7 @@ export class ProductComponent implements OnInit, OnDestroy {
 
    addNewProduct(){
     console.log('Por agregar una Producto');
-    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.categorias);
+    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.preciosCategoriasCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
               this.suscriptions.push(this.productService.addProduct( this.constructorRequest(resp.data)).subscribe(

@@ -18,9 +18,27 @@
           </div>
           <div class="col-md-12">
             <div class="form-group">
-              <label class="bmd-label-floating">Precio</label>
-              <input type="text"  formControlName="precio" class="form-control">
+              <label class="bmd-label-floating">IVA</label>
+              <input type="text"  formControlName="iva" class="form-control">
             </div>
+          </div>
+          <div class="col-md-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Stock</label>
+              <input type="text"  formControlName="stock" class="form-control">
+            </div>
+          </div>
+          <div class="row" *ngFor="let cp of categoriesPrice">
+           <div class="col-md-6">
+             <div class="form-group">
+               <input type="text"  formControlName="stock" class="form-control">
+             </div>
+           </div>
+           <div class="col-md-6">
+             <div class="form-group">
+               <input type="text"  formControlName="stock" class="form-control">
+             </div>
+           </div>
           </div>
           <div class="col-md-12">
             <div class="form-group">

@@ -8,7 +8,7 @@ import { ClientModalComponent } from 'src/app/shared/components/modals/client-mo
 import { ICategoryItemResponse } from '../interfaces/responses/category.response';
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
-import { IProfileAFIP, ILocation, IClientCategory } from '../interfaces/utils';
+import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -120,12 +120,12 @@ export class ModalService {
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  productAdd(title: string, message: string, product: IProductItemResponse, categories: Array<ICategoryItemResponse>){
+  productAdd(title: string, message: string, product: IProductItemResponse, categoriesPrice: Array<IPriceClientCategory>){
     const initialState = {
       title,
       message,
       product,
-      categories,
+      categoriesPrice,
       action: 'add',
     };
 

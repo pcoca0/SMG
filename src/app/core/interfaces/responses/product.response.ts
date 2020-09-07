@@ -1,4 +1,5 @@
 import { ICategoryItemResponse } from './category.response';
+import { IPriceClientCategory } from '../utils';
 
 export interface IProductResponse {
   data: {
@@ -10,5 +11,7 @@ export interface IProductItemResponse {
  id: string;
  descripcion: string;
  precio: number;
- categoria: ICategoryItemResponse;
+ iva: number;
+ stock: number;
+ precios: Array<IPriceClientCategory>;
 }
