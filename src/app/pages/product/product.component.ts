@@ -11,6 +11,7 @@ import { SwalService } from 'src/app/core/services/swal.service';
 import { TokenService } from 'src/app/core/services/token.service';
 import { IClientCategory, IPriceClientCategory } from '../../core/interfaces/utils';
 import { ClientCategoryService } from '../../core/services/client-category.service';
+import { PriceClientCategory } from 'src/app/core/models/utils';
 
 
 @Component({
@@ -68,32 +69,22 @@ export class ProductComponent implements OnInit, OnDestroy {
      this.productRequest.iva = resp.iva;
      this.productRequest.stock = resp.stock;
      for (let i = 0; i < resp.precios.length; i++) {
+        this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
         this.precioCategoriaCliente.categoriaCliente.id = resp.precios[i].id;
         this.precioCategoriaCliente.precio = resp.precios[i].precio;
         this.productRequest.precios.push(this.precioCategoriaCliente);
-        this.productRequest.precios = [... this.productRequest.precios, this.precioCategoriaCliente];
-     }
+      }
      console.log(this.productRequest);
      return this.productRequest;
    }
 
-   constructorRequestEdit(resp: any){
-    console.log(resp);
-    this.productRequest.descripcion = resp.descripcion;
-    // this.productRequest.categoria.id = resp.category.id;
-    this.productRequest.precios = resp.precios;
-    this.productRequest.codigo = resp.codigo;
-
-    return this.productRequest;
-  }
-  
    addNewProduct(){
     console.log('Por agregar una Producto');
 
     console.log(this.preciosCategoriasCliente);
     this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
-    resp => {  
+    resp => {
       console.log("disparo"),
       console.log(resp.data),
               this.suscriptions.push(this.productService.addProduct( this.constructorRequest(resp.data)).subscribe(
@@ -113,12 +104,12 @@ export class ProductComponent implements OnInit, OnDestroy {
     console.log('Por editar una Categoria');
     const id = this.productos[i].id;
     console.log(id);
-    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[i], this.categorias, i);
+    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[i],this.categoriasCliente, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
       console.log(id);
-      this.productRequest = this.constructorRequestEdit(resp.data),
+      this.productRequest = this.constructorRequest(resp.data),
       this.productRequest.id = id,
       this.suscriptions.push( this.productService.putProduct(id, this.productRequest).subscribe(
                               response => {

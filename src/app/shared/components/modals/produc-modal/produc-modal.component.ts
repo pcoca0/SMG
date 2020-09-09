@@ -22,6 +22,7 @@ export class ProducModalComponent implements OnInit {
   i: number;
   view: boolean;
   categories: Array<ICategoryItemResponse>;
+  preciosArray: FormArray;
 
   dropdownSetup: Object = {
     displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
@@ -55,38 +56,35 @@ export class ProducModalComponent implements OnInit {
 
   ngOnInit() {
     console.log(this.product);
-    const preciosArray = this.formProduct.controls.precios as FormArray;
+    this.preciosArray = this.formProduct.controls.precios as FormArray;
 
-    if (this.product) {
+    if (this.action === 'edit') {
       this.formProduct.patchValue({
       descripcion: this.product.descripcion,
       codigo: this.product.codigo,
       iva: this.product.iva,
       stock: this.product.stock,
       });
-      // this.product.precios.forEach((p) => {
-      //   console.log(p);
-      //   preciosArray.push(this.fb.group({
-      //     id: [p.categoriaCliente.id],
-      //     categoria: [ {value : 'Precio para ' + p.categoriaCliente.descripcion,  disabled: true} ],
-      //     precio: [ p.precio, Validators.required]
-      //  }));
-      // });
-    }
+      this.product.precios.forEach((p) => {
+        console.log(p);
+        this.preciosArray.push(this.fb.group({
+          id: [p.categoriaCliente.id],
+          categoria: [ {value : 'Precio para ' + p.categoriaCliente.descripcion,  disabled: true} ],
+          precio: [ p.precio, Validators.required]
+       }));
+       console.log(this.preciosArray);
+      });
+    }else{
     this.categoriesClient.forEach(c =>
-                                  preciosArray.push(this.fb.group({
+                                    this.preciosArray.push(this.fb.group({
                                     id: [c.id],
                                     categoria: [ {value : 'Precio para ' + c.descripcion,  disabled: true} ],
                                     precio: [ 0, Validators.required]
                                  }))
     );
-   
+   }
   }
 
-  get formArr() {
-    return this.data.get('address') as FormArray;
-  }
-  
   close() {
     this.bsModalRef.hide();
   }
@@ -102,6 +100,7 @@ export class ProducModalComponent implements OnInit {
     switch (this.action) {
       case 'add':
         console.log( "add to modal component" + this.formProduct.value);
+        console.log( this.formProduct.value);
         this.sendObject(this.formProduct.value);
         this.bsModalRef.hide();
         break;
