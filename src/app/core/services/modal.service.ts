@@ -120,12 +120,13 @@ export class ModalService {
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  productAdd(title: string, message: string, product: IProductItemResponse, categoriesPrice: Array<IPriceClientCategory>){
+  productAdd(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>
+    ){
     const initialState = {
       title,
       message,
       product,
-      categoriesPrice,
+      categoriesClient,
       action: 'add',
     };
 
@@ -133,12 +134,12 @@ export class ModalService {
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  productEdit(title: string, message: string, product: IProductItemResponse, categories: Array<ICategoryItemResponse>, pos?: number){
+  productEdit(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>, pos?: number){
     const initialState = {
       title,
       message,
       product,
-      categories,
+      categoriesClient,
       action: 'edit',
       pos
     };

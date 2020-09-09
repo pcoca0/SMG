@@ -25,7 +25,7 @@
           <tr *ngFor="let c of productos | filter: filterMatch; let i=index">
             <td>{{c.id}}</td>
             <td>{{c.descripcion}}</td>
-            <td>{{c.precio}}</td>
+            <td>{{c.codigo || 0}}</td>
             <td class="td-actions text-right">
               <!-- <button type="button" rel="tooltip" title="Ver Productos Asociados" class="btn btn-success btn-link btn-sm">
                 <i class="material-icons">remove_red_eye</i>

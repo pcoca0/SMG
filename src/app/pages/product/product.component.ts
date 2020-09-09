@@ -24,13 +24,13 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', precio: 0, iva: 0, stock: 0, precios: []};
-  productRequest: IProductRequest = { id:'', descripcion:'', precio: 0, iva: 0, stock: 0, precios: []};
+  product: IProductItemResponse = { id:'', descripcion:'', codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
+  productRequest: IProductRequest = { id:'', descripcion:'',codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   categoriasCliente: Array<IClientCategory>;
   preciosCategoriasCliente: Array<IPriceClientCategory> = [];
-  precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id:'',descripcion:''} , precio: 0 };
+  precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
   private suscriptions: Subscription[] = [];
 
 
@@ -48,13 +48,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     this.suscriptions.push(
                 this.productService.getProducts().subscribe(resp => this.productos = resp.data.productos),
                 this.clientCategoryService.getClientCategories().subscribe(respC =>
-                                           this.categoriasCliente = respC?.data?.['categoriasCliente'])
-              );
-    this.categoriasCliente.forEach( cc => {
-          this.precioCategoriaCliente.categoriaCliente = cc,
-          this.precioCategoriaCliente.precio = 0,
-          this.preciosCategoriasCliente.push(this.precioCategoriaCliente)
-    });
+                                           this.categoriasCliente = respC?.data?.['categoriasCliente']
+                                      )
+                                    );
 
     this.tokenService.getAuthorities().forEach(
       rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
@@ -68,8 +64,15 @@ export class ProductComponent implements OnInit, OnDestroy {
    constructorRequest(resp: any){
      console.log(resp);
      this.productRequest.descripcion = resp.descripcion;
-    //  this.productRequest.categoria.id = this.categorias[Number(resp.category)].id;
-     this.productRequest.precio = resp.precio;
+     this.productRequest.codigo = resp.codigo;
+     this.productRequest.iva = resp.iva;
+     this.productRequest.stock = resp.stock;
+     for (let i = 0; i < resp.precios.length; i++) {
+        this.precioCategoriaCliente.categoriaCliente.id = resp.precios[i].id;
+        this.precioCategoriaCliente.precio = resp.precios[i].precio;
+        this.productRequest.precios.push(this.precioCategoriaCliente);
+        this.productRequest.precios = [... this.productRequest.precios, this.precioCategoriaCliente];
+     }
      console.log(this.productRequest);
      return this.productRequest;
    }
@@ -78,19 +81,24 @@ export class ProductComponent implements OnInit, OnDestroy {
     console.log(resp);
     this.productRequest.descripcion = resp.descripcion;
     // this.productRequest.categoria.id = resp.category.id;
-    this.productRequest.precio = resp.precio;
-    console.log(this.productRequest);
+    this.productRequest.precios = resp.precios;
+    this.productRequest.codigo = resp.codigo;
+
     return this.productRequest;
   }
-
-
+  
    addNewProduct(){
     console.log('Por agregar una Producto');
-    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.preciosCategoriasCliente);
+
+    console.log(this.preciosCategoriasCliente);
+    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
-    resp => {
+    resp => {  
+      console.log("disparo"),
+      console.log(resp.data),
               this.suscriptions.push(this.productService.addProduct( this.constructorRequest(resp.data)).subscribe(
                   response => {
+                    console.log(response),
                      this.productNew = response.data.productos[0],
                      console.log(this.productNew),
                      this.productos.push(this.productNew),

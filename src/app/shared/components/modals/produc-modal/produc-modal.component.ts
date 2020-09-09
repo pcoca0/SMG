@@ -1,8 +1,9 @@
 import { Component, OnInit, EventEmitter } from '@angular/core';
 import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.response';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
+import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
+import { IPriceClientCategory, IClientCategory } from 'src/app/core/interfaces/utils';
 
 @Component({
   selector: 'app-produc-modal',
@@ -14,6 +15,7 @@ export class ProducModalComponent implements OnInit {
   title: string;
   message: string;
   product: IProductItemResponse;
+  categoriesClient: Array<IClientCategory>;
   public event: EventEmitter<any> = new EventEmitter();
   formProduct: FormGroup;
   action: string;
@@ -42,25 +44,49 @@ export class ProducModalComponent implements OnInit {
   ) {
     this.formProduct = this.fb.group({
       descripcion: ['', Validators.required],
+      codigo: [0, Validators.required],
       precio: [0, Validators.required],
       iva: ['', Validators.required],
       stock: ['', Validators.required],
-      category: ['', Validators.required]
+      precios: this.fb.array([])
     });
+
   }
 
   ngOnInit() {
     console.log(this.product);
+    const preciosArray = this.formProduct.controls.precios as FormArray;
+
     if (this.product) {
       this.formProduct.patchValue({
       descripcion: this.product.descripcion,
+      codigo: this.product.codigo,
       iva: this.product.iva,
       stock: this.product.stock,
-
       });
+      // this.product.precios.forEach((p) => {
+      //   console.log(p);
+      //   preciosArray.push(this.fb.group({
+      //     id: [p.categoriaCliente.id],
+      //     categoria: [ {value : 'Precio para ' + p.categoriaCliente.descripcion,  disabled: true} ],
+      //     precio: [ p.precio, Validators.required]
+      //  }));
+      // });
     }
+    this.categoriesClient.forEach(c =>
+                                  preciosArray.push(this.fb.group({
+                                    id: [c.id],
+                                    categoria: [ {value : 'Precio para ' + c.descripcion,  disabled: true} ],
+                                    precio: [ 0, Validators.required]
+                                 }))
+    );
+   
   }
 
+  get formArr() {
+    return this.data.get('address') as FormArray;
+  }
+  
   close() {
     this.bsModalRef.hide();
   }
