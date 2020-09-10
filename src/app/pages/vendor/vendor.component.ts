@@ -70,9 +70,8 @@ export class VendorComponent implements OnInit {
             });
   }
 
-  removeVendor(i: number){
-    console.log('posicion: ' + i);
-    const id = this.proveedores[i].id;
+  removeVendor(id: string){
+    const pos = this.proveedores.findIndex(p =>  p.id === id);
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás revertir este cambio',
@@ -86,7 +85,7 @@ export class VendorComponent implements OnInit {
       if (result.value) { // Llamar servicio
         this.suscriptions.push(this.vendorService.deleteVendor(id).subscribe(
             response => {
-              this.proveedores.splice(i, 1);
+              this.proveedores.splice(pos, 1);
               this.swalService.success('Eliminado!', `El proveedor ha sido eliminado exitosamente`, 3000);
             },
             error => {
@@ -97,11 +96,12 @@ export class VendorComponent implements OnInit {
     });
   }
 
-  editVendor(i: number){
+  editVendor(id: string){
     console.log('Por editar una proveedor');
-    const id = this.proveedores[i].id;
-    this.bsModalRef = this.modalService.vendorEdit('Proveedor', 'Productos', this.proveedores[i],this.perfilesAFIP,
-                                                    this.localidades, this.categoriasCliente, false, i);
+    const pos = this.proveedores.findIndex(p =>  p.id === id);
+
+    this.bsModalRef = this.modalService.vendorEdit('Proveedor', 'Productos', this.proveedores[pos],this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, false, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data);
@@ -109,7 +109,7 @@ export class VendorComponent implements OnInit {
       this.vendorRequest.id = id,
       this.suscriptions.push(this.vendorService.putVendor(this.vendorRequest.id, this.vendorRequest ).subscribe(
                             response => {
-                                          this.proveedores.splice(i, 1, response.data.proveedores[0]),
+                                          this.proveedores.splice(pos, 1, response.data.proveedores[0]),
                                           this.swalService.success(`Proveedor editado con éxito`)
                                         },
                             error => this.swalService.error(`No se ha podido eliminar el Proveedor.`)
@@ -117,10 +117,10 @@ export class VendorComponent implements OnInit {
     });
   }
 
-  viewVendor(i: number){
-    console.log('Por editar una cliente');
-    this.bsModalRef = this.modalService.vendorEdit('Cliente', 'Productos', this.proveedores[i], this.perfilesAFIP,
-                                                    this.localidades, this.categoriasCliente, true, i);
+  viewVendor(id: string){
+    const pos = this.proveedores.findIndex(p =>  p.id === id);
+    this.bsModalRef = this.modalService.vendorEdit('Cliente', 'Productos', this.proveedores[pos], this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, true, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
 

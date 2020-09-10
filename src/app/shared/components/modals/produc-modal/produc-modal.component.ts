@@ -55,7 +55,7 @@ export class ProducModalComponent implements OnInit {
   }
 
   ngOnInit() {
-    console.log(this.product);
+    // console.log(this.product);
     this.preciosArray = this.formProduct.controls.precios as FormArray;
 
     if (this.action === 'edit') {
@@ -66,13 +66,13 @@ export class ProducModalComponent implements OnInit {
       stock: this.product.stock,
       });
       this.product.precios.forEach((p) => {
-        console.log(p);
+        // console.log(p);
         this.preciosArray.push(this.fb.group({
           id: [p.categoriaCliente.id],
           categoria: [ {value : 'Precio para ' + p.categoriaCliente.descripcion,  disabled: true} ],
           precio: [ p.precio, Validators.required]
        }));
-       console.log(this.preciosArray);
+      //  console.log(this.preciosArray);
       });
     }else{
     this.categoriesClient.forEach(c =>
@@ -99,13 +99,13 @@ export class ProducModalComponent implements OnInit {
   onSubmit(){
     switch (this.action) {
       case 'add':
-        console.log( "add to modal component" + this.formProduct.value);
-        console.log( this.formProduct.value);
+        // console.log( "add to modal component" + this.formProduct.value);
+        // console.log( this.formProduct.value);
         this.sendObject(this.formProduct.value);
         this.bsModalRef.hide();
         break;
       case 'edit':
-        console.log( "Edit to modal component" + this.formProduct.value);
+        // console.log( "Edit to modal component" + this.formProduct.value);
         this.sendObject(this.formProduct.value, this.i);
         this.bsModalRef.hide();
         break;

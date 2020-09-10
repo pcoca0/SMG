@@ -38,9 +38,8 @@ export class BudgetComponent implements OnInit, OnDestroy {
   addNewBudget(){
     this.router.navigate(['crearPresupuesto'])
   }
-  removeBuget(i: number) {
-    console.log(' posicion: ' + i);
-    const id =  this.presupuestos[i].id;
+  removeBuget(id: string) {
+    const pos = this.presupuestos.findIndex(p =>  p.id === id);;
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás revertir este cambio',
@@ -54,7 +53,7 @@ export class BudgetComponent implements OnInit, OnDestroy {
       if (result.value) { // Llamar servicio
         this.suscriptions.push(this.budgetService.deleteBudget(id).subscribe(
           response => {
-              this.presupuestos.splice(i, 1),
+              this.presupuestos.splice(pos, 1),
               this.swalService.success('Eliminado!', `Presupuesto eliminado con éxito`, 3000);
             },
             error => {

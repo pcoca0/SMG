@@ -100,11 +100,13 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  editProduct(i: number){
+  editProduct(id: string){
+
     console.log('Por editar una Categoria');
-    const id = this.productos[i].id;
-    console.log(id);
-    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[i],this.categoriasCliente, i);
+    const pos = this.productos.findIndex(p =>  p.id === id);
+
+    console.log(pos);
+    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[pos],this.categoriasCliente, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
@@ -113,7 +115,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.productRequest.id = id,
       this.suscriptions.push( this.productService.putProduct(id, this.productRequest).subscribe(
                               response => {
-                                           this.productos.splice(i, 1, response.data.productos[0]),
+                                           this.productos.splice(pos, 1, response.data.productos[0]),
                                            this.swalService.success(`Producto editado con éxito`)
                                           },
                               error =>  this.swalService.error(`No se ha podido editar el producto.`)
@@ -122,9 +124,9 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
-  removeProduct(i) {
-    console.log('posicion: ' + i);
-    const id = this.productos[i].id;
+  removeProduct(id: string) {
+    //console.log('posicion: ' + i);
+    const pos = this.productos.findIndex(p =>  p.id === id);
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás revertir este cambio',
@@ -138,7 +140,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       if (result.value) { // Llamar servicio
         this.suscriptions.push(this.productService.deleteProduct(id).subscribe(
           response => {
-              this.productos.splice(i, 1),
+              this.productos.splice(pos, 1),
               this.swalService.success(`Producto eliminado con éxito`)
             },
             error => {

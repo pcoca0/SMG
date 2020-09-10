@@ -70,9 +70,8 @@ export class ClientComponent implements OnInit, OnDestroy {
             });
   }
 
-  removeClient(i: number){
-    console.log('posicion: ' + i);
-    const id = this.clientes[i].id;
+  removeClient(id: string){
+    const pos = this.clientes.findIndex(c =>  c.id === id);;
     Swal.fire({
       title: '¿Estás seguro?',
       text: 'No podrás revertir este cambio',
@@ -86,7 +85,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       if (result.value) { // Llamar servicio
         this.suscriptions.push(this.clientService.deleteClient(id).subscribe(
             response => {
-              this.clientes.splice(i, 1);
+              this.clientes.splice(pos, 1);
               this.swalService.success('Eliminado!', `El Cliente ha sido eliminado exitosamente`, 3000);
             },
             error => {
@@ -97,11 +96,10 @@ export class ClientComponent implements OnInit, OnDestroy {
     });
   }
 
-  editClient(i: number){
-    console.log('Por editar una cliente');
-    const id = this.clientes[i].id;
-    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i],this.perfilesAFIP,
-                                                    this.localidades, this.categoriasCliente, false, i);
+  editClient(id: string){
+    const pos = this.clientes.findIndex(c =>  c.id === id);;
+    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[pos],this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, false, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data);
@@ -109,7 +107,7 @@ export class ClientComponent implements OnInit, OnDestroy {
       this.clientRequest.id = id,
       this.suscriptions.push(this.clientService.putClient(this.clientRequest.id, this.clientRequest ).subscribe(
                             response => {
-                                          this.clientes.splice(i, 1, response.data.clientes[0]),
+                                          this.clientes.splice(pos, 1, response.data.clientes[0]),
                                           this.swalService.success(`Cliente editado con éxito`)
                                         },
                             error => this.swalService.error(`No se ha podido eliminar el cliente.`)
@@ -117,10 +115,11 @@ export class ClientComponent implements OnInit, OnDestroy {
     });
   }
 
-  viewClient(i: number){
+  viewClient(id: string){
     console.log('Por editar una cliente');
-    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[i],this.perfilesAFIP,
-                                                    this.localidades, this.categoriasCliente, true, i);
+    const pos = this.clientes.findIndex(c =>  c.id === id);
+    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[pos],this.perfilesAFIP,
+                                                    this.localidades, this.categoriasCliente, true, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
 

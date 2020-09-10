@@ -51,7 +51,7 @@
             </div>
           </div>
         </div>
-       
+
         <div class="col-sm-12">
           <div class="form-group">
             <label class="bmd-label-floating">Seleccione un Localidad</label>
@@ -96,7 +96,7 @@
         <div class="clearfix"></div>
   </div>
   <div class="modal-footer">
-    <button type="submit" class="btn btn-primary">Agregar</button>
+    <button type="submit" class="btn btn-primary" [disabled]="formClient.invalid">Agregar</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>
   </div>
 </form>
