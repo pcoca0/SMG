@@ -8,6 +8,7 @@ import { AddBudgetComponent } from './add-budget/add-budget.component';
 import { ClientComponent } from './client/client.component';
 import { ReportBudgetComponent } from './report-budget/report-budget.component';
 import { AuthGuardService as guard } from '../core/guards/auth-guard.service';
+import { VendorComponent } from './vendor/vendor.component';
 
 const pagesRoutes: Routes = [
     {
@@ -21,6 +22,7 @@ const pagesRoutes: Routes = [
           {path: 'editarPresupuesto/:id',   component: AddBudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
           {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
+          {path: 'proveedores',   component: VendorComponent },
 
 
           // {path: 'categorias',  component: ProductComponent },

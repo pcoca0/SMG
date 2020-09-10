@@ -16,10 +16,11 @@ import { ClientViewComponent } from './components/client-view/client-view.compon
 import { CategoryModalComponent } from './components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from './components/modals/produc-modal/produc-modal.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
+import { VendorModalComponent } from './components/modals/vendor-modal/vendor-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent ],
   imports: [
     CommonModule,
     RouterModule,

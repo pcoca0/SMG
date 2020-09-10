@@ -9,6 +9,8 @@ import { ICategoryItemResponse } from '../interfaces/responses/category.response
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
 import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory } from '../interfaces/utils';
+import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
+import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +96,41 @@ export class ModalService {
     return  this.bsModalService.show(ClientModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
+
+  vendorAdd(title: string, message: string, vendor?: IVendorItemResponse, profilesAFIP?: Array<IProfileAFIP>,
+            locations?: Array<ILocation>, clientCategories?: Array<IClientCategory>
+  ){
+  const initialState = {
+  title,
+  message,
+  vendor,
+  profilesAFIP,
+  locations,
+  clientCategories,
+  action: 'add'
+  };
+
+return  this.bsModalService.show(VendorModalComponent, {initialState});
+//return new Observable<string>(this.getBudgetModalsubscriber());
+}
+
+  vendorEdit(title: string, message: string, vendor: IVendorItemResponse, profilesAFIP?: Array<IProfileAFIP>,
+      locations?: Array<ILocation>, clientCategories?: Array<IClientCategory>, view?: boolean, pos?: number){
+  const initialState = {
+  title,
+  message,
+  vendor,
+  profilesAFIP,
+  locations,
+  clientCategories,
+  action: 'edit',
+  pos,
+  view
+  };
+
+return  this.bsModalService.show(VendorModalComponent, {initialState});
+//return new Observable<string>(this.getBudgetModalsubscriber());
+}
 
   categoryAdd(title: string, message: string, category?: ICategoryItemResponse){
     const initialState = {
