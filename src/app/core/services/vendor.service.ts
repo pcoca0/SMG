@@ -11,7 +11,7 @@ export class VendorService {
 
 
   apiUrl = environment.apis.productApi.url;
-  proveedoresPath = 'api/preveedores';
+  proveedoresPath = 'api/proveedores';
 
   constructor(private http: HttpClient) { }
 

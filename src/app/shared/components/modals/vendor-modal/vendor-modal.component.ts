@@ -55,6 +55,7 @@ export class VendorModalComponent implements OnInit {
       email: ['', Validators.required],
       contacto: ['', Validators.required],
       nota: ['', Validators.required],
+      rol: ['', Validators.required],
 
     });
   }
@@ -72,6 +73,7 @@ export class VendorModalComponent implements OnInit {
         email: this.vendor.email,
         contacto: this.vendor.contacto,
         nota: this.vendor.nota,
+        rol: this.vendor.rol,
 
       });
     }

@@ -1,10 +1,8 @@
 import { Component, OnInit, EventEmitter, OnDestroy } from '@angular/core';
-import { ClientService } from 'src/app/core/services/client.service';
-import { IClientItemResponse } from 'src/app/core/interfaces/responses/client.response';
+
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
-import { IClientRequest } from '../../core/interfaces/requests/client.request';
 import { SwalService } from '../../core/services/swal.service';
 import { UtilsService } from '../../core/services/utils.service';
 import { ILocation, IProfileAFIP, IClientCategory } from '../../core/interfaces/utils';
@@ -12,6 +10,7 @@ import { ClientCategoryService } from '../../core/services/client-category.servi
 import Swal from 'sweetalert2';
 import { VendorService } from 'src/app/core/services/vendor.service';
 import { IVendorItemResponse } from 'src/app/core/interfaces/responses/vendor.response';
+import { IVendorRequest } from 'src/app/core/interfaces/requests/vendor.request';
 @Component({
   selector: 'app-vendor',
   templateUrl: './vendor.component.html',
@@ -27,8 +26,8 @@ export class VendorComponent implements OnInit {
   categoriasCliente: Array<IClientCategory>;
   bsModalRef: BsModalRef;
   public event: EventEmitter<any> = new EventEmitter();
-  clientRequest: IClientRequest;
-  client: IClientItemResponse;
+  vendorRequest: IVendorRequest;
+  client: IVendorItemResponse;
   vendorNew: IVendorItemResponse;
   private suscriptions: Subscription[] = [];
 
@@ -55,7 +54,7 @@ export class VendorComponent implements OnInit {
   }
 
   addNewVendor() {
-    console.log('Por agregar una cliente');
+    console.log('Por agregar una Proveedor');
     this.bsModalRef = this.modalService.vendorAdd('Proveedor', 'proveedores', this.vendorNew, this.perfilesAFIP,
                                                   this.localidades, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
@@ -64,9 +63,9 @@ export class VendorComponent implements OnInit {
                                   response => {
                                         this.vendorNew = response.data.proveedores[0],
                                         this.proveedores.push(this.vendorNew),
-                                        this.swalService.success(`Cliente creado con éxito`)
+                                        this.swalService.success(`Proveedor creado con éxito`)
                                       },
-                                  error => this.swalService.error(`No se ha podido crear el cliente.`)
+                                  error => this.swalService.error(`No se ha podido crear el proveedor.`)
                                   ));
             });
   }
@@ -101,26 +100,26 @@ export class VendorComponent implements OnInit {
   editVendor(i: number){
     console.log('Por editar una proveedor');
     const id = this.proveedores[i].id;
-    this.bsModalRef = this.modalService.vendorEdit('Cliente', 'Productos', this.proveedores[i],this.perfilesAFIP,
+    this.bsModalRef = this.modalService.vendorEdit('Proveedor', 'Productos', this.proveedores[i],this.perfilesAFIP,
                                                     this.localidades, this.categoriasCliente, false, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data);
-      this.clientRequest = resp.data,
-      this.clientRequest.id = id,
-      this.suscriptions.push(this.vendorService.putVendor(this.clientRequest.id, this.clientRequest ).subscribe(
+      this.vendorRequest = resp.data,
+      this.vendorRequest.id = id,
+      this.suscriptions.push(this.vendorService.putVendor(this.vendorRequest.id, this.vendorRequest ).subscribe(
                             response => {
                                           this.proveedores.splice(i, 1, response.data.proveedores[0]),
-                                          this.swalService.success(`Cliente editado con éxito`)
+                                          this.swalService.success(`Proveedor editado con éxito`)
                                         },
-                            error => this.swalService.error(`No se ha podido eliminar el cliente.`)
+                            error => this.swalService.error(`No se ha podido eliminar el Proveedor.`)
       ));
     });
   }
 
   viewVendor(i: number){
     console.log('Por editar una cliente');
-    this.bsModalRef = this.modalService.vendorEdit('Cliente', 'Productos', this.proveedores[i],this.perfilesAFIP,
+    this.bsModalRef = this.modalService.vendorEdit('Cliente', 'Productos', this.proveedores[i], this.perfilesAFIP,
                                                     this.localidades, this.categoriasCliente, true, i);
     this.bsModalRef.content.event.subscribe(
     resp => {
@@ -128,8 +127,8 @@ export class VendorComponent implements OnInit {
     });
   }
 
-  trackBy(index: number, client: any): string {
-    return client.codigo;
+  trackBy(index: number, vendor: any): string {
+    return vendor.id;
     }
 
   ngOnDestroy(): void {

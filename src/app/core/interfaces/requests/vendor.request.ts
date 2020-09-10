@@ -13,5 +13,6 @@ export interface IVendorRequest {
   contacto: string;
   nota: string;
   email: string;
+  rol: string;
 
 }

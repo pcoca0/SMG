@@ -19,4 +19,6 @@ export interface IVendorItemResponse {
   contacto: string;
   nota: string;
   email: string;
+  rol: string;
+
 }
