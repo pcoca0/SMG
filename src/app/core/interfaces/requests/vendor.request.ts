@@ -3,6 +3,7 @@ import { ILocation, IProfileAFIP } from '../utils';
 export interface IVendorRequest {
   id: string;
   razonSocial: string;
+  cuit: string;
   apellido: string;
   nombre: string;
   calle: string;

@@ -16,7 +16,6 @@
     <div class="card-body table-responsive">
       <table class="table table-hover">
         <thead class="text-warning">
-          <th>Codigo</th>
           <th>Razón Social</th>
           <th>Contacto</th>
           <th>Domicilio</th>
@@ -24,7 +23,6 @@
         </thead>
         <tbody>
           <tr *ngFor="let c of clientes | filter: filterMatch;  let i = index; trackBy:trackBy">
-            <td>{{c.id}}</td>
             <td>{{c.razonSocial}}</td>
             <td>{{c.apellido}}, {{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}} </td>

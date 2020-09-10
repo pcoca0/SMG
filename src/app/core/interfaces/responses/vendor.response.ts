@@ -9,6 +9,7 @@ export interface IVendorResponse {
 export interface IVendorItemResponse {
   id: string;
   razonSocial: string;
+  cuit: string;
   apellido: string;
   nombre: string;
   calle: string;

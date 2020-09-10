@@ -9,6 +9,7 @@ export interface IClientResponse {
 export interface IClientItemResponse {
   id: string;
   razonSocial: string;
+  cuit: string;
   apellido: string;
   nombre: string;
   calle: string;

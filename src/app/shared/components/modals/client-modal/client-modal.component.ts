@@ -44,6 +44,7 @@ export class ClientModalComponent implements OnInit {
   ) {
     this.formClient = this.fb.group({
       razonSocial: ['', Validators.required],
+      cuit: ['', Validators.required],
       apellido: ['', Validators.required],
       nombre: ['', Validators.required],
       calle: ['', Validators.required],
@@ -62,6 +63,7 @@ export class ClientModalComponent implements OnInit {
     if (this.client) {
       this.formClient.patchValue({
         razonSocial: this.client.razonSocial,
+        cuit: this.client.cuit,
         apellido: this.client.apellido,
         nombre: this.client.nombre,
         calle: this.client.calle,
