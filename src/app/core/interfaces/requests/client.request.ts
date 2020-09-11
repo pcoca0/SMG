@@ -3,7 +3,7 @@ import { IProfileAFIP, ILocation, IClientCategory } from '../utils';
 export interface IClientRequest {
   id: string;
   razonSocial: string;
-  cuit: string;
+  cuil: string;
   apellido: string;
   nombre: string;
   calle: string;

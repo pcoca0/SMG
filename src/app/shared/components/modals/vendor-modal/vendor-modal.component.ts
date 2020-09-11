@@ -45,6 +45,7 @@ export class VendorModalComponent implements OnInit {
   ) {
     this.formVendor = this.fb.group({
       razonSocial: ['', Validators.required],
+      cuit: ['', Validators.required],
       apellido: ['', Validators.required],
       nombre: ['', Validators.required],
       calle: ['', Validators.required],
@@ -63,6 +64,7 @@ export class VendorModalComponent implements OnInit {
     if (this.vendor) {
       this.formVendor.patchValue({
         razonSocial: this.vendor.razonSocial,
+        cuit: this.vendor.cuit,
         apellido: this.vendor.apellido,
         nombre: this.vendor.nombre,
         calle: this.vendor.calle,

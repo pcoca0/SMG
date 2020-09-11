@@ -9,11 +9,17 @@
   <div class="modal-body text-center">
   <form [formGroup]="formClient" (ngSubmit)="onSubmit()">
     <div class="card-body">
+      <div class="col-sm-12 col-md-12">
+        <div class="form-group">
+          <label class="bmd-label-floating">Razón Social</label>
+          <input type="text"  formControlName="razonSocial" class="form-control">
+        </div>
+      </div>
         <div class="row">
           <div class="col-sm-12 col-md-6">
             <div class="form-group">
-              <label class="bmd-label-floating">Cuit</label>
-              <input type="text"  formControlName="cuit" class="form-control">
+              <label class="bmd-label-floating">Cuil</label>
+              <input type="text"  formControlName="cuil" class="form-control">
             </div>
           </div>
           <div class="col-sm-12 col-md-6">
