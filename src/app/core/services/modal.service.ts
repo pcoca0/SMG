@@ -11,6 +11,7 @@ import { ProducModalComponent } from 'src/app/shared/components/modals/produc-mo
 import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory } from '../interfaces/utils';
 import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
 import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
+import { ClientCategory } from '../models/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -22,11 +23,12 @@ export class ModalService {
     private bsModalService: BsModalService
   ) { }
 
-  budgetAdd(title: string, message: string, products: Array<IProductItemResponse>){
+  budgetAdd(title: string, message: string, products: Array<IProductItemResponse>, clientCategory: ClientCategory){
     const initialState = {
       title,
       message,
       products,
+      clientCategory,
       action: 'add'
     };
 

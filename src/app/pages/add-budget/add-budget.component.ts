@@ -12,6 +12,8 @@ import { BudgetService } from '../../core/services/budget.service';
 import { SwalService } from '../../core/services/swal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDF from 'jspdf';
+import { ClientCategory } from 'src/app/core/models/utils';
+import { IClientCategory } from 'src/app/core/interfaces/utils';
 
 
 @Component({
@@ -34,6 +36,9 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   clientView: IClientItemResponse;
   budgetRequest: IBudgetRequest = {cliente: null, productos: []};
   flagEdit = false;
+  clientSelected = false;
+  producto: IProductItemResponse;
+  categoriaCliente: IClientCategory;
   private suscriptions: Subscription[] = [];
 
 
@@ -47,7 +52,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     moreText: 'Más', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
     noResultsFound: 'No se encontraron resultados!', // text to be displayed when no items are found while searching
     searchPlaceholder:'Buscar', // label thats displayed in search input,
-    searchOnKey: 'descripcion', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
+    searchOnKey: 'razonSocial', // key on which search should be performed this will be selective search. if undefined this will be extensive search on all keys
     clearOnSelection: false, // clears search criteria when an option is selected if set to true, default is false
     inputDirection: 'ltr' // the direction of the search input can be rtl or ltr(default)
   }
@@ -90,12 +95,14 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   addBudgetItem() {
-    this.bsModalRef = this.modalService.budgetAdd('Presupuesto', 'Productos', this.productos);
+    this.bsModalRef = this.modalService.budgetAdd('Presupuesto', 'Productos', this.productos, this.categoriaCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
           if (this.budgetRequest.productos.find(p => p.id === resp['data'].id)){
             this.swalService.warning(`El producto seleccionado ya esta en la lista.`)
           } else {
+          console.log("Prueba de producto");
+          console.log(resp['data']);
           this.budgetRequest.productos.push(resp['data']);
           this.updateTotalizador();
           }
@@ -117,6 +124,8 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
                     this.clients = [...this.clients, this.clientView],
                     this.listForm.controls.client.setValue(this.clientView),
                     this.budgetRequest.cliente = this.clientView,
+                    this.clientSelected = true,
+                    this.categoriaCliente = this.clientView.categoriaCliente,
                     console.log(this.clientView)
   }));
   });
@@ -124,6 +133,8 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
 
   selectClient() {
   this.clientView = this.listForm.value.client;
+  this.clientSelected = true;
+  this.categoriaCliente = this.clientView.categoriaCliente;
   this.budgetRequest.cliente = this.clientView;
   console.log(this.clientView);
   }
@@ -133,7 +144,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     console.log("subida");
     this.totalizador = 0.00;
     this.budgetRequest.productos.forEach( i => {
-      this.totalizador = this.totalizador + i.precio,
+      this.totalizador = this.totalizador + (i.precio + i.cantidad),
       console.log('Precio: ' + i.precio),
       console.log('Acumulador: ' + this.totalizador),
       console.log(this.presupuesto.length)

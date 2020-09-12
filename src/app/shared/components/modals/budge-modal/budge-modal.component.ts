@@ -3,6 +3,8 @@ import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
+import { ClientCategory } from 'src/app/core/models/utils';
+import { IPriceClientCategory, IClientCategory } from '../../../../core/interfaces/utils';
 
 @Component({
   selector: 'app-budge-modal',
@@ -15,11 +17,14 @@ export class BudgeModalComponent implements OnInit {
   label: string;
   message: string;
   products: Array<IProductItemResponse>;
+  clientCategory: IClientCategory;
   itemForm: FormGroup;
   public event: EventEmitter<any> = new EventEmitter();
   i: number;
   e: IProductItemResponse;
   action: string;
+  producto: IProductItemResponse;
+  precio: IPriceClientCategory;
 
   dropdownSetup: Object = {
     displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
@@ -42,7 +47,9 @@ export class BudgeModalComponent implements OnInit {
       ) {
     this.itemForm = this.fb.group({
       producto: ['', Validators.required],
-      precio: ['', Validators.required]
+      precio: ['', Validators.required],
+      cantidad: ['', Validators.required]
+
     });
 
   }
@@ -54,7 +61,8 @@ export class BudgeModalComponent implements OnInit {
       // this.itemForm.value.producto.se = this.e;
       this.itemForm.patchValue({
         producto: this.e,
-        precio: this.e.precio
+        precio: this.e.precio,
+        cantidad: this.e.cantidad
 
       });
     }
@@ -72,8 +80,10 @@ export class BudgeModalComponent implements OnInit {
 
   selectProduct(){
     console.log("Valor sugerido: " + this.itemForm.value.producto.precio);
+    this.producto = this.itemForm.value.producto;
+    this.precio = this.producto.precios.find( p => p.categoriaCliente.id === this.clientCategory.id);
     this.itemForm.controls.precio
-    .setValue(this.itemForm.value.producto.precio);
+    .setValue(this.precio.precio);
   }
 
   updatePriceValue(){

@@ -25,8 +25,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
-  productRequest: IProductRequest = { id:'', descripcion:'',codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
+  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   categoriasCliente: Array<IClientCategory>;
@@ -106,7 +106,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     const pos = this.productos.findIndex(p =>  p.id === id);
 
     console.log(pos);
-    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[pos],this.categoriasCliente, pos);
+    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[pos], this.categoriasCliente, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),

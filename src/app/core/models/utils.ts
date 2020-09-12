@@ -13,7 +13,7 @@ export class PriceClientCategory{
 
 export class ClientCategory{
   constructor(
-    id:string,
+    id: string,
     descripcion: string
   ){}
 }

@@ -12,6 +12,7 @@ export interface IProductItemResponse {
  descripcion: string;
  codigo: number;
  precio: number;
+ cantidad: number;
  iva: number;
  stock: number;
  precios: Array<IPriceClientCategory>;

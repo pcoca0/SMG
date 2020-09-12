@@ -37,7 +37,7 @@
       <div class="card-header card-header-primary">
         <h4 class="card-title">Productos</h4>
         <p class="card-category"></p>
-        <button class="btn btn-info float-right" (click)="addBudgetItem()">Agregar Producto</button>
+        <button class="btn btn-info float-right" (click)="addBudgetItem()" [disabled]="!clientSelected">Agregar Producto</button>
       </div>
 
       <div class="card-body">
@@ -46,6 +46,7 @@
             <thead>
               <tr>
                 <th>Descripción</th>
+                <th>Cantidad</th>
                 <th class="text-center">Valor</th>
                 <th class="text-center"></th>
                 <th class="text-center"></th>
@@ -54,6 +55,7 @@
             <tbody>
               <tr *ngFor="let p of budgetRequest.productos; index as i">
                 <td>{{p.descripcion}}</td>
+                <td>{{p.cantidad}}</td>
                 <td class="text-center">{{p.precio}}</td>
                 <td class="text-center">
                   <button class="btn btn-outline-info" (click)="removeElement(i)"><i class="fa fa-times text-danger"></i></button>
