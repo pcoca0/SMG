@@ -68,6 +68,7 @@ export class ProductComponent implements OnInit, OnDestroy {
      this.productRequest.codigo = resp.codigo;
      this.productRequest.iva = resp.iva;
      this.productRequest.stock = resp.stock;
+     this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
         this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
         this.precioCategoriaCliente.categoriaCliente.id = resp.precios[i].id;
@@ -82,7 +83,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     console.log('Por agregar una Producto');
 
     console.log(this.preciosCategoriasCliente);
-    this.bsModalRef = this.modalService.productAdd('Categorias', 'Productos', this.product, this.categoriasCliente);
+    this.bsModalRef = this.modalService.productAdd('Producto', 'Productos', this.product, this.categoriasCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log("disparo"),
@@ -106,7 +107,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     const pos = this.productos.findIndex(p =>  p.id === id);
 
     console.log(pos);
-    this.bsModalRef = this.modalService.productEdit('Categorias', 'Productos',  this.productos[pos], this.categoriasCliente, pos);
+    this.bsModalRef = this.modalService.productEdit('Producto', 'Productos',  this.productos[pos], this.categoriasCliente, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
