@@ -14,10 +14,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { ReportBudgetComponent } from './report-budget/report-budget.component';
 import { VendorComponent } from './vendor/vendor.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent],
   imports: [
     CommonModule,
     SharedModule,

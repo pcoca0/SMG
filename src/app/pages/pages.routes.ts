@@ -9,6 +9,8 @@ import { ClientComponent } from './client/client.component';
 import { ReportBudgetComponent } from './report-budget/report-budget.component';
 import { AuthGuardService as guard } from '../core/guards/auth-guard.service';
 import { VendorComponent } from './vendor/vendor.component';
+import { InvoiceComponent } from './invoice/invoice.component';
+import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 
 const pagesRoutes: Routes = [
     {
@@ -23,6 +25,9 @@ const pagesRoutes: Routes = [
           {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
           {path: 'proveedores',   component: VendorComponent },
+          {path: 'facturas',   component: InvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
+          {path: 'crearFactura',   component: AddInvoiceComponent },
+          {path: 'editarFactura/:id',   component: AddInvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
 
 
           // {path: 'categorias',  component: ProductComponent },

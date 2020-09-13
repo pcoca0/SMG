@@ -3,16 +3,13 @@ import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
-import { ClientCategory } from 'src/app/core/models/utils';
 import { IPriceClientCategory, IClientCategory } from '../../../../core/interfaces/utils';
-
 @Component({
-  selector: 'app-budge-modal',
-  templateUrl: './budge-modal.component.html',
-  styleUrls: ['./budge-modal.component.scss'],
+  selector: 'app-invoice-modal',
+  templateUrl: './invoice-modal.component.html',
+  styleUrls: ['./invoice-modal.component.scss']
 })
-export class BudgeModalComponent implements OnInit {
-
+export class InvoiceModalComponent implements OnInit {
   title: string;
   label: string;
   message: string;
@@ -48,7 +45,9 @@ export class BudgeModalComponent implements OnInit {
     this.itemForm = this.fb.group({
       producto: ['', Validators.required],
       precio: ['', Validators.required],
-      cantidad: ['', Validators.required]
+      cantidad: ['', Validators.required],
+      iva: ['', Validators.required]
+
 
     });
 
@@ -62,8 +61,8 @@ export class BudgeModalComponent implements OnInit {
       this.itemForm.patchValue({
         producto: this.e,
         precio: this.e.precio,
-        cantidad: this.e.cantidad
-
+        cantidad: this.e.cantidad,
+        iva: this.e.iva
       });
     }
   }
@@ -114,5 +113,4 @@ export class BudgeModalComponent implements OnInit {
 close() {
   this.bsModalRef.hide();
 }
-
 }

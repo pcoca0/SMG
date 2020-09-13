@@ -17,10 +17,11 @@ import { CategoryModalComponent } from './components/modals/category-modal/categ
 import { ProducModalComponent } from './components/modals/produc-modal/produc-modal.component';
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { VendorModalComponent } from './components/modals/vendor-modal/vendor-modal.component';
+import { InvoiceModalComponent } from './components/modals/invoice-modal/invoice-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent ],
   imports: [
     CommonModule,
     RouterModule,

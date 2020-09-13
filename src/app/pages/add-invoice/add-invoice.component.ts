@@ -7,36 +7,34 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IClientItemResponse } from 'src/app/core/interfaces/responses/client.response';
 import { ClientService } from 'src/app/core/services/client.service';
 import { Subscription } from 'rxjs';
-import { IBudgetRequest } from '../../core/interfaces/requests/budget.resquest';
-import { BudgetService } from '../../core/services/budget.service';
 import { SwalService } from '../../core/services/swal.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as jsPDF from 'jspdf';
-import { ClientCategory } from 'src/app/core/models/utils';
 import { IClientCategory, IProfileAFIP, ILocation } from 'src/app/core/interfaces/utils';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { ClientCategoryService } from 'src/app/core/services/client-category.service';
-
-
+import { IInvoiceRequest } from 'src/app/core/interfaces/requests/invoice.request';
+import { InvoiceService } from 'src/app/core/services/invoice.service';
+import { IInvoiceItemResponse } from 'src/app/core/interfaces/responses/invoice.response';
 @Component({
-  selector: 'app-add-budget',
-  templateUrl: './add-budget.component.html',
-  styleUrls: ['./add-budget.component.scss']
+  selector: 'app-add-invoice',
+  templateUrl: './add-invoice.component.html',
+  styleUrls: ['./add-invoice.component.scss']
 })
-export class AddBudgetComponent implements OnInit, OnDestroy {
+export class AddInvoiceComponent implements OnInit, OnDestroy {
 
   today: number =  Date.now();
   totalizador: number;
   totalizadorParcial = 0;
   productos: Array<IProductItemResponse>;
-  presupuesto: Array<IProductItemResponse> = [];
+  facturas: Array<IInvoiceItemResponse> = [];
   bsModalRef: BsModalRef;
   listForm: FormGroup;
   element: IProductItemResponse;
   clients: Array<IClientItemResponse>;
   client: IClientItemResponse;
   clientView: IClientItemResponse;
-  budgetRequest: IBudgetRequest = {cliente: null, productos: []};
+  invoiceRequest: IInvoiceRequest = {cliente: null, productos: []};
   flagEdit = false;
   clientSelected = false;
   producto: IProductItemResponse;
@@ -68,7 +66,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
       private modalService: ModalService,
       private productService: ProductService,
       private clientService: ClientService,
-      private budgetService: BudgetService,
+      private invoiceService: InvoiceService,
       private fB: FormBuilder,
       private swalService: SwalService,
       private activateRoute: ActivatedRoute,
@@ -93,14 +91,14 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     if (this.activateRoute.snapshot.paramMap.get('id')) {
       this.flagEdit = true;
       this.suscriptions.push(
-                  this.budgetService.getBudget(this.activateRoute.snapshot.paramMap.get('id')).subscribe(
+                  this.invoiceService.getInvoice(this.activateRoute.snapshot.paramMap.get('id')).subscribe(
                   resp => {
-                            this.client = resp.data.presupuestos[0].cliente,
-                            this.budgetRequest = resp.data.presupuestos[0],
-                            console.log(this.budgetRequest);
-                            this.clientView =  resp.data.presupuestos[0].cliente,
-                            this.listForm.controls.client.setValue( resp.data.presupuestos[0].cliente),
-                            this.totalizador =  resp.data.presupuestos[0]?.total || 0 
+                            this.client = resp.data.facturas[0].cliente,
+                            this.invoiceRequest = resp.data.facturas[0],
+                            console.log(this.invoiceRequest);
+                            this.clientView =  resp.data.facturas[0].cliente,
+                            this.listForm.controls.client.setValue( resp.data.facturas[0].cliente),
+                            this.totalizador =  resp.data.facturas[0]?.total || 0 
                           })
                   );
     }
@@ -108,15 +106,14 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   addBudgetItem() {
-    this.bsModalRef = this.modalService.budgetAdd('Presupuesto', 'Productos', this.productos, this.categoriaCliente);
+    this.bsModalRef = this.modalService.invoiceAdd('Factura', 'Productos', this.productos, this.categoriaCliente);
     this.bsModalRef.content.event.subscribe(
     resp => {
-          if (this.budgetRequest.productos.find(p => p.id === resp['data'].id)){
+          if (this.invoiceRequest.productos.find(p => p.id === resp['data'].id)){
             this.swalService.warning(`El producto seleccionado ya esta en la lista.`)
           } else {
-          console.log("Prueba de producto");
           console.log(resp['data']);
-          this.budgetRequest.productos.push(resp['data']);
+          this.invoiceRequest.productos.push(resp['data']);
           this.updateTotalizador();
           }
     });
@@ -137,7 +134,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
                     //lo tengo que hacer asi por el change detec
                     this.clients = [...this.clients, this.clientView],
                     this.listForm.controls.client.setValue(this.clientView),
-                    this.budgetRequest.cliente = this.clientView,
+                    this.invoiceRequest.cliente = this.clientView,
                     this.clientSelected = true,
                     this.categoriaCliente = this.clientView.categoriaCliente,
                     console.log(this.clientView)
@@ -149,7 +146,7 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   this.clientView = this.listForm.value.client;
   this.clientSelected = true;
   this.categoriaCliente = this.clientView.categoriaCliente;
-  this.budgetRequest.cliente = this.clientView;
+  this.invoiceRequest.cliente = this.clientView;
   console.log(this.clientView);
   }
 
@@ -157,27 +154,27 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   updateTotalizador() {
     console.log("subida");
     this.totalizador = 0.00;
-    this.budgetRequest.productos.forEach( i => {
+    this.invoiceRequest.productos.forEach( i => {
       this.totalizador = this.totalizador + (i.precio * i.cantidad),
       console.log('Precio: ' + i.precio),
       console.log('cantidad: ' + i.cantidad),
       console.log('multi: ' + i.precio * i.cantidad),
       console.log('Acumulador: ' + this.totalizador),
-      console.log(this.presupuesto.length)
+      console.log(this.facturas.length)
     });
   }
 
   removeElement(i: number) {
     console.log('posicion: ' + i);
-    this.budgetRequest.productos.splice(i, 1);
+    this.invoiceRequest.productos.splice(i, 1);
     this.updateTotalizador();
   }
 
   updateElement(i: number) {
-    this.bsModalRef = this.modalService.budgetEdit('Presupuesto', 'Editar Producto', this.productos, this.budgetRequest.productos[i], i );
+    this.bsModalRef = this.modalService.budgetEdit('Factura', 'Editar Producto', this.productos, this.invoiceRequest.productos[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
-        this.budgetRequest.productos.splice(i, 1, resp.data),
+        this.invoiceRequest.productos.splice(i, 1, resp.data),
         this.updateTotalizador()
       });
   }
@@ -187,24 +184,24 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
   }
 
   saveBudget() {
-    this.budgetRequest.total = this.totalizador;
-    this.budgetRequest.fecha = new Date();
-    console.log(this.budgetRequest);
+    this.invoiceRequest.total = this.totalizador;
+    this.invoiceRequest.fecha = new Date();
+    console.log(this.invoiceRequest);
     if (this.flagEdit) {
       this.suscriptions.push(
-        this.budgetService.putBudget(this.budgetRequest.id, this.budgetRequest).subscribe(
-          response => this.swalService.success(`Presupuesto editado con éxito`),
-          error => this.swalService.error(`No se ha podido editar el presupuesto.`)
+        this.invoiceService.putInvoice(this.invoiceRequest.id, this.invoiceRequest).subscribe(
+          response => this.swalService.success(`factura editada con éxito`),
+          error => this.swalService.error(`No se ha podido editar la factura.`)
         )
       );
     } else {
       this.suscriptions.push(
-        this.budgetService.addBudget(this.budgetRequest).subscribe(
+        this.invoiceService.addInvoice(this.invoiceRequest).subscribe(
           response => {
-                        this.swalService.success(`Presupuesto creado con éxito`),
-                        this.router.navigate(['editarPresupuesto', response.data.presupuestos[0].id]);
+                        this.swalService.success(`factura creada con éxito`),
+                        this.router.navigate(['editarfacturas', response.data.facturas[0].id]);
                       },
-          error => this.swalService.error(`No se ha podido crear el presupuesto.`)
+          error => this.swalService.error(`No se ha podido crear la factura.`)
         )
       );
     }
@@ -214,38 +211,8 @@ export class AddBudgetComponent implements OnInit, OnDestroy {
     this.suscriptions.forEach( suscription => suscription.unsubscribe());
   }
 
-  // makePDF(): void {
-  //   console.log('imprime');
 
-  //   const  PDF = new jsPDF('p', 'pt', 'a4');
-  //   const width = PDF.internal.pageSize.getWidth();
-  //   const height = PDF.internal.pageSize.getHeight();
-  //   const margins = {
-  //     top: 60,
-  //     bottom: 80,
-  //     left: 40,
-  //     width: 522
-  //   };
-
-  //   PDF.fromHTML(
-  //     document.getElementById('document'), // HTML string or DOM elem ref.
-  //     margins.left, // x coord
-  //     margins.top, {
-  //       // y coord
-  //       width: margins.width // max width of content on PDF
-  //     },
-  //     (dispose: any) => {
-  //       // dispose: object with X, Y of the last line add to the PDF
-  //       // this allow the insertion of new lines after html
-  //       //this.setHeaderAndFooter(PDF, PDF.internal.getNumberOfPages(), width, height),
-  //       PDF.save(`${this?.budgetRequest?.id || 'Report sin título'}.pdf`);
-  //     },
-  //     margins
-  //   );
-  // }
-  
   imprimirPDF(){
-    this.router.navigate(['imprimirPresupuesto', this.budgetRequest.id]);
+    this.router.navigate(['imprimirfacturas', this.invoiceRequest.id]);
   }
-
 }

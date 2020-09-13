@@ -12,6 +12,7 @@ import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory } from '
 import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
 import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
 import { ClientCategory } from '../models/utils';
+import { InvoiceModalComponent } from 'src/app/shared/components/modals/invoice-modal/invoice-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -50,19 +51,32 @@ export class ModalService {
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  // private getBudgetModalsubscriber(){
-  //   return(observer) => {
-  //     const suscription = this.bsModalService.onHidden.subscribe((reason: string) =>
-  //     {
-  //       observer.complete();
-  //     });
-  //     return {
-  //       unsubscribe() {
-  //         suscription.unsubscribe();
-  //       }
-  //     };
-  //   }
-  // }
+  invoiceAdd(title: string, message: string, products: Array<IProductItemResponse>, clientCategory: ClientCategory){
+    const initialState = {
+    title,
+    message,
+    products,
+    clientCategory,
+    action: 'add'
+  };
+
+  return this.bsModalService.show(InvoiceModalComponent, {initialState});
+  //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  invoiceEdit(title: string, message: string, products: Array<IProductItemResponse>, e?: IProductItemResponse,  pos?: number){
+    const initialState = {
+      title,
+      message,
+      products,
+      action: 'edit',
+      pos,
+      e
+    };
+  
+    return this.bsModalService.show(InvoiceModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
 
   clientAdd(title: string, message: string, client?: IClientItemResponse, profilesAFIP?: Array<IProfileAFIP>,
             locations?: Array<ILocation>, clientCategories?: Array<IClientCategory>
