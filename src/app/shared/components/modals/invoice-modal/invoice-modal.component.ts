@@ -83,7 +83,6 @@ export class InvoiceModalComponent implements OnInit {
     this.precio = this.producto.precios.find( p => p.categoriaCliente.id === this.clientCategory.id);
     this.itemForm.controls.precio.setValue(this.precio.precio);
     this.itemForm.value.producto.precio = Number(this.precio.precio);
-
   }
 
   updatePriceValue(){
@@ -93,6 +92,8 @@ export class InvoiceModalComponent implements OnInit {
 
   onSubmit(){
   this.itemForm.value.producto.cantidad = Number(this.itemForm.value.cantidad); 
+  this.itemForm.value.producto.cantidad = Number(this.itemForm.value.cantidad); 
+
   switch (this.action) {
     case 'add':
       console.log( "add to modal component" + this.itemForm.value.producto);

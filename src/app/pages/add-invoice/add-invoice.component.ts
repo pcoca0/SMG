@@ -25,6 +25,8 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
 
   today: number =  Date.now();
   totalizador: number;
+  iva: number;
+
   totalizadorParcial = 0;
   productos: Array<IProductItemResponse>;
   facturas: Array<IInvoiceItemResponse> = [];
@@ -154,13 +156,10 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   updateTotalizador() {
     console.log("subida");
     this.totalizador = 0.00;
+    this.iva = 0.00;
     this.invoiceRequest.productos.forEach( i => {
       this.totalizador = this.totalizador + (i.precio * i.cantidad),
-      console.log('Precio: ' + i.precio),
-      console.log('cantidad: ' + i.cantidad),
-      console.log('multi: ' + i.precio * i.cantidad),
-      console.log('Acumulador: ' + this.totalizador),
-      console.log(this.facturas.length)
+      this.iva = this.iva + (((i.precio * i.cantidad) * i.iva) / 100 );
     });
   }
 
@@ -171,7 +170,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   }
 
   updateElement(i: number) {
-    this.bsModalRef = this.modalService.budgetEdit('Factura', 'Editar Producto', this.productos, this.invoiceRequest.productos[i], i );
+    this.bsModalRef = this.modalService.invoiceEdit('Factura', 'Editar Producto', this.productos, this.invoiceRequest.productos[i], i );
     this.bsModalRef.content.event.subscribe(
       resp => {
         this.invoiceRequest.productos.splice(i, 1, resp.data),

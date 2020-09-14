@@ -66,7 +66,7 @@ export class ProductComponent implements OnInit, OnDestroy {
      console.log(resp);
      this.productRequest.descripcion = resp.descripcion;
      this.productRequest.codigo = resp.codigo;
-     this.productRequest.iva = resp.iva;
+    //  this.productRequest.iva = resp.iva;
      this.productRequest.stock = resp.stock;
      this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
