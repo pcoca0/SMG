@@ -47,7 +47,7 @@ export class ProducModalComponent implements OnInit {
       descripcion: ['', Validators.required],
       codigo: [0, Validators.required],
       precio: [0, Validators.required],
-      iva: ['', Validators.required],
+      // iva: ['', Validators.required],
       stock: ['', Validators.required],
       precios: this.fb.array([])
     });
@@ -62,7 +62,7 @@ export class ProducModalComponent implements OnInit {
       this.formProduct.patchValue({
       descripcion: this.product.descripcion,
       codigo: this.product.codigo,
-      iva: this.product.iva,
+      // iva: this.product.iva,
       stock: this.product.stock,
       });
       this.product.precios.forEach((p) => {
