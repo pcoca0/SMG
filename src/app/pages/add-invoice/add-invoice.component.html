@@ -1,5 +1,5 @@
 <div class="row" id="document">
-    <div class="col-md-10 ml-auto mr-auto">
+    <div class="col-md-12 ml-auto mr-auto">
       <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Factura</h4>
@@ -59,8 +59,8 @@
                   <td>{{p.descripcion}}</td>
                   <td class="text-center">{{p.precio}}</td>
                   <td class="text-center">{{p.cantidad}}</td>
-                  <td class="text-center"> <small>({{p.iva}}) % </small> = {{((p.precio * p.cantidad) * p.iva)/100}}</td>
-                  <td class="text-center">{{[p.precio * p.cantidad] - (((p.precio * p.cantidad) * p.iva)/100)}}</td>
+                  <td class="text-center"> <small>({{p.iva}}) % </small> = {{(((p.precio * p.cantidad) * p.iva)/100) | number:'2.1-2' }}</td>
+                  <td class="text-center">{{((p.precio * p.cantidad) - (((p.precio * p.cantidad) * p.iva)/100)) |  number:'2.1-2'}}</td>
                   <td class="text-center">
                     <button class="btn btn-outline-info" (click)="removeElement(i)"><i class="fa fa-times text-danger"></i></button>
                     <button class="btn btn-outline-info" (click)="updateElement(i)"><i class="fa fa-edit  text-success"></i></button>
@@ -72,8 +72,8 @@
                   <td></td>
                   <td class="text-center">{{totalizador}}</td>
                   <td class="text-center">{{iva}}</td>   
-                  <td class="text-center">${{totalizador - iva}}</td>
-                   
+                  <td class="text-center">${{(totalizador - iva) |  number:'2.1-2'}}</td>
+                  <td></td>     
                 </tr>
                 <tr>
                   <td class="text-center"></td>

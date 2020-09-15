@@ -100,7 +100,8 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
                             console.log(this.invoiceRequest);
                             this.clientView =  resp.data.facturas[0].cliente,
                             this.listForm.controls.client.setValue( resp.data.facturas[0].cliente),
-                            this.totalizador =  resp.data.facturas[0]?.total || 0 
+                            this.totalizador =  resp.data.facturas[0]?.total || 0,
+                            this.iva = resp.data.facturas[0]?.totalIva || 0
                           })
                   );
     }
@@ -183,7 +184,10 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   }
 
   saveBudget() {
-    this.invoiceRequest.total = this.totalizador;
+    this.invoiceRequest.subTotal = this.totalizador;
+    this.invoiceRequest.totalIva = this.iva,
+    this.invoiceRequest.total = Number(this.totalizador + this.iva),
+
     this.invoiceRequest.fecha = new Date();
     console.log(this.invoiceRequest);
     if (this.flagEdit) {
@@ -198,7 +202,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
         this.invoiceService.addInvoice(this.invoiceRequest).subscribe(
           response => {
                         this.swalService.success(`factura creada con éxito`),
-                        this.router.navigate(['editarfacturas', response.data.facturas[0].id]);
+                        this.router.navigate(['editarFactura', response.data.facturas[0].id]);
                       },
           error => this.swalService.error(`No se ha podido crear la factura.`)
         )

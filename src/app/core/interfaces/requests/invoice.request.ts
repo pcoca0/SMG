@@ -9,6 +9,6 @@ export interface IInvoiceRequest {
     productos?: IProductItemResponse[];
     nro?: number;
     subTotal?: number;
-    iva?: number;
+    totalIva?: number;
     total?: number;
   }

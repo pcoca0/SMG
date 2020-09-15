@@ -92,7 +92,7 @@ export class InvoiceModalComponent implements OnInit {
 
   onSubmit(){
   this.itemForm.value.producto.cantidad = Number(this.itemForm.value.cantidad); 
-  this.itemForm.value.producto.cantidad = Number(this.itemForm.value.cantidad); 
+  this.itemForm.value.producto.iva = Number(this.itemForm.value.iva); 
 
   switch (this.action) {
     case 'add':
