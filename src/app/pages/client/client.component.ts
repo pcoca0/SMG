@@ -98,7 +98,7 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   editClient(id: string){
     const pos = this.clientes.findIndex(c =>  c.id === id);;
-    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[pos],this.perfilesAFIP,
+    this.bsModalRef = this.modalService.clientEdit('Cliente', 'Productos', this.clientes[pos], this.perfilesAFIP,
                                                     this.localidades, this.categoriasCliente, false, pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
@@ -110,7 +110,7 @@ export class ClientComponent implements OnInit, OnDestroy {
                                           this.clientes.splice(pos, 1, response.data.clientes[0]),
                                           this.swalService.success(`Cliente editado con éxito`)
                                         },
-                            error => this.swalService.error(`No se ha podido eliminar el cliente.`)
+                            error => this.swalService.error(`No se ha podido editar el cliente.`)
       ));
     });
   }

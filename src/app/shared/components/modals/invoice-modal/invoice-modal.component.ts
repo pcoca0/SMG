@@ -4,6 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ModalService } from 'src/app/core/services/modal.service';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { IPriceClientCategory, IClientCategory } from '../../../../core/interfaces/utils';
+import { SwalService } from 'src/app/core/services/swal.service';
 @Component({
   selector: 'app-invoice-modal',
   templateUrl: './invoice-modal.component.html',
@@ -40,7 +41,9 @@ export class InvoiceModalComponent implements OnInit {
 
   constructor(
       private fb: FormBuilder,
-      private bsModalRef: BsModalRef
+      private bsModalRef: BsModalRef,
+      private swalService: SwalService
+
       ) {
     this.itemForm = this.fb.group({
       producto: ['', Validators.required],
@@ -80,9 +83,13 @@ export class InvoiceModalComponent implements OnInit {
   selectProduct(){
     console.log("Valor sugerido: " + this.itemForm.value.producto.precio);
     this.producto = this.itemForm.value.producto;
-    this.precio = this.producto.precios.find( p => p.categoriaCliente.id === this.clientCategory.id);
-    this.itemForm.controls.precio.setValue(this.precio.precio);
-    this.itemForm.value.producto.precio = Number(this.precio.precio);
+    if (this.producto.stock > 0){
+      this.precio = this.producto.precios.find( p => p.categoriaCliente.id === this.clientCategory.id);
+      this.itemForm.controls.precio.setValue(this.precio.precio);
+      this.itemForm.value.producto.precio = Number(this.precio.precio)
+    } else {
+      this.swalService.warning(`No hay Stock disponible del producto que desea agregar.`);
+    }  
   }
 
   updatePriceValue(){

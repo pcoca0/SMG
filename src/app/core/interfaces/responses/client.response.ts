@@ -13,7 +13,7 @@ export interface IClientItemResponse {
   apellido: string;
   nombre: string;
   calle: string;
-  numero: number;
+  numero: string;
   telefono: string;
   localidad: ILocation;
   perfilAFIP: IProfileAFIP;

@@ -92,6 +92,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
    );
     if (this.activateRoute.snapshot.paramMap.get('id')) {
       this.flagEdit = true;
+      this.clientSelected = true;
       this.suscriptions.push(
                   this.invoiceService.getInvoice(this.activateRoute.snapshot.paramMap.get('id')).subscribe(
                   resp => {
