@@ -12,14 +12,14 @@
           <div class="card-header card-header-primary">
             <h4 class="card-title">Cliente</h4>
             <!-- <div class="card-category">Seleccione un Cliente</div> -->
-            <button class="btn btn-info float-right" (click)="addNewClient()">  <i class="material-icons">person_add</i></button>
+            <button class="btn btn-info float-right" (click)="addNewClient()" *ngIf="!flagEdit">  <i class="material-icons">person_add</i></button>
   
           </div>
           <div class="card-body">
             <form [formGroup]="listForm" (ngSubmit)="saveBudget()">
               <div class="row">
                   <div class="form-group col-lg-12 col-md-12 col-sm-12 pt-1">
-                    <ngx-select-dropdown [options]="clients" [config]="dropdownSetup" formControlName="client" (change)="selectClient()"></ngx-select-dropdown>
+                    <ngx-select-dropdown [options]="clients" [config]="dropdownSetup" formControlName="client" (change)="selectClient()" [disabled]="flagEdit"></ngx-select-dropdown>
                   </div>
                   <div class="form-group col-lg-4 col-md-4 col-sm-12 text-center">
                   </div>
@@ -37,7 +37,7 @@
         <div class="card-header card-header-primary">
           <h4 class="card-title">Productos</h4>
           <p class="card-category"></p>
-          <button class="btn btn-info float-right" (click)="addBudgetItem()" [disabled]="!clientSelected">Agregar Producto</button>
+          <button class="btn btn-info float-right" (click)="addBudgetItem()" [disabled]="!clientSelected" *ngIf="!flagEdit">Agregar Producto</button>
         </div>
   
         <div class="card-body">
@@ -62,29 +62,29 @@
                   <td class="text-center"> <small>({{p.iva}}) % </small> = {{(((p.precio * p.cantidad) * p.iva)/100) | number:'2.1-2' }}</td>
                   <td class="text-center">{{((p.precio * p.cantidad) - (((p.precio * p.cantidad) * p.iva)/100)) |  number:'2.1-2'}}</td>
                   <td class="text-center">
-                    <button class="btn btn-outline-info" (click)="removeElement(i)"><i class="fa fa-times text-danger"></i></button>
-                    <button class="btn btn-outline-info" (click)="updateElement(i)"><i class="fa fa-edit  text-success"></i></button>
+                    <button class="btn btn-outline-info" (click)="removeElement(i)" *ngIf="!flagEdit"><i class="fa fa-times text-danger"></i></button>
+                    <button class="btn btn-outline-info" (click)="updateElement(i)" *ngIf="!flagEdit"><i class="fa fa-edit  text-success"></i></button>
                   </td>
                 </tr>
   
                 <tr>
                   <td>TOTAL</td>
                   <td></td>
-                  <td class="text-center">{{totalizador}}</td>
-                  <td class="text-center">{{iva}}</td>   
-                  <td class="text-center">${{(totalizador - iva) |  number:'2.1-2'}}</td>
+                  <td class="text-center"><b>{{totalizador}}</b></td>
+                  <td class="text-center"><b>{{iva}}</b></td>   
+                  <td class="text-center"><b>${{(totalizador + iva) |  number:'2.1-2'}}</b></td>
                   <td></td>     
                 </tr>
                 <tr>
                   <td class="text-center"></td>
-                  <td class="text-center">
+                  <td class="text-right">
                     <!-- <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="makePDF()">Generar PDF</button> -->
-                    <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="imprimirPDF()">Generar PDF</button>
-  
                   </td>
+                  <td class="text-center"></td>
+                  <td class="text-center"></td>
                   <td class="text-center">
+                    <button href="#" class="btn btn-round btn-fill btn-default" (click)="imprimirPDF()" *ngIf="flagEdit">Generar PDF</button>
                     <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>
-                    <button  *ngIf="flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar los cambios</button>
                   </td>
                 </tr>
               </tbody>
