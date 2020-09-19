@@ -37,7 +37,7 @@
             <div class="tab-pane active" id="profile">
               <table class="table">
                 <tbody>
-                  <tr *ngFor="let f of facturas | filter: filterMatch;  let i = index">
+                  <tr *ngFor="let f of facturas | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
                     <td>{{f.numero}} </td>
                     <td>{{f.fecha | date}} </td>
                     <td>Cliente: {{f.cliente.apellido}}, {{f.cliente.nombre}}</td>
@@ -58,4 +58,12 @@
         </div>
       </div>
     </div>
+    <div class="row text-center">                
+      <pagination-controls responsive="true"
+      previousLabel="Anterior"
+      nextLabel="Siguiente"
+      class="pagination pt-3 pl-0" 
+      (pageChange)="page = $event">
+    </pagination-controls>
+   </div>
   

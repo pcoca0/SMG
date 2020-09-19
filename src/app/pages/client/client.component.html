@@ -22,7 +22,8 @@
           <th class="td-actions text-right">Acciones</th>
         </thead>
         <tbody>
-          <tr *ngFor="let c of clientes | filter: filterMatch;  let i = index; trackBy:trackBy">
+          <!-- <tr *ngFor="let c of clientes | filter: filterMatch;  let i = index; trackBy:trackBy"> -->
+            <tr *ngFor="let c of clientes | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page };  let i = index ">
             <td>{{c.razonSocial}} | {{c.cuil}}</td>
             <td>{{c.apellido}}, {{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}} </td>
@@ -39,7 +40,15 @@
             </td>
           </tr>
         </tbody>
-      </table>
+      </table>      
     </div>
   </div>
-</div>
+  <div class="row text-center">                
+    <pagination-controls responsive="true"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    class="pagination pt-3 pl-0" 
+    (pageChange)="page = $event">
+  </pagination-controls>
+ </div>
+

@@ -18,6 +18,7 @@ import { ProducModalComponent } from './components/modals/produc-modal/produc-mo
 import { UnauthorizedComponent } from './components/unauthorized/unauthorized.component';
 import { VendorModalComponent } from './components/modals/vendor-modal/vendor-modal.component';
 import { InvoiceModalComponent } from './components/modals/invoice-modal/invoice-modal.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -28,7 +29,8 @@ import { InvoiceModalComponent } from './components/modals/invoice-modal/invoice
     FormsModule,
     NgxBootstrapModule,
     SelectDropDownModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    NgxPaginationModule
   ],
   exports: [
     SidebarComponent,
@@ -42,7 +44,8 @@ import { InvoiceModalComponent } from './components/modals/invoice-modal/invoice
     ClientModalComponent,
     ClientViewComponent,
     CategoryModalComponent,
-    ProducModalComponent
+    ProducModalComponent,
+    NgxPaginationModule
     ],
   entryComponents: [
    BudgeModalComponent,

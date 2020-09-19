@@ -21,7 +21,7 @@
           <th class="td-actions text-right">Acciones</th>
         </thead>
         <tbody>
-          <tr *ngFor="let c of productos | filter: filterMatch; let i=index">
+          <tr *ngFor="let c of productos | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page }; let i=index">
             <td>{{c.codigo || 0}}</td>
             <td>{{c.descripcion}}</td>
             <td class="td-actions text-right">
@@ -41,4 +41,12 @@
       </table>
     </div>
   </div>
+</div>
+<div class="row text-center">                
+  <pagination-controls responsive="true"
+  previousLabel="Anterior"
+  nextLabel="Siguiente"
+  class="pagination pt-3 pl-0" 
+  (pageChange)="page = $event">
+</pagination-controls>
 </div>

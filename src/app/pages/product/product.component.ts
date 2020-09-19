@@ -33,6 +33,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   preciosCategoriasCliente: Array<IPriceClientCategory> = [];
   precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
   private suscriptions: Subscription[] = [];
+  page: number  = 1;
+
 
 
   constructor(

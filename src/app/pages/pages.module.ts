@@ -16,6 +16,7 @@ import { ReportBudgetComponent } from './report-budget/report-budget.component';
 import { VendorComponent } from './vendor/vendor.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
+import { NgxBootstrapModule } from '../shared/ngx-bootstrap/ngx-bootstrap.module';
 
 
 @NgModule({
@@ -26,7 +27,7 @@ import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
     RouterModule,
     ReactiveFormsModule,
     PAGES_ROUTES,
-    SweetAlert2Module,
+    SweetAlert2Module
   ]
 })
 export class PagesModule { }

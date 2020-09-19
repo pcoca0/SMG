@@ -30,6 +30,8 @@ export class VendorComponent implements OnInit {
   client: IVendorItemResponse;
   vendorNew: IVendorItemResponse;
   private suscriptions: Subscription[] = [];
+  page: number  = 1;
+
 
 
   constructor(

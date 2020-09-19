@@ -16,6 +16,8 @@ export class InvoiceComponent implements OnInit, OnDestroy {
   facturas: Array<IInvoiceItemResponse>;
   private suscriptions: Subscription[] = [];
   filterMatch: string;
+  page: number  = 1;
+
 
   constructor(
     private invoiceService: InvoiceService,

@@ -12,10 +12,13 @@ import Swal from 'sweetalert2';
   styleUrls: ['./budget.component.scss']
 })
 export class BudgetComponent implements OnInit, OnDestroy {
-
+  
+  today: number = Date.now();
   presupuestos: Array<IBudgetItemResponse>;
   private suscriptions: Subscription[] = [];
   filterMatch: string;
+  page: number  = 1;
+
 
   constructor(
     private budgetService: BudgetService,

@@ -30,6 +30,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   client: IClientItemResponse;
   clientNew: IClientItemResponse;
   private suscriptions: Subscription[] = [];
+  page: number  = 1;
 
 
   constructor(
@@ -43,12 +44,13 @@ export class ClientComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.suscriptions.push(
-      this.clientService.getClients().subscribe(resp => this.clientes = resp.data.clientes),
+      this.clientService.getClients().subscribe(resp => this.clientes = resp.data.clientes ),
       this.utilsService.getLocalidades().subscribe(respL => this.localidades = respL),
       this.utilsService.getPerfilesAFIP().subscribe(respP => this.perfilesAFIP = respP),
       this.clientCategoryService.getClientCategories().subscribe(respC => this.categoriasCliente = respC?.data?.['categoriasCliente'])
       );
   }
+
   search(term: string) {
     this.filterMatch = term;
   }
@@ -133,6 +135,7 @@ export class ClientComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.suscriptions.forEach(suscription => suscription.unsubscribe());
   }
+
 
 
 }
