@@ -3,7 +3,7 @@ import { IProductItemResponse } from 'src/app/core/interfaces/responses/product.
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
-import { IPriceClientCategory, IClientCategory } from 'src/app/core/interfaces/utils';
+import { IPriceClientCategory, IClientCategory, IIva } from 'src/app/core/interfaces/utils';
 
 @Component({
   selector: 'app-produc-modal',
@@ -16,6 +16,7 @@ export class ProducModalComponent implements OnInit {
   message: string;
   product: IProductItemResponse;
   categoriesClient: Array<IClientCategory>;
+  ivas: Array<IIva>;
   public event: EventEmitter<any> = new EventEmitter();
   formProduct: FormGroup;
   action: string;
@@ -25,7 +26,7 @@ export class ProducModalComponent implements OnInit {
   preciosArray: FormArray;
 
   dropdownSetup: Object = {
-    displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
+    displayKey:'iva', //if objects array passed which key to be displayed defaults to description
     search: true, //true/false for the search functionlity defaults to false,
     height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
     placeholder:'Selecciona', // text to be displayed when no item is selected defaults to Select,
@@ -47,7 +48,7 @@ export class ProducModalComponent implements OnInit {
       descripcion: ['', Validators.required],
       codigo: [0, Validators.required],
       precio: [0, Validators.required],
-      // iva: ['', Validators.required],
+      iva: ['', Validators.required],
       stock: ['', Validators.required],
       precios: this.fb.array([])
     });
@@ -62,7 +63,7 @@ export class ProducModalComponent implements OnInit {
       this.formProduct.patchValue({
       descripcion: this.product.descripcion,
       codigo: this.product.codigo,
-      // iva: this.product.iva,
+      iva: this.product.iva,
       stock: this.product.stock,
       });
       this.product.precios.forEach((p) => {
@@ -93,8 +94,7 @@ export class ProducModalComponent implements OnInit {
     this.event.emit({data: item, position: pos, res: 200});
   }
 
-  selectCategory(){}
-
+  selectIva(){}
 
   onSubmit(){
     switch (this.action) {

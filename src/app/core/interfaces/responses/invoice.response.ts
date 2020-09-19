@@ -13,8 +13,11 @@ export interface IInvoiceItemResponse {
     fecha: Date;
     cliente: IClientItemResponse;
     productos: IProductItemResponse[];
+    ivaDesglose: boolean;
     nro: number;
     subTotal: number;
     totalIva: number;
+    totalIva21: number;
+    totalIva10: number;
     total: number;
   }

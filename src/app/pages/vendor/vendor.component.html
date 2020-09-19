@@ -22,7 +22,7 @@
           <th class="td-actions text-right">Acciones</th>
         </thead>
         <tbody>
-          <tr *ngFor="let c of proveedores | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page };  let i = index; trackBy:trackBy">
+          <tr *ngFor="let c of proveedores | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page };  let i = index; trackBy:trackBy">
             <td>{{c.razonSocial}} | {{c.cuit}}</td>
             <td>{{c.apellido}}-{{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}}</td>

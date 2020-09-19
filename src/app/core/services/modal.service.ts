@@ -8,7 +8,7 @@ import { ClientModalComponent } from 'src/app/shared/components/modals/client-mo
 import { ICategoryItemResponse } from '../interfaces/responses/category.response';
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
-import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory } from '../interfaces/utils';
+import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory, IIva } from '../interfaces/utils';
 import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
 import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
 import { ClientCategory } from '../models/utils';
@@ -173,13 +173,15 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  productAdd(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>
+  productAdd(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>,
+             ivas: Array<IIva>
     ){
     const initialState = {
       title,
       message,
       product,
       categoriesClient,
+      ivas,
       action: 'add',
     };
 
@@ -187,12 +189,14 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-  productEdit(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>, pos?: number){
+  productEdit(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>,
+              ivas: Array<IIva>, pos?: number){
     const initialState = {
       title,
       message,
       product,
       categoriesClient,
+      ivas,
       action: 'edit',
       pos
     };

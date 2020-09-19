@@ -26,7 +26,9 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   today: number =  Date.now();
   totalizador: number;
   iva: number;
-
+  iva21: number;
+  iva10: number;
+  
   totalizadorParcial = 0;
   productos: Array<IProductItemResponse>;
   facturas: Array<IInvoiceItemResponse> = [];
@@ -36,7 +38,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   clients: Array<IClientItemResponse>;
   client: IClientItemResponse;
   clientView: IClientItemResponse;
-  invoiceRequest: IInvoiceRequest = {cliente: null, productos: []};
+  invoiceRequest: IInvoiceRequest = {cliente: null, ivaDesglose: false, productos: []};
   flagEdit = false;
   clientSelected = false;
   producto: IProductItemResponse;
@@ -44,6 +46,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   localidades: Array<ILocation>;
   perfilesAFIP: Array<IProfileAFIP>;
   categoriasCliente: Array<IClientCategory>;
+  flagDesgloseIVA: boolean = false;
 
   private suscriptions: Subscription[] = [];
 
@@ -101,7 +104,10 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
                             console.log(this.invoiceRequest);
                             this.clientView =  resp.data.facturas[0].cliente,
                             this.listForm.controls.client.setValue( resp.data.facturas[0].cliente),
-                            this.totalizador =  resp.data.facturas[0]?.total || 0,
+                            this.flagDesgloseIVA = resp.data.facturas[0]?.ivaDesglose,
+                            this.totalizador =  (resp.data.facturas[0]?.total - resp.data.facturas[0]?.totalIva) || 0,
+                            this.iva21 = resp.data.facturas[0]?.totalIva21 || 0,
+                            this.iva10 = resp.data.facturas[0]?.totalIva10 || 0,
                             this.iva = resp.data.facturas[0]?.totalIva || 0
                           })
                   );
@@ -149,6 +155,7 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   selectClient() {
   this.clientView = this.listForm.value.client;
   this.clientSelected = true;
+  this.flagDesgloseIVA = this.breakDown();
   this.categoriaCliente = this.clientView.categoriaCliente;
   this.invoiceRequest.cliente = this.clientView;
   console.log(this.clientView);
@@ -159,9 +166,16 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
     console.log("subida");
     this.totalizador = 0.00;
     this.iva = 0.00;
+    this.iva21 = 0.00;
+    this.iva10 = 0.00;
     this.invoiceRequest.productos.forEach( i => {
-      this.totalizador = this.totalizador + (i.precio * i.cantidad),
-      this.iva = this.iva + (((i.precio * i.cantidad) * i.iva) / 100 );
+      this.totalizador = this.totalizador + (i.precio * i.cantidad);
+      this.iva = this.iva + (((i.precio * i.cantidad) * Number(i.iva.iva) ) / 100 );
+      if ( i.iva.iva === 21 ) {
+        this.iva21 = this.iva21 + (((i.precio * i.cantidad) * Number(i.iva.iva) ) / 100 );
+      }else {
+        this.iva10 = this.iva10 + (((i.precio * i.cantidad) * Number(i.iva.iva) ) / 100 );
+      }
     });
   }
 
@@ -185,8 +199,11 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
   }
 
   saveBudget() {
+    this.invoiceRequest.ivaDesglose = this.flagDesgloseIVA;
     this.invoiceRequest.subTotal = this.totalizador;
     this.invoiceRequest.totalIva = this.iva,
+    this.invoiceRequest.totalIva21 = this.iva21,
+    this.invoiceRequest.totalIva10 = this.iva10,
     this.invoiceRequest.total = Number(this.totalizador + this.iva),
 
     this.invoiceRequest.fecha = new Date();
@@ -218,5 +235,13 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
 
   imprimirPDF(){
     this.router.navigate(['imprimirfacturas', this.invoiceRequest.id]);
+  }
+
+  breakDown(): boolean{
+    if (this.clientView.perfilAFIP.descripcion.toUpperCase() === 'RESPONSABLE INSCRIPTO'){
+      console.log(this.clientView.perfilAFIP.descripcion.toUpperCase());
+     return true;
+    }
+    return false;
   }
 }

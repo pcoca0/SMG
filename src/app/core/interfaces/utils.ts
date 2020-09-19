@@ -16,9 +16,12 @@ export interface IClientResponse {
         categoriasClientes: Array<IClientCategory>;
     };
 }
-
 export interface IPriceClientCategory {
   id: string;
   categoriaCliente: IClientCategory;
   precio: number;
+}
+export interface IIva {
+  id: string;
+  iva: number;
 }

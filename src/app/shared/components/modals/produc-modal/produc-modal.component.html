@@ -10,33 +10,34 @@
   <form [formGroup]="formProduct" (ngSubmit)="onSubmit()">
     <div class="card-body">
           <div class="row">
-          <div class="col-md-12">
-            <div class="form-group">
-              <label class="bmd-label-floating">Descripción</label>
-              <input type="text"  formControlName="descripcion" class="form-control">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Descripción</label>
+                <input type="text"  formControlName="descripcion" class="form-control">
+              </div>
             </div>
-          </div>
-        </div>
-          <div class="row">
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">codigo</label>
                 <input type="text" formControlName="codigo" class="form-control">
               </div>
             </div>
-            <!-- <div class="col-md-6">
+          </div>
+          <div class="row">
+            <div class="col-md-6">
               <div class="form-group">
-                <label class="bmd-label-floating">IVA</label>
-                <input type="text"  formControlName="iva" class="form-control">
+                <label class="bmd-label-floating">IVA %</label>
+                <ngx-select-dropdown [options]="ivas" [config]="dropdownSetup" formControlName="iva" (change)="selectIva()"></ngx-select-dropdown>
               </div>
-            </div> -->
+            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Stock</label>
                 <input type="text"  formControlName="stock" class="form-control">
               </div>
             </div>
-        </div>
+          </div> 
+       
           <div class="row" formArrayName="precios" >
             <ng-container *ngFor="let c of categoriesClient; let i=index" [formGroupName]="i">
               <input type="hidden"  formControlName="id" class="form-control">
@@ -54,6 +55,7 @@
           </div>
         <div class="clearfix"></div>
   </div>
+  
   <div class="modal-footer">
     <button type="submit" class="btn btn-primary"  [disabled]="formProduct.invalid">Agregar</button>
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>

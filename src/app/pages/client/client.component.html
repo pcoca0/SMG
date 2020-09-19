@@ -23,7 +23,7 @@
         </thead>
         <tbody>
           <!-- <tr *ngFor="let c of clientes | filter: filterMatch;  let i = index; trackBy:trackBy"> -->
-            <tr *ngFor="let c of clientes | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page };  let i = index ">
+            <tr *ngFor="let c of clientes | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page };  let i = index ">
             <td>{{c.razonSocial}} | {{c.cuil}}</td>
             <td>{{c.apellido}}, {{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}} </td>

@@ -1,4 +1,4 @@
-import { IPriceClientCategory } from '../utils';
+import { IPriceClientCategory, IIva } from '../utils';
 
 export interface IProductRequest {
   id: string;
@@ -6,7 +6,7 @@ export interface IProductRequest {
   codigo: number;
   precio: number;
   cantidad: number;
-  iva: number;
+  iva: IIva;
   stock: number;
   precios: Array<IPriceClientCategory>;
 }

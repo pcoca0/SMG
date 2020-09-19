@@ -49,7 +49,7 @@ export class InvoiceModalComponent implements OnInit {
       producto: ['', Validators.required],
       precio: ['', Validators.required],
       cantidad: ['', Validators.required],
-      iva: ['', Validators.required]
+      //iva: ['', Validators.required]
 
 
     });
@@ -65,7 +65,7 @@ export class InvoiceModalComponent implements OnInit {
         producto: this.e,
         precio: this.e.precio,
         cantidad: this.e.cantidad,
-        iva: this.e.iva
+       // iva: this.e.iva
       });
     }
   }
@@ -99,7 +99,7 @@ export class InvoiceModalComponent implements OnInit {
 
   onSubmit(){
   this.itemForm.value.producto.cantidad = Number(this.itemForm.value.cantidad); 
-  this.itemForm.value.producto.iva = Number(this.itemForm.value.iva); 
+  //this.itemForm.value.producto.iva = Number(this.itemForm.value.iva); 
 
   switch (this.action) {
     case 'add':

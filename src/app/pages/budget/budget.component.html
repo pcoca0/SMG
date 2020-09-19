@@ -19,7 +19,7 @@
           <div class="tab-pane active" id="profile">
             <table class="table">
               <tbody>
-                <tr *ngFor="let p of presupuestos | filter: filterMatch | paginate: { itemsPerPage: 5, currentPage: page }; let i = index">
+                <tr *ngFor="let p of presupuestos | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
                   <td>{{p.numero}} </td>
                   <td>{{p.fecha | date}} </td>
                   <td>Cliente: {{p.cliente.apellido}}, {{p.cliente.nombre}}</td>

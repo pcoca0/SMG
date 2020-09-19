@@ -8,7 +8,10 @@ export interface IInvoiceRequest {
     cliente?: IClientItemResponse;
     productos?: IProductItemResponse[];
     nro?: number;
+    ivaDesglose: boolean;
     subTotal?: number;
     totalIva?: number;
+    totalIva21?: number;
+    totalIva10?: number;
     total?: number;
   }

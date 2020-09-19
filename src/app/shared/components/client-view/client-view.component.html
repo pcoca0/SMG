@@ -2,9 +2,9 @@
 <div class="card  border-dark col-md-8 col-sm-12" *ngIf="client">
 
   <div class="card-body">
-    <h6 class="card-title">CUIL: <small>{{client?.cuil}}</small></h6>
-    <h6 class="card-title">Nombre: <small>{{client?.nombre}}</small></h6>
-    <h6 class="card-title">Apellido:  <small>{{client?.apellido}}</small></h6>
+    <h6 class="card-title">Cliente: <small>{{client?.razonSocial}} / {{client?.cuil}}</small></h6>
+    <h6 class="card-title">Tipo:  <small>{{client?.perfilAFIP.descripcion}} </small></h6>
     <h6 class="card-title">Dirección:  <small>{{client?.calle}} {{client?.numero}} </small></h6>
+    <h6 class="card-title">Localidad:  <small>{{client?.localidad.descripcion}} </small></h6>
   </div>
 </div>

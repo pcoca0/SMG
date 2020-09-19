@@ -9,9 +9,10 @@ import { Subscription } from 'rxjs';
 import Swal from 'sweetalert2';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { TokenService } from 'src/app/core/services/token.service';
-import { IClientCategory, IPriceClientCategory } from '../../core/interfaces/utils';
+import { IClientCategory, IIva, IPriceClientCategory } from '../../core/interfaces/utils';
 import { ClientCategoryService } from '../../core/services/client-category.service';
 import { PriceClientCategory } from 'src/app/core/models/utils';
+import { UtilsService } from 'src/app/core/services/utils.service';
 
 
 @Component({
@@ -25,10 +26,11 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
-  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: 0, stock: 0, precios: []};
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: []};
+  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: []};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
+  ivas: Array<IIva>;
   categoriasCliente: Array<IClientCategory>;
   preciosCategoriasCliente: Array<IPriceClientCategory> = [];
   precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
@@ -42,6 +44,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private swalService: SwalService,
     private tokenService: TokenService,
+    private utilsService: UtilsService,
+
     private clientCategoryService: ClientCategoryService
 
 
@@ -52,8 +56,9 @@ export class ProductComponent implements OnInit, OnDestroy {
                 this.productService.getProducts().subscribe(resp => this.productos = resp.data.productos),
                 this.clientCategoryService.getClientCategories().subscribe(respC =>
                                            this.categoriasCliente = respC?.data?.['categoriasCliente']
-                                      )
-                                    );
+                                      ),
+                this.utilsService.getIvas().subscribe( respIva => this.ivas = respIva)
+  );
 
     this.tokenService.getAuthorities().forEach(
       rol => {if (rol['authority'] === 'ROL_ADMIN') { this.isAdmin = true; } }
@@ -68,7 +73,7 @@ export class ProductComponent implements OnInit, OnDestroy {
      console.log(resp);
      this.productRequest.descripcion = resp.descripcion;
      this.productRequest.codigo = resp.codigo;
-    //  this.productRequest.iva = resp.iva;
+     this.productRequest.iva = resp.iva;
      this.productRequest.stock = resp.stock;
      this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
@@ -85,7 +90,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     console.log('Por agregar una Producto');
 
     console.log(this.preciosCategoriasCliente);
-    this.bsModalRef = this.modalService.productAdd('Producto', 'Productos', this.product, this.categoriasCliente);
+    this.bsModalRef = this.modalService.productAdd('Producto', 'Productos', this.product, this.categoriasCliente, this.ivas);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log("disparo"),
@@ -109,7 +114,7 @@ export class ProductComponent implements OnInit, OnDestroy {
     const pos = this.productos.findIndex(p =>  p.id === id);
 
     console.log(pos);
-    this.bsModalRef = this.modalService.productEdit('Producto', 'Productos',  this.productos[pos], this.categoriasCliente, pos);
+    this.bsModalRef = this.modalService.productEdit('Producto', 'Productos',  this.productos[pos], this.categoriasCliente, this.ivas,  pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),
