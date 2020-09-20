@@ -13,6 +13,8 @@ import { IClientCategory, IIva, IPriceClientCategory } from '../../core/interfac
 import { ClientCategoryService } from '../../core/services/client-category.service';
 import { PriceClientCategory } from 'src/app/core/models/utils';
 import { UtilsService } from 'src/app/core/services/utils.service';
+import { VendorService } from 'src/app/core/services/vendor.service';
+import { IVendorItemResponse } from '../../core/interfaces/responses/vendor.response';
 
 
 @Component({
@@ -23,11 +25,12 @@ import { UtilsService } from 'src/app/core/services/utils.service';
 export class ProductComponent implements OnInit, OnDestroy {
 
   productos: Array<IProductItemResponse>;
+  proveedores: Array<IVendorItemResponse>;
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: []};
-  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: []};
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   ivas: Array<IIva>;
@@ -45,11 +48,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     private swalService: SwalService,
     private tokenService: TokenService,
     private utilsService: UtilsService,
-
-    private clientCategoryService: ClientCategoryService
-
+    private clientCategoryService: ClientCategoryService,
+    private vendorService: VendorService,
 
   ) { }
+
+
+
+
 
   ngOnInit() {
     this.suscriptions.push(
@@ -57,7 +63,9 @@ export class ProductComponent implements OnInit, OnDestroy {
                 this.clientCategoryService.getClientCategories().subscribe(respC =>
                                            this.categoriasCliente = respC?.data?.['categoriasCliente']
                                       ),
-                this.utilsService.getIvas().subscribe( respIva => this.ivas = respIva)
+                this.utilsService.getIvas().subscribe( respIva => this.ivas = respIva),
+                this.vendorService.getVendors().subscribe(resp => this.proveedores = resp.data.proveedores),
+
   );
 
     this.tokenService.getAuthorities().forEach(
@@ -74,6 +82,7 @@ export class ProductComponent implements OnInit, OnDestroy {
      this.productRequest.descripcion = resp.descripcion;
      this.productRequest.codigo = resp.codigo;
      this.productRequest.iva = resp.iva;
+     this.productRequest.proveedor = resp.proveedor;
      this.productRequest.stock = resp.stock;
      this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
@@ -82,7 +91,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.precioCategoriaCliente.precio = resp.precios[i].precio;
         this.productRequest.precios.push(this.precioCategoriaCliente);
       }
-     console.log(this.productRequest);
+     console.log(this.productRequest); 
      return this.productRequest;
    }
 
@@ -90,7 +99,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     console.log('Por agregar una Producto');
 
     console.log(this.preciosCategoriasCliente);
-    this.bsModalRef = this.modalService.productAdd('Producto', 'Productos', this.product, this.categoriasCliente, this.ivas);
+    this.bsModalRef = this.modalService.productAdd('Producto', 'Productos', this.product, this.categoriasCliente,
+                                                    this.proveedores, this.ivas);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log("disparo"),
@@ -114,7 +124,8 @@ export class ProductComponent implements OnInit, OnDestroy {
     const pos = this.productos.findIndex(p =>  p.id === id);
 
     console.log(pos);
-    this.bsModalRef = this.modalService.productEdit('Producto', 'Productos',  this.productos[pos], this.categoriasCliente, this.ivas,  pos);
+    this.bsModalRef = this.modalService.productEdit('Producto', 'Productos',  this.productos[pos], this.categoriasCliente,
+                                                     this.proveedores, this.ivas,  pos);
     this.bsModalRef.content.event.subscribe(
     resp => {
       console.log(resp.data),

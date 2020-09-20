@@ -37,6 +37,16 @@
               </div>
             </div>
           </div> 
+
+          <div class="row">
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating">Proveedor</label>
+                <ngx-select-dropdown [options]="vendors" [config]="dropdownSetupProv" formControlName="proveedor" (change)="selectProveedor()"></ngx-select-dropdown>
+              </div>
+            </div>
+          </div> 
+       
        
           <div class="row" formArrayName="precios" >
             <ng-container *ngFor="let c of categoriesClient; let i=index" [formGroupName]="i">

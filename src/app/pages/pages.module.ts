@@ -17,10 +17,11 @@ import { VendorComponent } from './vendor/vendor.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 import { NgxBootstrapModule } from '../shared/ngx-bootstrap/ngx-bootstrap.module';
+import { AddProductComponent } from './add-product/add-product.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent],
   imports: [
     CommonModule,
     SharedModule,

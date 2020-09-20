@@ -174,13 +174,14 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
   }
 
   productAdd(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>,
-             ivas: Array<IIva>
+             vendors: Array<IVendorItemResponse>, ivas: Array<IIva>
     ){
     const initialState = {
       title,
       message,
       product,
       categoriesClient,
+      vendors,
       ivas,
       action: 'add',
     };
@@ -190,12 +191,13 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
   }
 
   productEdit(title: string, message: string, product: IProductItemResponse, categoriesClient: Array<IClientCategory>,
-              ivas: Array<IIva>, pos?: number){
+              vendors: Array<IVendorItemResponse>, ivas: Array<IIva>, pos?: number){
     const initialState = {
       title,
       message,
       product,
       categoriesClient,
+      vendors,
       ivas,
       action: 'edit',
       pos

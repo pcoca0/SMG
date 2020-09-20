@@ -1,0 +1,81 @@
+<div class="row" id="document">
+  <div class="col-md-12 ml-auto mr-auto">
+    <div class="card">
+      <div class="card-header card-header-primary">
+          <h4 class="card-title">Producto</h4>
+        </div>
+          <form [formGroup]="formProduct" (ngSubmit)="onSubmit()">
+              <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Descripción</label>
+                          <input type="text"  formControlName="descripcion" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">codigo</label>
+                          <input type="text" formControlName="codigo" class="form-control">
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Stock</label>
+                          <input type="text"  formControlName="stock" class="form-control">
+                        </div>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">IVA %</label>
+                          <ngx-select-dropdown [options]="ivas" [config]="dropdownSetup" formControlName="iva"></ngx-select-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-4">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Proveedor</label>
+                          <ngx-select-dropdown [options]="proveedores" [config]="dropdownSetupProv" formControlName="proveedor"></ngx-select-dropdown>
+                        </div>
+                      </div>
+                      <div class="col-md-2">
+                        <div class="form-group pt-3">
+                          <label class="bmd-label-floating"></label>
+                          <button class="btn btn-info" (click)="addNewVendor()"> <i class="material-icons">assignment_ind</i></button>
+                        </div>
+                        <!-- <div class="card-category">Seleccione un Cliente</div> -->
+              
+                      </div>
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="container-fluid">      
+                      <label class="bmd-label-floating">Precios</label>
+                        <div  class="row container-fluid"  formArrayName="precios" >    
+                          <ng-container *ngFor="let c of categoriasCliente; let i=index" [formGroupName]="i">
+                            <input type="hidden"  formControlName="id" class="form-control">
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input type="text"  formControlName="categoria" class="form-control">
+                          </div>
+                        </div>
+                        <div class="col-md-6">
+                          <div class="form-group">
+                            <input type="text"  formControlName="precio" class="form-control">
+                          </div>
+                        </div>
+                        </ng-container>
+                        </div>
+                    </div>
+            <br>        
+            <div class="row">  
+              <div class="col-md-12 text-right pr-4">
+                <button type="submit" class="btn btn-primary"  [disabled]="formProduct.invalid">Agregar</button>
+              </div>  
+            </div>
+          </form>
+        </div>  
+
+  </div>  
+</div>  

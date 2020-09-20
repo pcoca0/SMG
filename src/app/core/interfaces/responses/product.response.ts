@@ -1,5 +1,6 @@
 import { ICategoryItemResponse } from './category.response';
 import { IIva, IPriceClientCategory } from '../utils';
+import { IVendorItemResponse } from './vendor.response';
 
 export interface IProductResponse {
   data: {
@@ -16,4 +17,6 @@ export interface IProductItemResponse {
  iva: IIva;
  stock: number;
  precios: Array<IPriceClientCategory>;
+ proveedor: IVendorItemResponse;
+
 }

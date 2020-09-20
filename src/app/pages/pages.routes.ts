@@ -11,6 +11,7 @@ import { AuthGuardService as guard } from '../core/guards/auth-guard.service';
 import { VendorComponent } from './vendor/vendor.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
+import { AddProductComponent } from './add-product/add-product.component';
 
 const pagesRoutes: Routes = [
     {
@@ -19,6 +20,7 @@ const pagesRoutes: Routes = [
           {path: '', component: DashboardComponent},
           {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
           {path: 'productos',   component: ProductComponent },
+          {path: 'agregrarProducto',   component: AddProductComponent },
           {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
           {path: 'editarPresupuesto/:id',   component: AddBudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },

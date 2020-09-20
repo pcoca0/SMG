@@ -30,6 +30,12 @@
                   Productos
                 </a>
               </li>
+              <li routerLinkActive="active">
+                <a  [routerLink]="['/agregrarProducto']">
+                  <i class="material-icons">vertical_split</i>
+                  Agregar Producto
+                </a>
+              </li>
             </ul>
           </div>
         </li>
@@ -39,16 +45,16 @@
             </i>
             <p>Presupuestos</p>
           </a>
-          <div class="collapse" id="navbarDropdownMenuLinkPresupuestos">
+          <div class="collapse" id="navbarDropdownMenuLinkPresupuestos" aria-expanded="false">
             <ul class="nav">
               <li  routerLinkActive="active">
-                <a class="dropdown-item" [routerLink]="['/presupuestos']">
+                <a [routerLink]="['/presupuestos']">
                   <i class="material-icons">article</i>
                   Listar Presupuestos
               </a>
               </li>
               <li  routerLinkActive="active">
-                <a class="dropdown-item"  [routerLink]="['/crearPresupuesto']">
+                <a  [routerLink]="['/crearPresupuesto']">
                   <i class="material-icons">assignment_turned_in
                   </i>
                   Crear Presupuesto
@@ -63,10 +69,10 @@
             </i>
             <p>Clientes</p>
           </a>
-          <div class="collapse" id="navbarDropdownMenuLinkClientes">
+          <div class="collapse" id="navbarDropdownMenuLinkClientes" aria-expanded="false">
             <ul class="nav">
             <li  routerLinkActive="active">
-              <a class="dropdown-item" [routerLink]="['/clientes']">
+              <a [routerLink]="['/clientes']">
                 <i class="material-icons">assignment_turned_in</i>
                 Listar Clientes
               </a>
@@ -83,7 +89,7 @@
           <div class="collapse" id="navbarDropdownMenuLinkProveedores">
             <ul class="nav">
               <li  routerLinkActive="active">
-                <a class="dropdown-item" [routerLink]="['/proveedores']">
+                <a [routerLink]="['/proveedores']">
                   <i class="material-icons">assignment_turned_in</i>
                   Listar Proveedores
                </a>
@@ -100,13 +106,13 @@
           <div class="collapse" id="navbarDropdownMenuLinkFacturas">
             <ul class="nav">
               <li  routerLinkActive="active">
-                <a class="dropdown-item" [routerLink]="['/facturas']">
+                <a [routerLink]="['/facturas']">
                   <i class="material-icons">receipt</i>
                   Listar Facturas
                 </a>
              </li>
              <li  routerLinkActive="active"> 
-                <a class="dropdown-item"  [routerLink]="['/crearFactura']">
+                <a  [routerLink]="['/crearFactura']">
                   <i class="material-icons">request_page
                   </i>
                   Crear Factura
