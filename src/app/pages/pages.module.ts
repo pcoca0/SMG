@@ -18,10 +18,11 @@ import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 import { NgxBootstrapModule } from '../shared/ngx-bootstrap/ngx-bootstrap.module';
 import { AddProductComponent } from './add-product/add-product.component';
+import { VendorInvoiceComponent } from './vendor-invoice/vendor-invoice.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent, VendorInvoiceComponent],
   imports: [
     CommonModule,
     SharedModule,

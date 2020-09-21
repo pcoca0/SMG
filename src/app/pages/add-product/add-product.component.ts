@@ -22,8 +22,8 @@ import { VendorService } from 'src/app/core/services/vendor.service';
 export class AddProductComponent implements OnInit {
 
   formProduct: FormGroup;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
-  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0,
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0,
                                       precios: [], proveedor: null };
   categoriasCliente: Array<IClientCategory>;
   ivas: Array<IIva>;
@@ -94,10 +94,10 @@ export class AddProductComponent implements OnInit {
       precios: this.fb.array([])
     });
   }
-  
 
 
-    
+
+
 
   ngOnInit(): void {
     this.preciosArray = this.formProduct.controls.precios as FormArray;
@@ -159,7 +159,7 @@ export class AddProductComponent implements OnInit {
     console.log(this.productRequest);
     return this.productRequest;
   }
-  
+
   onSubmit(){
     this.suscriptions.push(this.productService.addProduct( this.constructorRequest(this.formProduct.value)).subscribe(
       response => {

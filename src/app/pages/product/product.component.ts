@@ -29,8 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
-  productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   ivas: Array<IIva>;
@@ -91,7 +91,7 @@ export class ProductComponent implements OnInit, OnDestroy {
         this.precioCategoriaCliente.precio = resp.precios[i].precio;
         this.productRequest.precios.push(this.precioCategoriaCliente);
       }
-     console.log(this.productRequest); 
+     console.log(this.productRequest);
      return this.productRequest;
    }
 

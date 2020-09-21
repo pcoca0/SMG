@@ -13,6 +13,8 @@ export interface IProductItemResponse {
  descripcion: string;
  codigo: number;
  precio: number;
+ precioCompra: number;
+ ivaCompra: number;
  cantidad: number;
  iva: IIva;
  stock: number;
