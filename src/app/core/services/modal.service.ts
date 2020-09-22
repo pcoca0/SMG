@@ -13,6 +13,7 @@ import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
 import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
 import { ClientCategory } from '../models/utils';
 import { InvoiceModalComponent } from 'src/app/shared/components/modals/invoice-modal/invoice-modal.component';
+import { VendorInvoiceProductModalComponent } from 'src/app/shared/components/modals/vendor-invoice-product-modal/vendor-invoice-product-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -204,6 +205,32 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
     };
 
     return  this.bsModalService.show(ProducModalComponent, {initialState});
+    //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  vendorInvoiceAdd(title: string, message: string, products: Array<IProductItemResponse>){
+    const initialState = {
+    title,
+    message,
+    products,
+    action: 'add'
+  };
+
+  return this.bsModalService.show(VendorInvoiceProductModalComponent, {initialState});
+  //return new Observable<string>(this.getBudgetModalsubscriber());
+  }
+
+  vendorInvoiceEdit(title: string, message: string, products: Array<IProductItemResponse>, e?: IProductItemResponse,  pos?: number){
+    const initialState = {
+      title,
+      message,
+      products,
+      action: 'edit',
+      pos,
+      e
+    };
+  
+    return this.bsModalService.show(VendorInvoiceProductModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 }

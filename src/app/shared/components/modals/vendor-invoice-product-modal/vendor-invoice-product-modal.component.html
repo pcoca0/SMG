@@ -1,0 +1,41 @@
+<div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{title}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+
+    <div class="modal-body text-center">
+      <p>Seleccione {{message}}</p>
+      <div class="col-sm-12">
+         <ngx-select-dropdown [options]="products" [config]="dropdownSetup" formControlName="producto" (change)="selectProduct()"></ngx-select-dropdown>
+      </div>
+      <br>    
+     <div class="col-sm-12">
+       <label for="">Precio</label>
+      <input type="text" value="" class="form-control" formControlName="precio" >
+     </div>
+     <br> 
+     <div class="row">
+        <div class="col-sm-12"> 
+          <label for="">Iva</label>
+          <input type="text" value="" class="form-control" formControlName="iva">
+        </div> 
+      </div>
+     <div class="row">
+      <div class="col-sm-12"> 
+        <label for="">Cantidad</label>
+        <input type="text" value="" class="form-control" formControlName="cantidad">
+      </div> 
+    </div>
+
+
+    </div>
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Agregar</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>
+    </div>
+  </form>
+  </div>

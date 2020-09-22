@@ -12,6 +12,8 @@ import { VendorComponent } from './vendor/vendor.component';
 import { InvoiceComponent } from './invoice/invoice.component';
 import { AddInvoiceComponent } from './add-invoice/add-invoice.component';
 import { AddProductComponent } from './add-product/add-product.component';
+import { VendorInvoiceComponent } from './vendor-invoice/vendor-invoice.component';
+import { AddVendorInvoiceComponent } from './add-vendor-invoice/add-vendor-invoice.component';
 
 const pagesRoutes: Routes = [
     {
@@ -27,6 +29,10 @@ const pagesRoutes: Routes = [
           {path: 'imprimirPresupuesto/:id',   component: ReportBudgetComponent },
           {path: 'clientes',   component: ClientComponent },
           {path: 'proveedores',   component: VendorComponent },
+          {path: 'facturasProveedores',   component: VendorInvoiceComponent },
+          {path: 'cargarFacturaProveedor',   component: AddVendorInvoiceComponent },
+
+
           {path: 'facturas',   component: InvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearFactura',   component: AddInvoiceComponent },
           {path: 'editarFactura/:id',   component: AddInvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },

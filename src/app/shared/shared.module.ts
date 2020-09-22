@@ -19,10 +19,11 @@ import { UnauthorizedComponent } from './components/unauthorized/unauthorized.co
 import { VendorModalComponent } from './components/modals/vendor-modal/vendor-modal.component';
 import { InvoiceModalComponent } from './components/modals/invoice-modal/invoice-modal.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { VendorInvoiceProductModalComponent } from './components/modals/vendor-invoice-product-modal/vendor-invoice-product-modal.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent, VendorInvoiceProductModalComponent ],
   imports: [
     CommonModule,
     RouterModule,
