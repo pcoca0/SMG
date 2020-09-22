@@ -11,14 +11,12 @@ export interface IVendorInvoiceResponse {
 export interface IVendorInvoiceItemResponse {
     id: string;
     numero: number;
+    concepto: string;
     fecha: Date;
     proveedor: IVendorItemResponse;
     productos: IProductItemResponse[];
-    ivaDesglose: boolean;
     nro: number;
     subTotal: number;
     totalIva: number;
-    totalIva21: number;
-    totalIva10: number;
     total: number;
   }

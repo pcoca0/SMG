@@ -28,7 +28,7 @@ export class AddVendorInvoiceComponent implements OnInit {
   totalizador: number;
   iva: number;
 
-  
+
   totalizadorParcial = 0;
   productos: Array<IProductItemResponse>;
   facturasProveedores: Array<IVendorInvoiceItemResponse> = [];
@@ -99,7 +99,7 @@ export class AddVendorInvoiceComponent implements OnInit {
                             this.vendorInvoiceRequest = resp.data.facturasProveedores[0],
                             console.log(this.vendorInvoiceRequest);
                             this.proveedorView =  resp.data.facturasProveedores[0].proveedor,
-                            this.listForm.controls.proveedor.setValue( resp.data.facturasProveedores[0].proveedores),
+                            this.listForm.controls.proveedor.setValue( resp.data.facturasProveedores[0].proveedor),
                             this.totalizador =  (resp.data.facturasProveedores[0]?.total - resp.data.facturasProveedores[0]?.totalIva) || 0,
                             this.iva = resp.data.facturasProveedores[0]?.totalIva || 0
                           })
@@ -117,7 +117,7 @@ export class AddVendorInvoiceComponent implements OnInit {
           } else {
           console.log(resp['data']);
           this.vendorInvoiceRequest.productos.push(resp['data']);
-          this.updateTotalizador();
+          //this.updateTotalizador();
           }
     });
  }
@@ -129,8 +129,11 @@ export class AddVendorInvoiceComponent implements OnInit {
   this.localidades, this.categoriasCliente);
   this.bsModalRef.content.event.subscribe(
   resp => {
+    console.log('del modal lo que viene');
+    console.log(resp);
     this.suscriptions.push(this.vendorService.addVendor(resp.data).subscribe(
                     response => {
+                     console.log(response);
                      this.proveedorView = response.data.proveedores[0],
                     //this.clients.push(this.client),
                     //this.options = [...this.options, {id: 34, description: 'Adding new item'}];
@@ -144,12 +147,10 @@ export class AddVendorInvoiceComponent implements OnInit {
 }
 
 selectProveedor() {
-  this.clientView = this.listForm.value.client;
-  this.clientSelected = true;
-  this.flagDesgloseIVA = this.breakDown();
+  this.proveedorView = this.listForm.value.proveedor;
+  this.proveedorSelected = true;
   this.categoriaCliente = this.clientView.categoriaCliente;
-  this.invoiceRequest.cliente = this.clientView;
-  console.log(this.clientView);
+  this.vendorInvoiceRequest.proveedor = this.proveedorView;
   }
 
 

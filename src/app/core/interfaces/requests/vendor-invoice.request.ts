@@ -8,7 +8,6 @@ export interface IVendorInvoiceRequest {
     proveedor?: IVendorItemResponse;
     productos?: IProductItemResponse[];
     nro?: number;
-    ivaDesglose: boolean;
     subTotal?: number;
     totalIva?: number;
     total?: number;
