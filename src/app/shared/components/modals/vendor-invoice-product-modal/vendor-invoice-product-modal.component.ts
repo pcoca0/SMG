@@ -59,9 +59,9 @@ export class VendorInvoiceProductModalComponent implements OnInit {
       // this.itemForm.value.producto.se = this.e;
       this.itemForm.patchValue({
         producto: this.e,
-        precio: this.e.precio,
-        cantidad: this.e.cantidad,
-        iva: this.e.iva
+        precio: this.e.precioCompra,
+        cantidad: this.e.cantidad || 0,
+        iva: this.e.ivaCompra || 0
       });
     }
   }

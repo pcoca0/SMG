@@ -1,0 +1,10 @@
+
+<div class="card  border-dark col-md-8 col-sm-12" *ngIf="vendor">
+    <div class="card-body">
+      <h6 class="card-title">Proveedor: <small>{{vendor?.razonSocial}} / {{vendor?.cuil}}</small></h6>
+      <h6 class="card-title">Tipo:  <small>{{vendor?.perfilAFIP.descripcion}} </small></h6>
+      <h6 class="card-title">Dirección:  <small>{{vendor?.calle}} {{vendor?.numero}} </small></h6>
+      <h6 class="card-title">Localidad:  <small>{{vendor?.localidad.descripcion}} </small></h6>
+    </div>
+  </div>
+  
