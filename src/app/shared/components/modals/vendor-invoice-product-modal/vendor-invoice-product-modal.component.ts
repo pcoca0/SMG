@@ -118,7 +118,7 @@ export class VendorInvoiceProductModalComponent implements OnInit {
       break;
   }
 }
-
+selectProduct() {}
 close() {
   this.bsModalRef.hide();
 }
