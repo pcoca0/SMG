@@ -70,6 +70,11 @@ export class VendorInvoiceComponent implements OnInit, OnDestroy {
     this.router.navigate(['editarFacturaProveedor', id]);
   }
 
+  editVendorInvoiceSpend(id: string) {
+    console.log('id Vendorinvoice' + id);
+    this.router.navigate(['editarGastoProveedor', id]);
+  }
+
   ngOnDestroy(): void {
     this.suscriptions.forEach( suscription => suscription.unsubscribe());
   }

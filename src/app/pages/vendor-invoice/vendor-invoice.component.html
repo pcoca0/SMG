@@ -1,5 +1,7 @@
 <div class="form-group col-sm-12 text-right pr-4">
-    <a class="btn btn-outline-info" [routerLink]="['/facturasProvedoores']" ><i class="material-icons">receipt</i></a>
+    <a class="btn btn-outline-info" [routerLink]="['/cargarFacturaProveedor']" ><i class="material-icons">receipt</i> MP</a>
+    <a class="btn btn-outline-info" [routerLink]="['/cargarGastoProveedor']" ><i class="material-icons">receipt</i> GASTOS</a>
+
   </div>
   <div class="row">
     <div class="col-lg-12 col-md-12">
@@ -23,10 +25,14 @@
                     <td>Proveedor: {{f.proveedor.apellido}}, {{f.proveedor.nombre}}</td>
                     <td>Total: {{f.total }}</td>
                     <td class="td-actions text-right">
-                      <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editVendorInvoice(f.id)">
+                      <button type="button"  *ngIf="f.productos.length != 0"  rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editVendorInvoice(f.id)">
                         <i class="material-icons">visibility</i>
                       </button> 
-                      <button *ngIf="false" type="button" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" (click)="removeVendorInvoice(f.id)">
+
+                      <button type="button" *ngIf="f.productos.length === 0" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editVendorInvoiceSpend(f.id)">
+                        <i class="material-icons">visibility</i>
+                      </button> 
+                      <button type="button" *ngIf="false" rel="tooltip" title="Remove" class="btn btn-danger btn-link btn-sm" (click)="removeVendorInvoice(f.id)">
                         <i class="material-icons">close</i>
                       </button>
                     </td>

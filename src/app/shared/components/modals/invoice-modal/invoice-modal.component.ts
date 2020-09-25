@@ -23,6 +23,7 @@ export class InvoiceModalComponent implements OnInit {
   action: string;
   producto: IProductItemResponse;
   precio: IPriceClientCategory;
+  stockDisponible: number = 0;
 
   dropdownSetup: Object = {
     displayKey:'descripcion', //if objects array passed which key to be displayed defaults to description
@@ -87,6 +88,7 @@ export class InvoiceModalComponent implements OnInit {
       this.precio = this.producto.precios.find( p => p.categoriaCliente.id === this.clientCategory.id);
       this.itemForm.controls.precio.setValue(this.precio.precio);
       this.itemForm.value.producto.precio = Number(this.precio.precio)
+      this.stockDisponible = this.producto.stock;
     } else {
       this.swalService.warning(`No hay Stock disponible del producto que desea agregar.`);
     }  

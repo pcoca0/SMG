@@ -1,12 +1,41 @@
 <div class="row" id="document">
     <div class="col-md-12 ml-auto mr-auto">
+      <form [formGroup]="listForm" (ngSubmit)="saveVendorInvoice()">
       <div class="card">
         <div class="card-header card-header-primary">
-          <h4 class="card-title">Factura</h4>
+          <h4 class="card-title">Factura Proveedor</h4>
         </div>
         <div class="card-body">
-          <span *ngIf="flagEdit">Factura número: {{invoiceRequest.numero}} </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span>
+          <div class="row">
+            <div class="col-sm-6"> 
+              <label for="">N&uacute;mero Factura</label>
+              <input type="text" value="" class="form-control" formControlName="numero" [disabled]="flagEdit">
+            </div> 
+          <div class="col-sm-6"> 
+            <label for="">Fecha</label>
+            <div class="row">
+              <div class="col-xs-12 col-12 col-md-8 text-center">
+                <input type="text"
+                       placeholder=""
+                       class="form-control datepicker"
+                       bsDatepicker
+                       [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                       [bsValue]="bsValue"
+                       formControlName="fecha"
+                        readonly [disabled]="flagEdit">
+              </div>
+            </div>
+          </div> 
+          <div class="col-md-12">
+            <label for="">Concepto</label>
+            <input type="text" value="" class="form-control" formControlName="concepto" [disabled]="flagEdit">
+          </div>
         </div>
+        <div class="row">  
+          <!-- <span>Factura número: {{vendorInvoiceRequest.numero}} </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span> -->
+        </div>
+       </div>
+  
       </div>
         <div class="card">
           <div class="card-header card-header-primary">
@@ -16,7 +45,6 @@
   
           </div>
           <div class="card-body">
-            <form [formGroup]="listForm" (ngSubmit)="saveVendorInvoice()">
               <div class="row">
                   <div class="form-group col-lg-12 col-md-12 col-sm-12 pt-1">
                     <ngx-select-dropdown [options]="proveedores" [config]="dropdownSetup" formControlName="proveedor" (change)="selectProveedor()" [disabled]="flagEdit"></ngx-select-dropdown>
@@ -30,15 +58,15 @@
               </div>
               </div>
               <div class="clearfix"></div>
-            </form>
           </div>
         </div>
+      </form>
         <div class="card">
         <div class="card-header card-header-primary">
           <h4 class="card-title">Productos</h4>
           <p class="card-category"></p>
-          <button class="btn btn-info float-right" (click)="newProductAdd()" *ngIf="!flagEdit">Agregar Producto</button>
-          <button class="btn btn-info float-right" (click)="addVendorInvoiceItem()" *ngIf="!flagEdit">Producto Existente</button>
+          <button class="btn btn-info float-right" (click)="newProductAdd()" *ngIf="!flagEdit" [disabled]="!proveedorSelected">Nuevo Producto</button>
+          <button class="btn btn-info float-right" (click)="addVendorInvoiceItem()" *ngIf="!flagEdit" [disabled]="!proveedorSelected">Producto Existente</button>
         </div>
   
         <div class="card-body">
@@ -71,7 +99,7 @@
                   </tr>
                 <tr>&nbsp;</tr>  
                 <tr>&nbsp;</tr>  
-                <tr *ngIf="totalizador > 0.00 && flagDesgloseIVA">
+                <tr *ngIf="totalizador > 0.00">
                   <td><b> SUBTOTAL</b></td>
                   <td></td>
                   <td></td>
@@ -80,25 +108,7 @@
                   <td class="text-center"><b>${{totalizador}}</b></td>
                   <td></td>     
                 </tr>
-                <tr *ngIf="totalizador > 0.00 && flagDesgloseIVA">
-                  <td><b>IVA 21%</b></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-center"></td>
-                  <td class="text-center"><b></b></td>   
-                  <td class="text-center"><b>${{iva21}}</b></td>
-                  <td></td>     
-                </tr>
-                   <tr *ngIf="totalizador > 0.00  && flagDesgloseIVA">
-                  <td><b>IVA 10.5%</b></td>
-                  <td></td>
-                  <td></td>
-                  <td class="text-center"></td>
-                  <td class="text-center"><b></b></td>   
-                  <td class="text-center"><b>${{iva10}}</b></td>
-                  <td></td>     
-                </tr>
-                <tr *ngIf="totalizador > 0.00  && flagDesgloseIVA">
+                <tr *ngIf="totalizador > 0.00 ">
                   <td><b> TOTAL IVA</b></td>
                   <td></td>
                   <td></td>
@@ -126,7 +136,7 @@
                   <td class="text-center"></td>
                   <td class="text-center">
                     <button href="#" class="btn btn-round btn-fill btn-default" (click)="imprimirPDF()" *ngIf="flagEdit">Generar PDF</button>
-                    <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>
+                    <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveVendorInvoice()" type="submit">Guardar</button>
                   </td>
                   <td class="text-center"></td>
 
@@ -136,6 +146,7 @@
           </div>
         </div>
         </div>
+     
     </div>
   </div>
   

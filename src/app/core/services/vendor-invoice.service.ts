@@ -33,4 +33,7 @@ export class VendorInvoiceService {
   deleteVendorInvoice(id: string): Observable<IVendorInvoiceResponse> {
     return this.http.delete(this.apiUrl + `api/proveedor/factura/${id}/delete`) as Observable<IVendorInvoiceResponse>;
   }
+  addVendorSpend(facturaProveedor: IVendorInvoiceRequest): Observable<IVendorInvoiceResponse> {
+    return this.http.post(this.apiUrl + `api/proveedor/gasto/add`, facturaProveedor) as Observable<IVendorInvoiceResponse>;
+  }
 }

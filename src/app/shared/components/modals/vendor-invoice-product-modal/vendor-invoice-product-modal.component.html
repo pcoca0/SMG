@@ -5,7 +5,7 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <form [formGroup]="itemForm" (ngSubmit)="onSubmit()">
+    <form [formGroup]="itemVendorInvoiceForm" (ngSubmit)="onSubmit()">
 
     <div class="modal-body text-center">
       <p>Seleccione {{message}}</p>
@@ -20,10 +20,11 @@
      <br> 
      <div class="row">
         <div class="col-sm-12"> 
-          <label for="">Iva</label>
-          <input type="text" value="" class="form-control" formControlName="iva">
-        </div> 
+            <label for="">Iva</label>
+            <ngx-select-dropdown [options]="ivasCompra" [config]="dropdownSetupIva" formControlName="iva" (change)="selectIva()"></ngx-select-dropdown>
+         </div>
       </div>
+     <br>  
      <div class="row">
       <div class="col-sm-12"> 
         <label for="">Cantidad</label>
@@ -34,7 +35,7 @@
 
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Agregar</button>
+      <button type="submit" class="btn btn-primary" [disabled]="itemVendorInvoiceForm.invalid">Agregar</button>
       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>
     </div>
   </form>

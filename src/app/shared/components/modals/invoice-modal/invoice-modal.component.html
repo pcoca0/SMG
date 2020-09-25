@@ -22,13 +22,17 @@
       <div class="col-sm-12"> 
         <label for="">Cantidad</label>
         <input type="text" value="" class="form-control" formControlName="cantidad">
+        <div class="alert alert-danger" role="alert" *ngIf="stockDisponible < itemForm.value.cantidad">
+          La cantidad solicitada supera el stock disponible
+        </div>
       </div> 
+
     </div>
 
 
     </div>
     <div class="modal-footer">
-      <button type="submit" class="btn btn-primary" [disabled]="itemForm.invalid">Agregar</button>
+      <button type="submit" *ngIf=" stockDisponible > itemForm.value.cantidad" class="btn btn-primary" [disabled]="itemForm.invalid">Agregar</button>
       <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>
     </div>
   </form>
