@@ -32,4 +32,10 @@ export class InvoiceService {
   deleteInvoice(id: string): Observable<IInvoiceResponse> {
     return this.http.delete(this.apiUrl + `api/factura/${id}/delete`) as Observable<IInvoiceResponse>;
   }
+
+  getInvoicePdf(id: string): Observable<string> {
+    const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
+    return this.http.get(this.apiUrl + `api/factura/pdf/${id}`, httpOptions) as Observable<string>;
+  }
+  
 }
