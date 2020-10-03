@@ -39,7 +39,7 @@
                 <tbody>
                   <tr *ngFor="let f of facturas | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
                     <td>{{f.numero}} </td>
-                    <td>{{f.fecha | date}} </td>
+                    <td>{{f.fecha | date: 'dd/MM/yyyy'}} </td> 
                     <td>Cliente: {{f.cliente.apellido}}, {{f.cliente.nombre}}</td>
                     <td>Total: {{f.total }}</td>
                     <td class="td-actions text-right">

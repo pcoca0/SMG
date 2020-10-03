@@ -5,7 +5,7 @@
           <h4 class="card-title">Factura</h4>
         </div>
         <div class="card-body">
-          <span *ngIf="flagEdit">Factura número: {{invoiceRequest.numero}} </span> <span class="pull-right">Fecha: {{today | date:'h:mm a z'}}</span>
+          <span *ngIf="flagEdit">Factura número: {{invoiceRequest.numero}} </span> <span class="pull-right" *ngIf="flagEdit">Fecha: {{invoiceRequest.fecha | date: 'dd/MM/yyyy'}}</span> <span class="pull-right" *ngIf="!flagEdit">Fecha: {{today | date: 'dd/MM/yyyy'}}</span>
         </div>
       </div>
         <div class="card">
