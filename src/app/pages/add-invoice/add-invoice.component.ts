@@ -235,18 +235,39 @@ export class AddInvoiceComponent implements OnInit, OnDestroy {
 
   imprimirPDF(){
     // this.router.navigate(['imprimirfacturas', this.invoiceRequest.id]);
-
+    const nombre = 'Factura_' + this.invoiceRequest.numero + '.pdf';
     this.invoiceService.getInvoicePdf(this.invoiceRequest.id).subscribe(
       response =>
-     { 
-      console.log("asdasdas");
-      console.log(response);
+     {
       const blob = new Blob([response], {type: 'application/pdf'});
       console.log(blob);
       const linkElement = document.createElement('a');
       const url = window.URL.createObjectURL(blob);
       linkElement.setAttribute('href', url);
-      linkElement.setAttribute('download', 'file.pdf');
+      linkElement.setAttribute('download', nombre);
+      const clickEvent = new MouseEvent('click', {
+        'view': window,
+        'bubbles': true,
+        'cancelable': false
+      });
+      linkElement.dispatchEvent(clickEvent);
+
+      }
+    );
+  }
+
+  imprimirRemitoPDF(){
+    // this.router.navigate(['imprimirfacturas', this.invoiceRequest.id]);
+
+    this.invoiceService.getReferPdf(this.invoiceRequest).subscribe(
+      response =>
+     {
+      const blob = new Blob([response], {type: 'application/pdf'});
+      console.log(blob);
+      const linkElement = document.createElement('a');
+      const url = window.URL.createObjectURL(blob);
+      linkElement.setAttribute('href', url);
+      linkElement.setAttribute('download', 'Remito.pdf');
       const clickEvent = new MouseEvent('click', {
         'view': window,
         'bubbles': true,

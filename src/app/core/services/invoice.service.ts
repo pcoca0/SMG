@@ -37,5 +37,10 @@ export class InvoiceService {
     const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
     return this.http.get(this.apiUrl + `api/factura/pdf/${id}`, httpOptions) as Observable<string>;
   }
+
+  getReferPdf(factura: IInvoiceRequest): Observable<string> {
+    const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
+    return this.http.post(this.apiUrl + `api/remito/pdf/`, factura, httpOptions ) as Observable<string>;
+  }
   
 }

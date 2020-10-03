@@ -143,7 +143,8 @@
                   <td class="text-center"></td>
                   <td class="text-center"></td>
                   <td class="text-center">
-                    <button href="#" class="btn btn-round btn-fill btn-default" (click)="imprimirPDF()" *ngIf="flagEdit">Generar PDF</button>
+                    <button href="#" class="btn btn-round btn-fill btn-default" (click)="imprimirRemitoPDF()" *ngIf="flagEdit">Generar Remito</button>
+                    <button href="#" class="btn btn-round btn-fill btn-default" (click)="imprimirPDF()" *ngIf="flagEdit">Generar Factura</button>
                     <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" (click)="saveBudget()">Guardar</button>
                   </td>
                   <td class="text-center"></td>
