@@ -1,7 +1,7 @@
 export interface ILocation {
     id: string;
     descripcion: string;
-    codigoPostal: string;
+    codigoPostal: number;
   }
 export interface IProfileAFIP {
     id: string;
@@ -24,4 +24,9 @@ export interface IPriceClientCategory {
 export interface IIva {
   id: string;
   iva: number;
+}
+
+export interface ILocationUpdate {
+  descripcion: string;
+  codigoPostal: string;
 }

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { IProfileAFIP, ILocation, IIva } from '../interfaces/utils';
+import { IProfileAFIP, ILocation, IIva, ILocationUpdate } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -13,6 +13,8 @@ export class UtilsService {
   perfilesAFIPPath = 'api/perfilesAFIP';
   localidadesPath = 'api/localidades';
   ivasPath = 'api/ivas';
+
+  private localidades: Observable<Array<ILocationUpdate>>;
 
 
   constructor(private http: HttpClient) { }
@@ -27,6 +29,14 @@ export class UtilsService {
 
   getIvas(): Observable<Array<IIva>> {
     return this.http.get(this.apiUrl + this.ivasPath) as Observable<Array<IIva>>;
+  }
+
+  getLocalidadesUpdate(): Observable<Array<ILocationUpdate>> {
+    return this.localidades = this.http.get('assets/mocks/Localidades.json') as Observable<Array<ILocationUpdate>>;
+  }
+
+  addLocation(localidad: ILocation): Observable<ILocation> {
+    return this.http.post(this.apiUrl + `api/localidad/add`, localidad) as Observable<ILocation>;
   }
 
 }
