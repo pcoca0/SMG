@@ -30,3 +30,8 @@ export interface ILocationUpdate {
   descripcion: string;
   codigoPostal: string;
 }
+
+export interface IBank{
+  id: string;
+  descripcion: string;
+}

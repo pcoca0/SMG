@@ -123,7 +123,6 @@ export class AddVendorInvoiceComponent implements OnInit, OnDestroy {
                             this.listForm.controls.fecha.setValue( resp.data.facturasProveedores[0].fecha),
                             this.bsValue = new Date(resp.data.facturasProveedores[0].fecha);
                             this.listForm.controls.numero.setValue( resp.data.facturasProveedores[0].numero),
-
                             this.totalizador =  (resp.data.facturasProveedores[0]?.total - resp.data.facturasProveedores[0]?.totalIva) || 0,
                             this.iva = resp.data.facturasProveedores[0]?.totalIva || 0
                           })

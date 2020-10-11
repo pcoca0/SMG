@@ -1,0 +1,93 @@
+<div class="modal-content">
+    <div class="modal-header">
+      <h5 class="modal-title">{{title}}</h5>
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" (click)="close()">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+  
+    <div class="modal-body text-center">
+    <form [formGroup]="formCheck" (ngSubmit)="onSubmit()">
+      <div class="card-body">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Banco</label>
+              <ngx-select-dropdown [options]="banks" [config]="dropdownSetup" formControlName="banco" (change)="selectBanco()"></ngx-select-dropdown>
+           </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Fecha Emisión</label>
+                <input type="text"
+                placeholder=""
+                class="form-control datepicker"
+                bsDatepicker
+                [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                [bsValue]="bsValueE"
+                formControlName="fechaEmision"
+                 readonly>
+             </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Fecha Pago</label>
+                    <input type="text"
+                    placeholder=""
+                    class="form-control datepicker"
+                    bsDatepicker
+                    [bsConfig]="{ dateInputFormat: 'DD/MM/YYYY' }"
+                    [bsValue]="bsValueP"
+                    formControlName="fechaPago"
+                    readonly>
+               </div>
+            </div>
+          </div>
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="bmd-label-floating">Seleccione un Localidad</label>
+              <ngx-select-dropdown [options]="locations" [config]="dropdownSetup" formControlName="localidad" (change)="selectLocation()"></ngx-select-dropdown>
+           </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">N&uacute;mero de Cheque</label>
+                <input type="text" formControlName="nroCheque" class="form-control">
+              </div>
+            </div>
+            <div class="col-sm-12 col-md-6">
+              <div class="form-group">
+                <label class="bmd-label-floating">Importe</label>
+                <input type="text" formControlName="importe" class="form-control">
+              </div>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <label class="bmd-label-floating">Comentario</label>
+                <textarea type="text" formControlName="comentario" class="form-control"></textarea>
+              </div>
+            </div>
+          </div>
+         </div>
+         <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" value="true" formControlName="echeque">
+                    <label class="custom-control-label" for="customCheck1">es E-Cheque</label>
+                </div>
+            </div>
+          </div>
+          </div>
+          <div class="clearfix"></div>
+   
+    <div class="modal-footer">
+      <button type="submit" class="btn btn-primary" [disabled]="formCheck.invalid">Agregar</button>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="close()">Cerrar</button>
+    </div>
+  </form>
+  </div>
+  

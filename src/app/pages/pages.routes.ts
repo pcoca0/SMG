@@ -15,6 +15,7 @@ import { AddProductComponent } from './add-product/add-product.component';
 import { VendorInvoiceComponent } from './vendor-invoice/vendor-invoice.component';
 import { AddVendorInvoiceComponent } from './add-vendor-invoice/add-vendor-invoice.component';
 import { AddVendorInvoiceSpendComponent } from './add-vendor-invoice-spend/add-vendor-invoice-spend.component';
+import { CheckComponent } from './check/check.component';
 
 const pagesRoutes: Routes = [
     {
@@ -23,6 +24,8 @@ const pagesRoutes: Routes = [
           {path: '', component: DashboardComponent},
           {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
           {path: 'productos',   component: ProductComponent },
+          {path: 'cheques',   component: CheckComponent },
+
           {path: 'agregrarProducto',   component: AddProductComponent },
           {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearPresupuesto',   component: AddBudgetComponent },
