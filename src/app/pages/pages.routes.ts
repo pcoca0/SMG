@@ -16,6 +16,8 @@ import { VendorInvoiceComponent } from './vendor-invoice/vendor-invoice.componen
 import { AddVendorInvoiceComponent } from './add-vendor-invoice/add-vendor-invoice.component';
 import { AddVendorInvoiceSpendComponent } from './add-vendor-invoice-spend/add-vendor-invoice-spend.component';
 import { CheckComponent } from './check/check.component';
+import { PayOrdersComponent } from './pay-orders/pay-orders.component';
+import { AddPayOrdersComponent } from './add-pay-orders/add-pay-orders.component';
 
 const pagesRoutes: Routes = [
     {
@@ -37,6 +39,10 @@ const pagesRoutes: Routes = [
           {path: 'facturasProveedores',   component: VendorInvoiceComponent },
           {path: 'cargarFacturaProveedor',   component: AddVendorInvoiceComponent },
           {path: 'editarFacturaProveedor/:id',   component: AddVendorInvoiceComponent },
+          {path: 'ordenesDePago/:id',   component: PayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'crearOrdenDePago/:idProveedor',   component: AddPayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'editarOrdenDePago/:id',   component: AddPayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+
 
           {path: 'cargarGastoProveedor',   component: AddVendorInvoiceSpendComponent },
           {path: 'editarGastoProveedor/:id',   component: AddVendorInvoiceSpendComponent },

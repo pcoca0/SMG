@@ -13,4 +13,5 @@ export interface IProductRequest {
   stock: number;
   precios: Array<IPriceClientCategory>;
   proveedor: IVendorRequest;
+  comentario: string;
 }

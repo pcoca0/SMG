@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
-import { IProfileAFIP, ILocation, IIva, ILocationUpdate, IBank } from '../interfaces/utils';
+import { IProfileAFIP, ILocation, IIva, ILocationUpdate, IBank, ITypeOfPaymentMethods } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,7 @@ export class UtilsService {
   localidadesPath = 'api/localidades';
   ivasPath = 'api/ivas';
   bancosPath = 'api/bancos';
+  tiposDePagosPath = 'api/tiposDePagos';
 
 
   private localidades: Observable<Array<ILocationUpdate>>;
@@ -35,6 +36,10 @@ export class UtilsService {
 
   getBancos(): Observable<Array<IBank>> {
     return this.http.get(this.apiUrl + this.bancosPath) as Observable<Array<IBank>>;
+  }
+
+  getTiposDePagos(): Observable<Array<ITypeOfPaymentMethods>> {
+    return this.http.get(this.apiUrl + this.tiposDePagosPath) as Observable<Array<ITypeOfPaymentMethods>>;
   }
 
   // getLocalidadesUpdate(): Observable<Array<ILocationUpdate>> {

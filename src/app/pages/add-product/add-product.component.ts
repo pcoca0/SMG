@@ -22,9 +22,9 @@ import { VendorService } from 'src/app/core/services/vendor.service';
 export class AddProductComponent implements OnInit {
 
   formProduct: FormGroup;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario: ''};
   productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0,
-                                      precios: [], proveedor: null };
+                                      precios: [], proveedor: null, comentario: '' };
   categoriasCliente: Array<IClientCategory>;
   ivas: Array<IIva>;
   action: string;
@@ -91,6 +91,7 @@ export class AddProductComponent implements OnInit {
       iva: ['', Validators.required],
       proveedor: ['', Validators.required],
       stock: ['', Validators.required],
+      comentario: [''],
       precios: this.fb.array([])
     });
   }
@@ -149,6 +150,8 @@ export class AddProductComponent implements OnInit {
     this.productRequest.iva = resp.iva;
     this.productRequest.proveedor = resp.proveedor;
     this.productRequest.stock = resp.stock;
+    this.productRequest.comentario = resp.comentario;
+
     this.productRequest.precios = [];
     for (let i = 0; i < resp.precios.length; i++) {
        this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };

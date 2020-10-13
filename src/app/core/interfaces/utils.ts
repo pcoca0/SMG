@@ -1,3 +1,5 @@
+import { ICheckItemResponse } from './responses/check.response';
+import { IClientItemResponse } from './responses/client.response';
 export interface ILocation {
     id: string;
     descripcion: string;
@@ -31,7 +33,32 @@ export interface ILocationUpdate {
   codigoPostal: string;
 }
 
-export interface IBank{
+export interface IBank {
   id: string;
   descripcion: string;
+}
+
+export interface ITypeOfPaymentMethods{
+  id: string;
+  descripcion: string;
+  referencia: string;
+}
+
+export interface IBankTransfer{
+    id: string;
+    CBU: string;
+    alias: string;
+    titularCuenta: string;
+    banco: IBank;
+    importe: number;
+    realizada: boolean;
+    recibida: boolean;
+}
+
+export interface IPayment {
+   id: string;
+   tipoDePago: ITypeOfPaymentMethods;
+   cheque: ICheckItemResponse;
+   transferencia: IBankTransfer;
+   importe: number;
 }

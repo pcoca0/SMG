@@ -11,12 +11,13 @@ import Swal from 'sweetalert2';
 import { VendorService } from 'src/app/core/services/vendor.service';
 import { IVendorItemResponse } from 'src/app/core/interfaces/responses/vendor.response';
 import { IVendorRequest } from 'src/app/core/interfaces/requests/vendor.request';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-vendor',
   templateUrl: './vendor.component.html',
   styleUrls: ['./vendor.component.scss']
 })
-export class VendorComponent implements OnInit {
+export class VendorComponent implements OnInit, OnDestroy {
 
   today: number = Date.now();
   filterMatch: string;
@@ -39,8 +40,8 @@ export class VendorComponent implements OnInit {
     private modalService: ModalService,
     private swalService: SwalService,
     private utilsService: UtilsService,
-    private clientCategoryService: ClientCategoryService
-
+    private clientCategoryService: ClientCategoryService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -132,6 +133,10 @@ export class VendorComponent implements OnInit {
   trackBy(index: number, vendor: any): string {
     return vendor.id;
     }
+
+  payOrderVendor(id: string){
+    console.log('id invoice' + id);
+    this.router.navigate(['ordenesDePago', id]);  }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach(suscription => suscription.unsubscribe());

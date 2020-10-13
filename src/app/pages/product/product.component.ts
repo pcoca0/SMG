@@ -29,8 +29,8 @@ export class ProductComponent implements OnInit, OnDestroy {
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
-  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null};
+  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
+  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   ivas: Array<IIva>;
@@ -84,6 +84,8 @@ export class ProductComponent implements OnInit, OnDestroy {
      this.productRequest.iva = resp.iva;
      this.productRequest.proveedor = resp.proveedor;
      this.productRequest.stock = resp.stock;
+     this.productRequest.comentario = resp.comentario;
+
      this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
         this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };

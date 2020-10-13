@@ -20,5 +20,7 @@ export interface IProductItemResponse {
  stock: number;
  precios: Array<IPriceClientCategory>;
  proveedor: IVendorItemResponse;
+ comentario: string;
+
 
 }

@@ -67,7 +67,8 @@ export class ProducModalComponent implements OnInit {
       iva: ['', Validators.required],
       proveedor: ['', Validators.required],
       stock: ['', Validators.required],
-      precios: this.fb.array([])
+      precios: this.fb.array([]),
+      comentario:['']
     });
 
   }
@@ -85,6 +86,7 @@ export class ProducModalComponent implements OnInit {
       iva: this.product.iva,
       proveedor: this.product.proveedor,
       stock: this.product.stock,
+      comentario: this.product.comentario
       });
       this.product.precios.forEach((p) => {
         // console.log(p);

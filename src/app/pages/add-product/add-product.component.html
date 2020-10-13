@@ -68,7 +68,14 @@
                         </ng-container>
                         </div>
                     </div>
-            <br>        
+            <br>
+            <div class="col-md-12">
+              <div class="form-group">
+                <label class="bmd-label-floating">Comentario</label>
+                <input type="text"  formControlName="comentario" class="form-control">
+              </div>
+            </div>
+             <br> 
             <div class="row">  
               <div class="col-md-12 text-right pr-4">
                 <button type="submit" class="btn btn-primary"  [disabled]="formProduct.invalid">Agregar</button>

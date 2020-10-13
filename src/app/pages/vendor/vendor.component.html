@@ -5,7 +5,7 @@
   <div class="card">
     <div class="card-header card-header-primary">
       <div class="col-sm-6 col-md-6">
-        <h4 class="card-title">Clientes</h4>
+        <h4 class="card-title">Proveedores</h4>
         <p class="card-category">{{today | date:'h:mm a z'}}</p>
 
      </div>
@@ -27,9 +27,9 @@
             <td>{{c.apellido}}-{{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}}</td>
             <td class="td-actions text-right">
-              <!-- <button type="button" rel="tooltip" title="Ver Productos Asociados" class="btn btn-success btn-link btn-sm" (click)="viewClient(i)">
-                <i class="material-icons">remove_red_eye</i>
-              </button> -->
+              <button type="button" rel="tooltip" title="Ordenes de Pagos" class="btn btn-success btn-link btn-sm" (click)="payOrderVendor(c.id)">
+                <i class="material-icons">payment</i>
+              </button>
               <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-link btn-sm" (click)="editVendor(c.id)">
                 <i class="material-icons">edit</i>
               </button>

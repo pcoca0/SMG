@@ -8,7 +8,7 @@ import { ClientModalComponent } from 'src/app/shared/components/modals/client-mo
 import { ICategoryItemResponse } from '../interfaces/responses/category.response';
 import { CategoryModalComponent } from 'src/app/shared/components/modals/category-modal/category-modal.component';
 import { ProducModalComponent } from 'src/app/shared/components/modals/produc-modal/produc-modal.component';
-import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory, IIva, IBank } from '../interfaces/utils';
+import { IProfileAFIP, ILocation, IClientCategory, IPriceClientCategory, IIva, IBank, ITypeOfPaymentMethods, IPayment } from '../interfaces/utils';
 import { IVendorItemResponse } from '../interfaces/responses/vendor.response';
 import { VendorModalComponent } from 'src/app/shared/components/modals/vendor-modal/vendor-modal.component';
 import { ClientCategory } from '../models/utils';
@@ -17,6 +17,7 @@ import { VendorInvoiceProductModalComponent } from 'src/app/shared/components/mo
 import { ICheckItemResponse } from '../interfaces/responses/check.response';
 import { CheckModalComponent } from 'src/app/shared/components/modals/check-modal/check-modal.component';
 import { ICheckRequest } from '../interfaces/requests/check.request';
+import { PaymentModalComponent } from '../../shared/components/modals/payment-modal/payment-modal.component';
 
 @Injectable({
   providedIn: 'root'
@@ -237,7 +238,7 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
     //return new Observable<string>(this.getBudgetModalsubscriber());
   }
 
-    checkAdd(title: string, message: string, check?: ICheckRequest, banks?: Array<IBank>,
+  checkAdd(title: string, message: string, check?: ICheckRequest, banks?: Array<IBank>,
            locations?: Array<ILocation>
   ){
   const initialState = {
@@ -254,7 +255,7 @@ return  this.bsModalService.show(VendorModalComponent, {initialState});
   }
 
 checkEdit(title: string, message: string, check?: ICheckRequest, banks?: Array<IBank>,
-         locations?: Array<ILocation>, view?: boolean, pos?: number){
+          locations?: Array<ILocation>, view?: boolean, pos?: number){
   const initialState = {
   title,
   message,
@@ -268,5 +269,37 @@ checkEdit(title: string, message: string, check?: ICheckRequest, banks?: Array<I
   
   return  this.bsModalService.show(CheckModalComponent, {initialState});
   //return new Observable<string>(this.getBudgetModalsubscriber());
+}
+
+
+paymentAdd(title: string, message: string, typeOfPayments: Array<ITypeOfPaymentMethods>, checks: Array<ICheckItemResponse>,
+           banks?: Array<IBank>
+){
+const initialState = {
+title,
+message,
+typeOfPayments,
+checks,
+banks,
+action: 'add'
+};
+return  this.bsModalService.show(PaymentModalComponent, {initialState});
+//return new Observable<string>(this.getBudgetModalsubscriber());
+}
+
+paymentEdit(title: string, message: string, typeOfPayments: Array<ITypeOfPaymentMethods>, checks: Array<ICheckItemResponse>,
+            banks?: Array<IBank>, payment?: IPayment , pos?: number ){
+const initialState = {
+title,
+message,
+typeOfPayments,
+checks,
+banks,
+payment,
+action: 'edit',
+pos
+};
+return  this.bsModalService.show(PaymentModalComponent, {initialState});
+//return new Observable<string>(this.getBudgetModalsubscriber());
 }
 }

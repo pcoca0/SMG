@@ -22,10 +22,13 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { VendorInvoiceProductModalComponent } from './components/modals/vendor-invoice-product-modal/vendor-invoice-product-modal.component';
 import { VendorViewComponent } from './components/vendor-view/vendor-view.component';
 import { CheckModalComponent } from './components/modals/check-modal/check-modal.component';
+import { PaymentModalComponent } from './components/modals/payment-modal/payment-modal.component';
+import { VendorInvoiceViewComponent } from './components/vendor-invoice-view/vendor-invoice-view.component';
+import { CheckViewComponent } from './components/check-view/check-view.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent, VendorInvoiceProductModalComponent, VendorViewComponent, CheckModalComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent, VendorInvoiceProductModalComponent, VendorViewComponent, CheckModalComponent, PaymentModalComponent, VendorInvoiceViewComponent, CheckViewComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -49,7 +52,10 @@ import { CheckModalComponent } from './components/modals/check-modal/check-modal
     CategoryModalComponent,
     ProducModalComponent,
     NgxPaginationModule,
-    VendorViewComponent
+    VendorViewComponent,
+    PaymentModalComponent,
+    VendorInvoiceViewComponent,
+    CheckViewComponent
     ],
   entryComponents: [
    BudgeModalComponent,

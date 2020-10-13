@@ -36,4 +36,12 @@ export class VendorInvoiceService {
   addVendorSpend(facturaProveedor: IVendorInvoiceRequest): Observable<IVendorInvoiceResponse> {
     return this.http.post(this.apiUrl + `api/proveedor/gasto/add`, facturaProveedor) as Observable<IVendorInvoiceResponse>;
   }
+
+  getVendorInvoiceUnPaid(idProveedor: string): Observable<IVendorInvoiceResponse> {
+    return this.http.get(this.apiUrl + `api/proveedor/facturasAdeudadas/${idProveedor}`) as Observable<IVendorInvoiceResponse>;
+  }
+
+  getVendorInvoicePaidProveedor(idProveedor: string): Observable<IVendorInvoiceResponse> {
+    return this.http.get(this.apiUrl + `api/proveedor/facturasPagadas/${idProveedor}`) as Observable<IVendorInvoiceResponse>;
+  }
 }
