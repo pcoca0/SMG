@@ -18,6 +18,8 @@ import { AddVendorInvoiceSpendComponent } from './add-vendor-invoice-spend/add-v
 import { CheckComponent } from './check/check.component';
 import { PayOrdersComponent } from './pay-orders/pay-orders.component';
 import { AddPayOrdersComponent } from './add-pay-orders/add-pay-orders.component';
+import { AddBillComponent } from './add-bill/add-bill.component';
+import { BillComponent } from './bill/bill.component';
 
 const pagesRoutes: Routes = [
     {
@@ -51,6 +53,9 @@ const pagesRoutes: Routes = [
           {path: 'facturas',   component: InvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
           {path: 'crearFactura',   component: AddInvoiceComponent },
           {path: 'editarFactura/:id',   component: AddInvoiceComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'cobros/:id',   component: BillComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'crearCobro/:idCliente',   component: AddBillComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'editarCobro/:id',   component: AddBillComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
 
 
           // {path: 'categorias',  component: ProductComponent },

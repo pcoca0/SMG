@@ -1,0 +1,90 @@
+<div class="row" id="document">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Orden de Pago</h4>
+        </div>
+        <div class="card-body">
+          <span *ngIf="flagEdit">Cobro número: {{billRequest?.numero}} </span> <span class="pull-right" *ngIf="flagEdit">Fecha: {{billRequest.fechaCobro | date: 'dd/MM/yyyy'}}</span> <span class="pull-right" *ngIf="!flagEdit">Fecha: {{today | date: 'dd/MM/yyyy'}}</span>
+        </div>
+      </div>
+        <div class="card">
+          <div class="card-header card-header-primary">
+            <h4 class="card-title">Factura a Cobrar </h4>
+            <!-- <div class="card-category">Seleccione un Cliente</div> -->
+            <!-- <button class="btn btn-info float-right" (click)="addNewClient()" *ngIf="!flagEdit">  <i class="material-icons">person_add</i></button> -->
+  
+          </div>
+          <div class="card-body">
+            <form [formGroup]="listForm" (ngSubmit)="saveBill()">
+              <div class="row">
+                  <div class="form-group col-lg-12 col-md-12 col-sm-12 pt-1">
+                    <ngx-select-dropdown [options]="facturas" [config]="dropdownSetup" formControlName="invoice" (change)="selectInvoice()" [disabled]="flagEdit"></ngx-select-dropdown>
+                  </div>
+                  <div class="form-group col-lg-4 col-md-4 col-sm-12 text-center">
+                  </div>
+              </div>
+              <div class="row">
+                <div class="col-lg-12">
+                    <app-invioce-view [invoice]="invoiceView"></app-invioce-view>
+              </div>
+              </div>
+              <div class="clearfix"></div>
+            </form>
+          </div>
+        </div>
+        <div class="card">
+        <div class="card-header card-header-primary">
+          <h4 class="card-title">Cobros recibos</h4>
+          <p class="card-category"></p>
+          <button class="btn btn-info float-right" (click)="addPaymentItem()" [disabled]="!invoiceSelected" *ngIf="!flagEdit">Agregar Pago</button>
+        </div>
+  
+        <div class="card-body">
+          <div class="table-responsive table-upgrade">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th class="text-center">Forma de Pago</th>
+                  <th class="text-center">Monto</th>
+                  <th class="text-center"></th>
+
+                </tr>
+              </thead>
+              <tbody>
+                  <tr *ngFor="let p of billRequest.pagosRecibidos; index as i"  >
+                    <td class="text-center">{{p.tipoDePago.descripcion}}</td>
+                    <td class="text-center">{{p.importe| number:'2.1-2' }}</td>
+                    <td class="text-center">
+                      <button class="btn btn-outline-info" (click)="removeElement(i)" *ngIf="!flagEdit"><i class="fa fa-times text-danger"></i></button>
+                      <button class="btn btn-outline-info" (click)="updateElement(i)" *ngIf="!flagEdit"><i class="fa fa-edit  text-success"></i></button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="totalizador > 0.00">
+                    <td><b>TOTAL</b></td>   
+                    <td class="text-center"><b>${{totalizador| number:'2.1-2' }} </b></td>
+                    <td></td>     
+                  </tr>
+                <tr>
+                  <td class="text-center">
+                    <span class="badge badge-warning" *ngIf="totalizador > 0 && totalizador == totalFactura">Saldo: {{totalizador - totalFactura}} </span>
+                    <span class="badge badge-success" *ngIf="totalizador > 0 && totalizador > totalFactura">Saldo a Favor: {{totalizador - totalFactura}} </span>
+                    <span class="badge badge-danger" *ngIf="totalizador > 0 &&  totalizador < totalFactura">Faltan agregar pagos por: {{totalFactura - totalizador}} </span>
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-right">
+                    <!-- <button href="#" class="btn btn-round btn-fill btn-default disabled" (click)="makePDF()">Generar PDF</button> -->
+                  </td>
+                  <td class="text-center"></td>
+                  <td class="text-center">
+                    <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" [disabled]="!(totalizador >= totalFactura)" (click)="saveBill()">Guardar</button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+    </div>
+  </div>
+  

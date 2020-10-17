@@ -1,0 +1,10 @@
+
+<div class="card  border-dark col-md-8 col-sm-12" *ngIf="invoice">
+    <div class="card-body">
+      <h6 class="card-title">Factura Número: <small>{{invoice?.numero}} </small></h6>
+      <h6 class="card-title">Fecha:  <small>{{invoice.fecha | date: 'dd/MM/yyyy'}} </small></h6>
+      <h6 class="card-title">Cliente:  <small>{{invoice.cliente.razonSocial}} </small></h6>
+      <h3 class="card-title"><small>Total a Pagar:  {{invoice.total}} </small></h3>
+    </div>
+  </div>
+  

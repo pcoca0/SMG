@@ -25,10 +25,11 @@ import { CheckModalComponent } from './components/modals/check-modal/check-modal
 import { PaymentModalComponent } from './components/modals/payment-modal/payment-modal.component';
 import { VendorInvoiceViewComponent } from './components/vendor-invoice-view/vendor-invoice-view.component';
 import { CheckViewComponent } from './components/check-view/check-view.component';
+import { InvioceViewComponent } from './components/invioce-view/invioce-view.component';
 
 
 @NgModule({
-  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent, VendorInvoiceProductModalComponent, VendorViewComponent, CheckModalComponent, PaymentModalComponent, VendorInvoiceViewComponent, CheckViewComponent ],
+  declarations: [SidebarComponent, NavbarComponent, FooterComponent, FilterPipe, SearchComponent, BudgeModalComponent, ClientModalComponent, ClientViewComponent, CategoryModalComponent, ProducModalComponent, UnauthorizedComponent, VendorModalComponent, InvoiceModalComponent, VendorInvoiceProductModalComponent, VendorViewComponent, CheckModalComponent, PaymentModalComponent, VendorInvoiceViewComponent, CheckViewComponent, InvioceViewComponent ],
   imports: [
     CommonModule,
     RouterModule,
@@ -55,7 +56,8 @@ import { CheckViewComponent } from './components/check-view/check-view.component
     VendorViewComponent,
     PaymentModalComponent,
     VendorInvoiceViewComponent,
-    CheckViewComponent
+    CheckViewComponent,
+    InvioceViewComponent
     ],
   entryComponents: [
    BudgeModalComponent,

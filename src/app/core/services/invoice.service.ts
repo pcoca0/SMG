@@ -32,7 +32,15 @@ export class InvoiceService {
   deleteInvoice(id: string): Observable<IInvoiceResponse> {
     return this.http.delete(this.apiUrl + `api/factura/${id}/delete`) as Observable<IInvoiceResponse>;
   }
+  geInvoiceUnPaid(idCliente: string): Observable<IInvoiceResponse> {
+    return this.http.get(this.apiUrl + `api/factura/facturasAdeudadas/${idCliente}`) as Observable<IInvoiceResponse>;
+  }
 
+  // getInvoicePaidProveedor(idProveedor: string): Observable<IVendorInvoiceResponse> {
+  //   return this.http.get(this.apiUrl + `api/proveedor/facturasPagadas/${idProveedor}`) as Observable<IVendorInvoiceResponse>;
+  // }
+
+  /*PDF*/
   getInvoicePdf(id: string): Observable<string> {
     const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
     return this.http.get(this.apiUrl + `api/factura/pdf/${id}`, httpOptions) as Observable<string>;
@@ -42,5 +50,4 @@ export class InvoiceService {
     const httpOptions = {'responseType'  : 'arraybuffer' as 'json'};
     return this.http.post(this.apiUrl + `api/remito/pdf/`, factura, httpOptions ) as Observable<string>;
   }
-  
 }

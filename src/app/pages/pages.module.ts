@@ -24,10 +24,12 @@ import { AddVendorInvoiceSpendComponent } from './add-vendor-invoice-spend/add-v
 import { CheckComponent } from './check/check.component';
 import { PayOrdersComponent } from './pay-orders/pay-orders.component';
 import { AddPayOrdersComponent } from './add-pay-orders/add-pay-orders.component';
+import { AddBillComponent } from './add-bill/add-bill.component';
+import { BillComponent } from './bill/bill.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent, VendorInvoiceComponent, AddVendorInvoiceComponent, AddVendorInvoiceSpendComponent, CheckComponent, PayOrdersComponent, AddPayOrdersComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent, VendorInvoiceComponent, AddVendorInvoiceComponent, AddVendorInvoiceSpendComponent, CheckComponent, PayOrdersComponent, AddPayOrdersComponent, AddBillComponent, BillComponent],
   imports: [
     CommonModule,
     SharedModule,

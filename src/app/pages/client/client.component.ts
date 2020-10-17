@@ -10,6 +10,7 @@ import { UtilsService } from '../../core/services/utils.service';
 import { ILocation, IProfileAFIP, IClientCategory } from '../../core/interfaces/utils';
 import { ClientCategoryService } from '../../core/services/client-category.service';
 import Swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-client',
@@ -38,7 +39,9 @@ export class ClientComponent implements OnInit, OnDestroy {
     private modalService: ModalService,
     private swalService: SwalService,
     private utilsService: UtilsService,
-    private clientCategoryService: ClientCategoryService
+    private clientCategoryService: ClientCategoryService,
+    private router: Router
+
 
   ) { }
 
@@ -131,6 +134,10 @@ export class ClientComponent implements OnInit, OnDestroy {
   trackBy(index: number, client: any): string {
     return client.codigo;
     }
+
+  bill(id: string){
+    console.log('id invoice' + id);
+    this.router.navigate(['cobros', id]);  }
 
   ngOnDestroy(): void {
     this.suscriptions.forEach(suscription => suscription.unsubscribe());
