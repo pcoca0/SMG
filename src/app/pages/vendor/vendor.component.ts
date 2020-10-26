@@ -142,4 +142,8 @@ export class VendorComponent implements OnInit, OnDestroy {
     this.suscriptions.forEach(suscription => suscription.unsubscribe());
   }
 
+  currentAccount(id: string){
+    this.router.navigate(['cuentaCorrienteProveedor', id]);
+  }
+
 }

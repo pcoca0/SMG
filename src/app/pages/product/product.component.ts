@@ -15,6 +15,7 @@ import { PriceClientCategory } from 'src/app/core/models/utils';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { VendorService } from 'src/app/core/services/vendor.service';
 import { IVendorItemResponse } from '../../core/interfaces/responses/vendor.response';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -25,12 +26,14 @@ import { IVendorItemResponse } from '../../core/interfaces/responses/vendor.resp
 export class ProductComponent implements OnInit, OnDestroy {
 
   productos: Array<IProductItemResponse>;
+  productosBack: Array<IProductItemResponse>;
+
   proveedores: Array<IVendorItemResponse>;
   filterMatch: string;
   categorias: Array<ICategoryItemResponse>;
   bsModalRef: BsModalRef;
-  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
-  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
+  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:'', seguimiento: false, seguimientoInfo:[]};
+  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:'', seguimiento: false, seguimientoInfo:[]};
   productNew: IProductItemResponse;
   isAdmin: boolean = true;
   ivas: Array<IIva>;
@@ -39,6 +42,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   precioCategoriaCliente: IPriceClientCategory = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
   private suscriptions: Subscription[] = [];
   page: number  = 1;
+  flagTrack: boolean = false;
 
 
 
@@ -50,16 +54,15 @@ export class ProductComponent implements OnInit, OnDestroy {
     private utilsService: UtilsService,
     private clientCategoryService: ClientCategoryService,
     private vendorService: VendorService,
-
+    private router: Router
   ) { }
-
-
-
-
 
   ngOnInit() {
     this.suscriptions.push(
-                this.productService.getProducts().subscribe(resp => this.productos = resp.data.productos),
+                this.productService.getProducts().subscribe(resp => { this.productos = resp.data.productos,
+                                                                      this.productosBack = resp.data.productos,
+                                                                      console.log(this.productos)
+                }),
                 this.clientCategoryService.getClientCategories().subscribe(respC =>
                                            this.categoriasCliente = respC?.data?.['categoriasCliente']
                                       ),
@@ -85,6 +88,7 @@ export class ProductComponent implements OnInit, OnDestroy {
      this.productRequest.proveedor = resp.proveedor;
      this.productRequest.stock = resp.stock;
      this.productRequest.comentario = resp.comentario;
+     this.productRequest.seguimiento = resp.seguimiento;
 
      this.productRequest.precios = [];
      for (let i = 0; i < resp.precios.length; i++) {
@@ -172,8 +176,21 @@ export class ProductComponent implements OnInit, OnDestroy {
     });
   }
 
+  tackProduct(idProducto: string){
+    this.router.navigate(['seguimientoProducto', idProducto]);
+  }
+
   ngOnDestroy(): void {
     this.suscriptions.forEach(suscription => suscription.unsubscribe());
   }
 
+  filterTrack(flag: boolean){
+    console.log(flag);
+    this.flagTrack = flag;
+    if (flag) {
+      this.productos = this.productos.filter(p => p.seguimiento);
+    } else {
+      this.productos = this.productosBack;
+    }
+  }
 }

@@ -1,6 +1,15 @@
-<div class="form-group col-sm-12 text-right pr-4">
-  <button class="btn btn-outline-info" (click)="addNewVendor()">  <i class="material-icons">person_add</i></button>
-</div>
+<div class="row">
+  <div class="col-sm-6 pl-5">  
+    <div class="alert alert-dark" role="alert">
+    <small><strong> 
+    Para registrar un pago con cheque como parte de pago, recuerde cargar primero el cheque desde el apartado Gestión / Cheques
+    </strong></small>
+    </div>
+  </div> 
+  <div class="form-group col-sm-6 text-right pr-4">
+    <button class="btn btn-outline-info" (click)="addNewVendor()">  <i class="material-icons">person_add</i></button>
+  </div>
+</div>  
 <div class="col-lg-12 col-md-12">
   <div class="card">
     <div class="card-header card-header-primary">
@@ -27,15 +36,18 @@
             <td>{{c.apellido}}-{{c.nombre}}</td>
             <td>{{c.calle}} {{c.numero}} - {{c.localidad.descripcion}}</td>
             <td class="td-actions text-right">
+              <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-link btn-sm" (click)="currentAccount(c.id)">
+                <i class="material-icons">calculate</i>
+              </button>
               <button type="button" rel="tooltip" title="Ordenes de Pagos" class="btn btn-success btn-link btn-sm" (click)="payOrderVendor(c.id)">
                 <i class="material-icons">payment</i>
               </button>
               <button type="button" rel="tooltip" title="Editar" class="btn btn-info btn-link btn-sm" (click)="editVendor(c.id)">
                 <i class="material-icons">edit</i>
               </button>
-              <button type="button" rel="tooltip" title="Eliminar" class="btn btn-danger btn-link btn-sm" (click)="removeVendor(c.id)">
+              <!-- <button type="button" rel="tooltip" title="Eliminar" class="btn btn-danger btn-link btn-sm" (click)="removeVendor(c.id)">
                 <i class="material-icons">close</i>
-              </button>
+              </button> -->
             </td>
           </tr>
         </tbody>

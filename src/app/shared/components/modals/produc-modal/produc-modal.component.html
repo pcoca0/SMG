@@ -33,7 +33,7 @@
             <div class="col-md-6">
               <div class="form-group">
                 <label class="bmd-label-floating">Stock</label>
-                <input type="text"  formControlName="stock" class="form-control">
+                <input type="text"  formControlName="stock" class="form-control" (change)="trackInfo()">
               </div>
             </div>
           </div> 
@@ -63,6 +63,23 @@
            </div>
           </ng-container>
           </div>
+          <br>
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="form-group">
+                <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input" id="customCheck1" value="true" formControlName="seguimiento" (change)="trackInfo()">
+                    <label class="custom-control-label pl-4" for="customCheck1"> Tracking</label>
+                </div>
+            </div>
+            </div>
+            <div class="col-sm-12" *ngIf="formProduct.controls.seguimiento.value === true && formProduct.controls.stock.value > 0 && action === 'add'">
+              <div class="alert alert-warning" role="alert">
+                Una vez cargada la información del producto podra agregar los codigo de seguimiento
+              </div>
+            </div>
+          </div> 
+          <br>
           <br>  
           <div class="col-md-12">
             <div class="form-group">

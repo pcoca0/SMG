@@ -71,7 +71,7 @@ export class PaymentModalComponent implements OnInit {
     displayKey:'nroCheque', //if objects array passed which key to be displayed defaults to description
     search: true, //true/false for the search functionlity defaults to false,
     height: 'auto', //height of the list so that if there are more no of items it can show a scroll defaults to auto. With auto height scroll will never appear
-    placeholder:'Selecciona', // text to be displayed when no item is selected defaults to Select,
+    placeholder:'Selecciona por Nro. de Cheque', // text to be displayed when no item is selected defaults to Select,
     customComparator: ()=>{}, // a custom function using which user wants to sort the items. default is undefined and Array.sort() will be used in that case,
     //limitTo: options.length, // a number thats limits the no of options displayed in the UI similar to angular's limitTo pipe
     moreText: 'Más', // text to be displayed whenmore than one items are selected like Option 1 + 5 more
@@ -193,27 +193,27 @@ export class PaymentModalComponent implements OnInit {
     this.itemForm.controls.importe.setValue(this.chequeSelected.importe);
   }
 
-  addNewCheck() {
-    console.log('Por agregar una Cheque');
-    this.bsModalRef = this.modalService.checkAdd('Cheques', 'Productos', this.checkRequest, this.banks, this.localidades);
-    this.bsModalRef.content.event.subscribe(
-    resp => {
-             resp.data.fechaEmision = new Date(resp.data.fechaEmision);
-             resp.data.fechaPago = new Date(resp.data.fechaPago);
-             this.checkService.addCheck(resp.data).subscribe(
-                  response => {
-                        this.chequeSelected = response.data.cheques[0],
-                        this.itemForm.controls.cheque.setValue(this.chequeSelected);
-                        this.itemForm.controls.importe.setValue(this.chequeSelected.importe);
+  // addNewCheck() {
+  //   console.log('Por agregar una Cheque');
+  //   this.bsModalRef = this.modalService.checkAdd('Cheques', 'Productos', this.checkRequest, this.banks, this.localidades);
+  //   this.bsModalRef.content.event.subscribe(
+  //   resp => {
+  //            resp.data.fechaEmision = new Date(resp.data.fechaEmision);
+  //            resp.data.fechaPago = new Date(resp.data.fechaPago);
+  //            this.checkService.addCheck(resp.data).subscribe(
+  //                 response => {
+  //                       this.chequeSelected = response.data.cheques[0],
+  //                       this.itemForm.controls.cheque.setValue(this.chequeSelected);
+  //                       this.itemForm.controls.importe.setValue(this.chequeSelected.importe);
 
-                        this.checks.push(this.chequeSelected),
-                        this.swalService.success(`Cheque agregado con éxito`)
-                       },
-                  error => this.swalService.error(`No se ha podido agregar el cheque.`)
-             );
+  //                       this.checks.push(this.chequeSelected),
+  //                       this.swalService.success(`Cheque agregado con éxito`)
+  //                      },
+  //                 error => this.swalService.error(`No se ha podido agregar el cheque.`)
+  //            );
 
-    });
-  }
+  //   });
+  // }
   
   selectBank() {}
 

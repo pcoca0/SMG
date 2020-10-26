@@ -1,0 +1,68 @@
+<div class="row" id="document">
+    <div class="col-md-12 ml-auto mr-auto">
+      <div class="card">
+        <div class="card-header card-header-primary">
+            <h4 class="card-title">Gestión de seguimiento</h4>
+          </div>
+            <form [formGroup]="formProduct" (ngSubmit)="onSubmit()">
+                <div class="card-body">
+                <div class="row">
+                <div class="card  border-dark col-sm-6 pl-5">
+                    <div class="card-body">
+                        <h6 class="card-title">Producto: <small>{{productRequest?.descripcion}} </small></h6>
+                        <h6 class="card-title">Codigo de Producto: <small>{{productRequest?.codigo}} </small></h6>
+                        <h6 class="card-title">Proveedor:  <small>{{productRequest?.proveedor?.razonSocial}} </small></h6>
+                    </div>
+                </div>
+                <div class="col-md-4 text-center">
+                    <div class="form-group">
+                    <label class="bmd-label-floating">Stock</label>
+                    <input type="text"  formControlName="stock" class="form-control text-center" (change)="stockChange()">
+                    </div>
+                </div>
+                </div>
+              <div class="container-fluid">
+                <h5>Codigos de Seguimiento <b><small>(en stock de exitente)</small></b></h5>
+                  <div  class="row"  formArrayName="seguimientoInfo" >
+                    <ng-container *ngFor="let c of seguimientoInfo.controls; let i=index" [formGroupName]="i">
+                      <div class="col-sm-2 input-group">
+                        <input type="hidden"  formControlName="id" class="form-control">
+
+                         <!-- <input type="text"   formControlName="codigo" class="form-control"> -->
+                         <!-- <input type="text" class="form-control" aria-label="Amount (to the nearest dollar)"> -->
+                         <div class="input-group mb-3">
+                            <input type="text"   formControlName="codigo" class="form-control">
+                            <div class="input-group-append" *ngIf="c.controls.id.value">
+                                <a class="" type="button" id="button-addon2"><i  class="material-icons" (click)="deleteTrack(c.controls.id.value, c, i)">cancel_presentation</i></a>
+                                <!-- <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2"><i  class="material-icons">cancel_presentation</i></button> -->
+                            </div>
+                            <div class="input-group-append" *ngIf="!c.controls.id.value  && flagStockChange">
+                                <a class="" type="button" id="button-addon2"><i  class="material-icons" (click)="deleteTrack(c.controls.id.value, c, i)">cancel_presentation</i></a>
+                                <!-- <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2"><i  class="material-icons">cancel_presentation</i></button> -->
+                            </div>
+                          </div>
+
+                      </div>
+                  </ng-container>
+                  </div>
+              </div>
+                </div>
+              <div class="row">
+                  <div class="col-sm-12 col-md-8 pl-4">
+                    <div class="alert alert-danger" role="alert" *ngIf="flagStockChange &&  (this.formProduct.controls.stock.value < seguimientoInfo.length)">
+                        El stock ha disminuido en base a un cambio manúal.
+                        Debe eliminar codigos de seguimiento hasta equiparar el total de los mismos con el stock existente para poder guardar los cambios.
+                    </div>
+                    <!-- <div class="alert alert-info" role="alert" *ngIf="formProduct.invalid">
+                        Debe completar todos codigos de seguimiento para poder guardar.
+                      </div> -->
+                  </div>
+                <div class="col-sm-12 col-md-4 text-right pr-4">
+                  <button type="submit" class="btn btn-primary"  [disabled]="formProduct.invalid || (this.formProduct.controls.stock.value < seguimientoInfo.length)">Agregar</button>
+                </div>
+              </div>
+            </form>
+          </div>
+
+    </div>
+  </div>

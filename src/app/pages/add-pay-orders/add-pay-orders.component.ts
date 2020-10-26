@@ -87,7 +87,7 @@ ngOnInit() {
       this.utilsService.getBancos().subscribe(resp => this.bancos = resp ),
       this.utilsService.getTiposDePagos().subscribe(respT => this.tiposDePago = respT),
       this.utilsService.getLocalidades().subscribe(respL => this.localidades = respL),
-      this.checkService.getChecks().subscribe(respC => this.cheques = respC.data.cheques)
+      this.checkService.getFreeChecks().subscribe(respC => this.cheques = respC.data.cheques)
  );
   if (this.activateRoute.snapshot.paramMap.get('id')) {
     this.flagEdit = true;
@@ -111,9 +111,21 @@ addPaymentItem() {
   this.bsModalRef = this.modalService.paymentAdd('Orden de Pago', 'Pago', this.tiposDePago, this.cheques, this.bancos);
   this.bsModalRef.content.event.subscribe(
   resp => {
-        console.log(resp);
-        this.payOrderRequest.pagos.push(resp.data);
-        this.updateTotalizador();
+        if (this.payOrderRequest.pagos.find(p => p.tipoDePago.id === resp.data.tipoDePago.id )){
+          if (this.payOrderRequest.pagos.find(p => p.cheque.nroCheque === resp.data.cheque.nroCheque)) {
+            this.swalService.warning(`El cheque seleccionado ya esta ingresado como forma de pago.`);
+           } else if(resp.data.tipoDePago.referencia === 'EFECTIVO') {
+            this.swalService.warning(`Ya agrego efectivo como forma pago, edite el importe de la existente`);
+           } else {
+            console.log(resp);
+            this.payOrderRequest.pagos.push(resp.data);
+            this.updateTotalizador();
+           }
+        } else {
+          console.log(resp);
+          this.payOrderRequest.pagos.push(resp.data);
+          this.updateTotalizador();
+        }
   });
 }
 
@@ -137,6 +149,7 @@ updateTotalizador() {
 removeElement(i: number) {
   console.log('posicion: ' + i);
   this.payOrderRequest.pagos.splice(i, 1);
+  this.updateTotalizador();
 }
 
 updateElement(i: number) {

@@ -13,18 +13,26 @@
                           <input type="text"  formControlName="descripcion" class="form-control">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-3">
                         <div class="form-group">
                           <label class="bmd-label-floating">codigo</label>
                           <input type="text" formControlName="codigo" class="form-control">
                         </div>
                       </div>
-                      <div class="col-md-4">
+                      <div class="col-md-2">
                         <div class="form-group">
                           <label class="bmd-label-floating">Stock</label>
-                          <input type="text"  formControlName="stock" class="form-control">
+                          <input type="text"  formControlName="stock" class="form-control" (change)="trackInfo()">
                         </div>
                       </div>
+                      <div class="col-md-3">
+                        <div class="form-group">
+                          <div class="custom-control custom-checkbox">
+                              <input type="checkbox" class="custom-control-input" id="customCheck1" value="true" formControlName="seguimiento" (change)="trackInfo()">
+                              <label class="custom-control-label pl-4" for="customCheck1"> Tracking</label>
+                          </div>
+                      </div>
+                    </div>
                     </div>
                     <div class="row">
                       <div class="col-md-6">
@@ -69,6 +77,18 @@
                         </div>
                     </div>
             <br>
+            <hr>  
+            <div class="container-fluid">      
+              <label class="">Seguimiento</label>
+                <div  class="row"  formArrayName="seguimientoInfo" >    
+                  <ng-container *ngFor="let c of seguimientoInfo.controls; let i=index" [formGroupName]="i">
+                    <div class="col-sm-2">
+                       <input type="text"  formControlName="codigo" class="form-control">
+                    </div>
+                </ng-container>
+                </div>
+            </div>
+            <br>
             <div class="col-md-12">
               <div class="form-group">
                 <label class="bmd-label-floating">Comentario</label>
@@ -76,6 +96,7 @@
               </div>
             </div>
              <br> 
+
             <div class="row">  
               <div class="col-md-12 text-right pr-4">
                 <button type="submit" class="btn btn-primary"  [disabled]="formProduct.invalid">Agregar</button>

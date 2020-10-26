@@ -1,4 +1,4 @@
-import { IPriceClientCategory, IIva } from '../utils';
+import { IPriceClientCategory, IIva, ITrackInfo } from '../utils';
 import { IVendorRequest } from './vendor.request';
 
 export interface IProductRequest {
@@ -14,4 +14,7 @@ export interface IProductRequest {
   precios: Array<IPriceClientCategory>;
   proveedor: IVendorRequest;
   comentario: string;
+  seguimiento: boolean;
+  seguimientoInfo: Array<ITrackInfo>;
+ 
 }

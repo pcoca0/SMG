@@ -20,6 +20,10 @@ import { PayOrdersComponent } from './pay-orders/pay-orders.component';
 import { AddPayOrdersComponent } from './add-pay-orders/add-pay-orders.component';
 import { AddBillComponent } from './add-bill/add-bill.component';
 import { BillComponent } from './bill/bill.component';
+import { TrackComponent } from './track/track.component';
+import { TrackingViewComponent } from './tracking-view/tracking-view.component';
+import { ClientMovementComponent } from './client-movement/client-movement.component';
+import { VendorMovementComponent } from './vendor-movement/vendor-movement.component';
 
 const pagesRoutes: Routes = [
     {
@@ -28,7 +32,12 @@ const pagesRoutes: Routes = [
           {path: '', component: DashboardComponent},
           {path: 'categorias',  component: CategoryComponent, canActivate: [guard], data: {expectedRol: ['admin']} },
           {path: 'productos',   component: ProductComponent },
+          {path: 'seguimientoProducto/:idProducto',   component: TrackComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'cuentaCorriente/:id',   component: ClientMovementComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+
           {path: 'cheques',   component: CheckComponent },
+          {path: 'seguimientos',   component: TrackingViewComponent },
+
 
           {path: 'agregrarProducto',   component: AddProductComponent },
           {path: 'presupuestos',   component: BudgetComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}},
@@ -44,6 +53,7 @@ const pagesRoutes: Routes = [
           {path: 'ordenesDePago/:id',   component: PayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
           {path: 'crearOrdenDePago/:idProveedor',   component: AddPayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
           {path: 'editarOrdenDePago/:id',   component: AddPayOrdersComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
+          {path: 'cuentaCorrienteProveedor/:id',   component:VendorMovementComponent, canActivate: [guard], data: {expectedRol: ['admin', 'user']}  },
 
 
           {path: 'cargarGastoProveedor',   component: AddVendorInvoiceSpendComponent },

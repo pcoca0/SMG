@@ -21,6 +21,11 @@ getChecks(): Observable<ICheckResponse> {
   return this.http.get(this.apiUrl + `api/cheques`) as Observable<ICheckResponse>;
 }
 
+getFreeChecks(): Observable<ICheckResponse> {
+  return this.http.get(this.apiUrl + `api/cheques/libres`) as Observable<ICheckResponse>;
+}
+
+
 addCheck(cheque: ICheckRequest): Observable<ICheckResponse> {
   return this.http.post(this.apiUrl + `api/cheque/add`, cheque) as Observable<ICheckResponse>;
 }

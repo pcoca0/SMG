@@ -47,8 +47,8 @@ export class AddVendorInvoiceComponent implements OnInit, OnDestroy {
   producto: IProductItemResponse;
   localidades: Array<ILocation>;
   perfilesAFIP: Array<IProfileAFIP>;
-  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
-  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:''};
+  product: IProductItemResponse = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:'', seguimiento: false, seguimientoInfo:[]};
+  productRequest: IProductRequest = { id:'', descripcion:'', precioCompra: 0, ivaCompra: 0,cantidad:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario:'', seguimiento: false, seguimientoInfo:[]};
   productNew: IProductItemResponse;
   ivas: Array<IIva>;
   categoriasCliente: Array<IClientCategory>;
@@ -199,7 +199,9 @@ selectProveedor() {
     this.productRequest.codigo = resp.codigo;
     this.productRequest.iva = resp.iva;
     this.productRequest.proveedor = resp.proveedor;
-    this.productRequest.stock = resp.stock;
+    //this.productRequest.stock = resp.stock;
+    //el stock se agrega cuando ingresa la compra
+    this.productRequest.stock = 0;
     this.productRequest.precios = [];
     for (let i = 0; i < resp.precios.length; i++) {
        this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };

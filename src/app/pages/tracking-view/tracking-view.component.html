@@ -1,0 +1,96 @@
+
+ <!-- <div class="row">
+    <div class="col-sm-12 pl-5">  
+      <div class="alert alert-dark" role="alert">
+      <small><strong> 
+        Las actualizaciones de stock mediante <i class="material-icons" *ngIf="isAdmin">edit</i>
+        gestionan de forma automatica la eliminación de codigos de seguimiento. <br> Para poder gestionarlos de manera transparente utilice  <i class="material-icons">gps_fixed</i>.   
+      </strong></small>
+      </div>
+    </div> 
+  </div> -->
+  <div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-header card-header-primary">
+        <div class="col-sm-6 col-md-6">
+          <h4 class="card-title">Seguimiento</h4>
+          <!-- <p class="card-category">{{today | date:'h:mm a z'}}</p> -->
+       </div>
+       <div class="col-sm-6 col-md-6">
+         <app-search (filterEvent)="search($event)"></app-search>
+     </div>
+      </div>
+      <div class="card-body table-responsive">
+        <p>Seleccione producto</p>
+        <form [formGroup]="formProduct" (ngSubmit)="onSubmit()">
+        <div class="col-sm-12">
+           <ngx-select-dropdown [options]="productos" [config]="dropdownSetup" formControlName="producto" (change)="selectProduct()"></ngx-select-dropdown>
+        </div>
+        </form>
+        <br>
+        <br>
+        <div class="row" *ngIf="producto">
+            <div class="col-sm-3"></div>
+            <div class="col-sm-6">
+                <div class="btn-group btn-group-toggle" data-toggle="buttons">
+                    <label class="btn btn-secondary active">
+                    <input type="radio" name="options" id="option1" autocomplete="off" checked (click)="view(1)"> TODOS
+                    </label>
+                    <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option2" autocomplete="off" (click)="view(2)"> ASINADOS
+                    </label>
+                    <label class="btn btn-secondary">
+                    <input type="radio" name="options" id="option3" autocomplete="off" (click)="view(3)"> DISPONIBLES
+                    </label>
+                </div>
+            </div>
+            <div class="col-sm-3"></div>
+
+        </div>
+        <br>
+        <br>
+        
+
+        <div class="col-sm-12 pl-5" *ngIf="producto && seguimientosT?.length == 0">  
+            <div class="alert alert-dark" role="alert">
+            <strong> 
+                    No hay codigos de seguimientos cargados. Cargar
+                    <button type="button" rel="tooltip" title="Seguimiento" class="btn btn-warning btn-link btn-sm" (click)="tackProduct(producto.id)">
+                        <i class="material-icons">gps_fixed</i>
+                    </button>
+            </strong>
+            </div>
+          </div>
+        <table class="table table-hover" *ngIf="producto && seguimientosT.length > 0">
+          <thead class="text-warning">
+            <th>Codigo</th>
+            <th>Estado</th>
+            <th class="td-actions text-right"></th>
+          </thead>
+          <tbody>
+            <tr *ngFor="let c of seguimientos | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i=index">
+              <td>{{c.codigo || 0}}</td>
+              <td>{{c.vendido}}</td>
+              <td class="td-actions text-right">
+                <span *ngIf="c.vendido">   
+                Factura de Venta Asociada: {{c.facturaVenta.numero}} {{c.facturaVenta?.cliente?.razonSocial}}   
+                <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editInvoice(c.facturaVenta.id)">
+                    <i class="material-icons">visibility</i>
+                </button> 
+                </span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">                
+    <pagination-controls responsive="true"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    class="pagination pt-3 pl-0" 
+    (pageChange)="page = $event">
+  </pagination-controls>
+  </div>
+  

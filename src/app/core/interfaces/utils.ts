@@ -1,5 +1,12 @@
 import { ICheckItemResponse } from './responses/check.response';
 import { IClientItemResponse } from './responses/client.response';
+import { IVendorInvoiceRequest } from './requests/vendor-invoice.request';
+import { IVendorRequest } from './requests/vendor.request';
+import { IProductRequest } from './requests/product.request';
+import { IBillItemResponse } from './responses/bill.response';
+import { IVendorInvoiceItemResponse } from './responses/vendor-invoice.response';
+import { IVendorItemResponse } from './responses/vendor.response';
+import { IPayOrderItemResponse } from './responses/pay-order.response';
 export interface ILocation {
     id: string;
     descripcion: string;
@@ -62,3 +69,41 @@ export interface IPayment {
    transferencia: IBankTransfer;
    importe: number;
 }
+
+
+export interface ITrackInfo {
+id: string;
+codigo: string;
+vendido: boolean;
+facturaCompra: IVendorInvoiceRequest;
+facturaVenta: IVendorRequest;
+producto: IProductRequest;
+}
+
+
+export interface IClientItemMovement {
+  factura: IVendorItemResponse;
+  pago: IBillItemResponse;
+  }
+
+export interface IClientMovementResponse {
+  data: {
+      movimientos: Array<IClientItemMovement>;
+  };
+}
+
+
+export interface IVendorItemMovement {
+  factura: IVendorInvoiceItemResponse;
+  pago: IPayOrderItemResponse;
+  }
+
+export interface IVendorMovementResponse {
+  data: {
+      movimientos: Array<IVendorItemMovement>;
+  };
+}
+
+
+
+

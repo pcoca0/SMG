@@ -15,14 +15,14 @@
       <br>    
       <div class="row" *ngIf="chequeFlat">
         <hr>    
-        <div class="col-sm-8">
+        <div class="col-sm-12">
         <label for="">Seleccione Cheque</label>
         <ngx-select-dropdown [options]="checks" [config]="dropdownSetupC" formControlName="cheque" (change)="selectCheck()"></ngx-select-dropdown>
         </div>
-        <div class="col-sm-4 pt-4">
+        <!-- <div class="col-sm-4 pt-4">
             <label for=""></label>
             <button class="btn btn-outline-info" (click)="addNewCheck()">  <i class="material-icons">receipt</i></button>
-        </div>
+        </div> -->
         <div class="col-sm-12">
             <app-check-view [check] ="chequeSelected"></app-check-view>
         </div>

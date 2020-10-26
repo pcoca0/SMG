@@ -1,0 +1,68 @@
+<div class="form-group col-sm-12 text-right pr-4">
+</div>
+<div class="row">
+  <div class="col-lg-12 col-md-12">
+    <div class="card">
+      <div class="card-header card-header-tabs card-header-primary">
+        <div class="nav-tabs-navigation">
+          <div class="nav-tabs-wrapper">
+            <span class="nav-tabs-title">Movimientos realizados por: {{proveedor?.razonSocial}}</span>
+            <!-- <ul class="nav nav-tabs" data-tabs="tabs">
+              <li class="nav-item">
+                <a class="nav-link active" href="#profile" data-toggle="tab">
+                  <i class="material-icons">bug_report</i> Aprobados
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#messages" data-toggle="tab">
+                  <i class="material-icons">code</i> Rechazados
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#settings" data-toggle="tab">
+                  <i class="material-icons">cloud</i> En Espera
+                  <div class="ripple-container"></div>
+                </a>
+              </li>
+            </ul> -->
+          </div>
+        </div>
+        <app-search (filterEvent)="search($event)"></app-search>
+      </div>
+      <div class="card-body">
+        <div class="tab-content">
+          <div class="tab-pane active" id="profile">
+            <table class="table">
+              <tbody>
+                <tr *ngFor="let o of movimientos | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
+                      <td>Movimiento: {{i}}</td>
+                      <td></td> 
+                      <td>Factura: {{o.factura.numero}} - {{o.factura.fecha | date: 'dd/MM/yyyy'}} - $:{{o.factura.total}} 
+                          <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editInvoice(o.factura.id)">
+                              <i class="material-icons">visibility</i>
+                            </button>  </td> 
+                      <td><span class="badge badge-warning" *ngIf="!(o.pago!=null)">Sin pago realizado</span> 
+                          <span *ngIf="o.pago!=null">Pago: {{o.pago.numero}} {{o.pago.fechaPago | date: 'dd/MM/yyyy'}} - $: {{o.pago.totalPago}}
+                          <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="payOrderVendor(o.pago.id)">
+                              <i class="material-icons">visibility</i>
+                        </button>
+                      </span></td> 
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row text-center">                
+    <pagination-controls responsive="true"
+    previousLabel="Anterior"
+    nextLabel="Siguiente"
+    class="pagination pt-3 pl-0" 
+    (pageChange)="page = $event">
+  </pagination-controls>
+ </div>

@@ -4,6 +4,7 @@ import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { ICategoryItemResponse } from 'src/app/core/interfaces/responses/category.response';
 import { IPriceClientCategory, IClientCategory, IIva } from 'src/app/core/interfaces/utils';
+import { ModalService } from '../../../../core/services/modal.service';
 
 @Component({
   selector: 'app-produc-modal',
@@ -58,7 +59,7 @@ export class ProducModalComponent implements OnInit {
 
   constructor(
     private bsModalRef: BsModalRef,
-    private fb: FormBuilder,
+    private fb: FormBuilder
   ) {
     this.formProduct = this.fb.group({
       descripcion: ['', Validators.required],
@@ -68,7 +69,8 @@ export class ProducModalComponent implements OnInit {
       proveedor: ['', Validators.required],
       stock: ['', Validators.required],
       precios: this.fb.array([]),
-      comentario:['']
+      comentario:[''],
+      seguimiento: [false]
     });
 
   }
@@ -86,7 +88,8 @@ export class ProducModalComponent implements OnInit {
       iva: this.product.iva,
       proveedor: this.product.proveedor,
       stock: this.product.stock,
-      comentario: this.product.comentario
+      comentario: this.product.comentario,
+      seguimiento: this.product.seguimiento
       });
       this.product.precios.forEach((p) => {
         // console.log(p);
@@ -114,6 +117,14 @@ export class ProducModalComponent implements OnInit {
 
   sendObject(item: string, pos?: number) {
     this.event.emit({data: item, position: pos, res: 200});
+  }
+
+  trackInfo(){
+    /*
+    si es editar y hay tacking, y ponen menos stock, hay que ir a borrar
+    sino hay que ir a borrar
+    si sacan trancking hay que borrar toda la info
+    */
   }
 
   selectIva(){}

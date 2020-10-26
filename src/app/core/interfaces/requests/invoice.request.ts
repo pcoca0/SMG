@@ -14,4 +14,6 @@ export interface IInvoiceRequest {
     totalIva21?: number;
     totalIva10?: number;
     total?: number;
+    comentario?: string;
+
   }

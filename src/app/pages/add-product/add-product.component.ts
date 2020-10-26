@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { BsModalRef } from 'ngx-bootstrap/modal';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ import { ProductService } from 'src/app/core/services/product.service';
 import { SwalService } from 'src/app/core/services/swal.service';
 import { UtilsService } from 'src/app/core/services/utils.service';
 import { VendorService } from 'src/app/core/services/vendor.service';
+import { ITrackInfo } from '../../core/interfaces/utils';
 
 @Component({
   selector: 'app-add-product',
@@ -22,9 +23,9 @@ import { VendorService } from 'src/app/core/services/vendor.service';
 export class AddProductComponent implements OnInit {
 
   formProduct: FormGroup;
-  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario: ''};
+  product: IProductItemResponse = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0, precios: [], proveedor: null, comentario: '', seguimiento: false, seguimientoInfo: []};
   productRequest: IProductRequest = { id:'', descripcion:'', cantidad:0, precioCompra:0, ivaCompra:0, codigo:0, precio: 0, iva: { id: '', iva: 0}, stock: 0,
-                                      precios: [], proveedor: null, comentario: '' };
+                                      precios: [], proveedor: null, comentario: '', seguimiento: false, seguimientoInfo: [] };
   categoriasCliente: Array<IClientCategory>;
   ivas: Array<IIva>;
   action: string;
@@ -39,6 +40,7 @@ export class AddProductComponent implements OnInit {
   perfilesAFIP: Array<IProfileAFIP>;
   vendorNew: IVendorItemResponse;
   productNew: IProductItemResponse;
+  tracking: ITrackInfo;
 
 
   private suscriptions: Subscription[] = [];
@@ -92,7 +94,9 @@ export class AddProductComponent implements OnInit {
       proveedor: ['', Validators.required],
       stock: ['', Validators.required],
       comentario: [''],
-      precios: this.fb.array([])
+      precios: this.fb.array([]),
+      seguimiento: ['', Validators.required],
+      seguimientoInfo: this.fb.array([])
     });
   }
 
@@ -151,7 +155,14 @@ export class AddProductComponent implements OnInit {
     this.productRequest.proveedor = resp.proveedor;
     this.productRequest.stock = resp.stock;
     this.productRequest.comentario = resp.comentario;
-
+    this.productRequest.seguimiento =  resp.seguimiento;
+    resp.seguimientoInfo.forEach( s =>
+      {  
+         this.tracking = {id: '', facturaCompra: null, codigo: '', facturaVenta: null, vendido: false, producto: null},
+         this.tracking.codigo = s.codigo;
+         this.productRequest.seguimientoInfo.push(this.tracking)
+      }
+    );
     this.productRequest.precios = [];
     for (let i = 0; i < resp.precios.length; i++) {
        this.precioCategoriaCliente = {id: '',  categoriaCliente: {id: '', descripcion: ''} , precio: 0 };
@@ -163,8 +174,26 @@ export class AddProductComponent implements OnInit {
     return this.productRequest;
   }
 
+  get seguimientoInfo(): FormArray {
+    return this.formProduct.get('seguimientoInfo') as FormArray;
+  }
+
+  trackInfo(){
+   if(this.formProduct.controls.seguimiento.value){ 
+      const c =  Number(this.formProduct.controls.stock.value);
+      for (let index = 0; index < c; index++) {
+        const track = this.fb.group({
+          codigo : new FormControl('')
+        });
+        this.seguimientoInfo.push(track);
+      }
+   }
+  }
+
   onSubmit(){
-    this.suscriptions.push(this.productService.addProduct( this.constructorRequest(this.formProduct.value)).subscribe(
+    console.log(this.formProduct.value);
+    this.suscriptions.push(
+      this.productService.addProduct( this.constructorRequest(this.formProduct.value)).subscribe(
       response => {
         console.log(response),
          this.productNew = response.data.productos[0],

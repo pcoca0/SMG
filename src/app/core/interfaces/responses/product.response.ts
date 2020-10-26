@@ -21,6 +21,9 @@ export interface IProductItemResponse {
  precios: Array<IPriceClientCategory>;
  proveedor: IVendorItemResponse;
  comentario: string;
+ seguimiento: boolean;
+ trackIncomplete?: boolean;
+ seguimientoInfo: Array<string>;
 
 
 }

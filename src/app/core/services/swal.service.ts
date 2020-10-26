@@ -25,7 +25,7 @@ export class SwalService {
   warning(
     title: string = 'Cuidado!',
     text: string = 'Algo parece andar mal.',
-    timer: any = 1500,
+    timer: any = 2000,
     confirmButton = false): boolean {
     Swal.fire({
       title,

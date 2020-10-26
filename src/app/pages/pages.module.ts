@@ -26,10 +26,14 @@ import { PayOrdersComponent } from './pay-orders/pay-orders.component';
 import { AddPayOrdersComponent } from './add-pay-orders/add-pay-orders.component';
 import { AddBillComponent } from './add-bill/add-bill.component';
 import { BillComponent } from './bill/bill.component';
+import { TrackComponent } from './track/track.component';
+import { TrackingViewComponent } from './tracking-view/tracking-view.component';
+import { ClientMovementComponent } from './client-movement/client-movement.component';
+import { VendorMovementComponent } from './vendor-movement/vendor-movement.component';
 
 
 @NgModule({
-  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent, VendorInvoiceComponent, AddVendorInvoiceComponent, AddVendorInvoiceSpendComponent, CheckComponent, PayOrdersComponent, AddPayOrdersComponent, AddBillComponent, BillComponent],
+  declarations: [PagesComponent, DashboardComponent, CategoryComponent, ProductComponent, BudgetComponent, AddBudgetComponent, ClientComponent, ReportBudgetComponent, VendorComponent, InvoiceComponent, AddInvoiceComponent, AddProductComponent, VendorInvoiceComponent, AddVendorInvoiceComponent, AddVendorInvoiceSpendComponent, CheckComponent, PayOrdersComponent, AddPayOrdersComponent, AddBillComponent, BillComponent, TrackComponent, TrackingViewComponent, ClientMovementComponent, VendorMovementComponent],
   imports: [
     CommonModule,
     SharedModule,

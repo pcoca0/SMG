@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 import { Observable } from 'rxjs';
 import { IVendorResponse, IVendorItemResponse } from '../interfaces/responses/vendor.response';
+import { IVendorMovementResponse } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -28,4 +29,9 @@ export class VendorService {
   deleteVendor(id: string): Observable<IVendorResponse> {
     return this.http.delete(this.apiUrl + `api/proveedor/${id}/delete`) as Observable<IVendorResponse>;
   }
+
+  getVendorMovement(id: string): Observable<IVendorMovementResponse> {
+    return this.http.get(this.apiUrl + `api/proveedor/movimientos/${id}`) as Observable<IVendorMovementResponse>;
+  }
+
 }

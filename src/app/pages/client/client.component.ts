@@ -42,7 +42,6 @@ export class ClientComponent implements OnInit, OnDestroy {
     private clientCategoryService: ClientCategoryService,
     private router: Router
 
-
   ) { }
 
   ngOnInit() {
@@ -118,6 +117,10 @@ export class ClientComponent implements OnInit, OnDestroy {
                             error => this.swalService.error(`No se ha podido editar el cliente.`)
       ));
     });
+  }
+
+  currentAccount(id: string){
+    this.router.navigate(['cuentaCorriente', id]);
   }
 
   viewClient(id: string){

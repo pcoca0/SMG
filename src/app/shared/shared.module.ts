@@ -57,7 +57,8 @@ import { InvioceViewComponent } from './components/invioce-view/invioce-view.com
     PaymentModalComponent,
     VendorInvoiceViewComponent,
     CheckViewComponent,
-    InvioceViewComponent
+    InvioceViewComponent,
+    
     ],
   entryComponents: [
    BudgeModalComponent,

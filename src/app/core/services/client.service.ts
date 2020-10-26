@@ -4,6 +4,7 @@ import { Observable } from 'rxjs';
 import { IClientResponse, IClientItemResponse } from '../interfaces/responses/client.response';
 import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import { IClientMovementResponse } from '../interfaces/utils';
 
 @Injectable({
   providedIn: 'root'
@@ -29,4 +30,10 @@ export class ClientService implements IClientService {
   deleteClient(id: string): Observable<IClientResponse> {
     return this.http.delete(this.apiUrl + `api/cliente/${id}/delete`) as Observable<IClientResponse>;
   }
+
+
+  getClientMovement(id: string): Observable<IClientMovementResponse> {
+    return this.http.get(this.apiUrl + `api/cliente/moviemientos/${id}`) as Observable<IClientMovementResponse>;
+  }
+
 }

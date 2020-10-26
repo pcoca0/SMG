@@ -54,4 +54,9 @@ export class ProductService implements IProductService {
     return this.http.delete(this.apiUrl + `api/producto/${id}/delete`) as Observable<IProductResponse>;
   }
 
+  getProduct(id: string): Observable<IProductResponse> {
+    return this.http.get(this.apiUrl + `api/producto/${id}`) as Observable<IProductResponse>;
+  }
+
+
 }
