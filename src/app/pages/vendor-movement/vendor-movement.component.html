@@ -35,24 +35,33 @@
         <div class="tab-content">
           <div class="tab-pane active" id="profile">
             <table class="table">
-              <tbody>
-                <tr *ngFor="let o of movimientos | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
+              <tbody *ngFor="let o of movimientos | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
+                <tr class="newMov">
                       <td>Movimiento: {{i}}</td>
                       <td></td> 
-                      <td>Factura: {{o.factura.numero}} - {{o.factura.fecha | date: 'dd/MM/yyyy'}} - $:{{o.factura.total}} 
-                          <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editInvoice(o.factura.id)">
-                              <i class="material-icons">visibility</i>
-                            </button>  </td> 
-                      <td><span class="badge badge-warning" *ngIf="!(o.pago!=null)">Sin pago realizado</span> 
-                          <span *ngIf="o.pago!=null">Pago: {{o.pago.numero}} {{o.pago.fechaPago | date: 'dd/MM/yyyy'}} - $: {{o.pago.totalPago}}
-                          <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="payOrderVendor(o.pago.id)">
-                              <i class="material-icons">visibility</i>
+                      <td>Factura: {{o.factura.numero}} - {{o.factura.fecha | date: 'dd/MM/yyyy'}} - $:{{o.factura.total}} </td>
+                      <td>
+                        <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editInvoice(o.factura.id)">
+                          <i class="material-icons">visibility</i>
                         </button>
-                      </span></td> 
-
+                      </td>
+                      <td><span *ngIf="o.pagos.length == 0" class="badge badge-warning">Sin pagos realizados</span></td> 
                 </tr>
-              </tbody>
-            </table>
+                <tr *ngFor="let p of o.pagos">
+                  <td></td>
+                  <td></td> 
+                  <td></td>
+                  <td>
+                        <span >Pago: {{p.numero}} {{p.fechaPago | date: 'dd/MM/yyyy'}} - $: {{p.totalPago}}</span>
+                  </td> 
+                  <td>
+                    <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="payOrderVendor(p.id)">
+                      <i class="material-icons">visibility</i>
+                  </button>
+                  </td>
+                </tr>
+            </tbody>     
+          </table>
           </div>
         </div>
       </div>

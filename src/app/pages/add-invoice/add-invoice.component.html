@@ -58,7 +58,19 @@
               <tbody>
                 <ng-container *ngIf="flagDesgloseIVA">
                   <tr *ngFor="let p of invoiceRequest.productos; index as i"  >
-                    <td>{{p.descripcion}}</td>
+                    <td>
+                      <div class="row pl-3">{{p.descripcion}}</div>  
+                      <div class="row pl-3" *ngIf="p.codigosSeguimiento && flagEdit">
+                       <small><strong>Codigos de Seguimiento: </strong></small>
+                        <p>
+                          <span *ngFor="let s of p.codigosSeguimiento; index as i">
+                            <strong>{{s}}</strong> 
+                            <span *ngIf="i < p.codigosSeguimiento.length-1"> | </span>
+                          </span>
+                       </p>
+                      </div>  
+
+                    </td>
                     <td class="text-center">{{p.cantidad}}</td>
                     <td class="text-center">{{p.precio}} </td> 
                     <td class="text-center">{{p.cantidad * p.precio}} </td>
@@ -73,7 +85,19 @@
 
                 <ng-container *ngIf="!flagDesgloseIVA">
                   <tr *ngFor="let p of invoiceRequest.productos; index as i"  >
-                    <td>{{p.descripcion}}</td>
+                    <td>
+                      <div class="row pl-3">{{p.descripcion}}</div>  
+                      <div class="row pl-3" *ngIf="p.codigosSeguimiento && flagEdit">
+                        <small><strong>Codigos de Seguimiento: </strong></small><br>
+                        <p>
+                          <span *ngFor="let s of p.codigosSeguimiento; index as i">
+                              {{s}}
+                              <span *ngIf="p.codigosSeguimiento != null && i < p.codigosSeguimiento?.length -1"> | </span>
+                          </span>
+                        </p>
+                      </div>  
+
+                    </td>
                     <td class="text-center">{{p.cantidad}}</td>
                     <td class="text-center">{{p.precio + (p.precio * p.iva.iva)/100}} </td> 
                     <td class="text-center">{{p.cantidad * (p.precio + (p.precio * p.iva.iva)/100) |  number:'2.1-2'}} </td>

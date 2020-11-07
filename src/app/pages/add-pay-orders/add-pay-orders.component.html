@@ -26,7 +26,7 @@
               </div>
               <div class="row">
                 <div class="col-lg-12">
-                <app-vendor-invoice-view [vendorInvoice]="invoiceView"></app-vendor-invoice-view>
+                <app-vendor-invoice-view [vendorInvoice]="invoiceView" [flagEdit]="flagEdit"></app-vendor-invoice-view>
               </div>
               </div>
               <div class="clearfix"></div>
@@ -66,7 +66,7 @@
                     <td></td>     
                   </tr>
                 <tr>
-                  <td class="text-center">
+                  <td class="text-center" *ngIf="!flagEdit">
                     <span class="badge badge-warning" *ngIf="totalizador > 0 && totalizador == totalFactura">Saldo: {{totalizador - totalFactura}} </span>
                     <span class="badge badge-success" *ngIf="totalizador > 0 && totalizador > totalFactura">Saldo a Favor: {{totalizador - totalFactura}} </span>
                     <span class="badge badge-danger" *ngIf="totalizador > 0 &&  totalizador < totalFactura">Faltan agregar pagos por: {{totalFactura - totalizador}} </span>
@@ -77,7 +77,7 @@
                   </td>
                   <td class="text-center"></td>
                   <td class="text-center">
-                    <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" [disabled]="!(totalizador >= totalFactura)" (click)="savePayOrder()">Guardar</button>
+                    <button  *ngIf="!flagEdit" target="_blank"class="btn btn-round btn-fill btn-info" [disabled]="!(payOrderRequest.pagos.length > 0)" (click)="savePayOrder()">Guardar</button>
                   </td>
                 </tr>
               </tbody>

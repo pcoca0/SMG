@@ -4,7 +4,15 @@
       <h6 class="card-title">Factura Número: <small>{{invoice?.numero}} </small></h6>
       <h6 class="card-title">Fecha:  <small>{{invoice.fecha | date: 'dd/MM/yyyy'}} </small></h6>
       <h6 class="card-title">Cliente:  <small>{{invoice.cliente.razonSocial}} </small></h6>
-      <h3 class="card-title"><small>Total a Pagar:  {{invoice.total}} </small></h3>
+
+      <div *ngIf="!flagEdit">
+        <h3 class="card-title" *ngIf="invoice?.saldoACobrar == 0"><small>Total a Factura:  {{invoice.total}} </small></h3>
+        <h3 class="card-title" *ngIf="invoice?.saldoACobrar > 0"><small>Total a Pagar:  {{invoice.saldoACobrar}} </small></h3>
+      </div>
+      <div *ngIf="flagEdit">
+        <h3 class="card-title"><small>Total Factura:  {{invoice.total}} </small></h3>
+      </div>
+
     </div>
   </div>
   

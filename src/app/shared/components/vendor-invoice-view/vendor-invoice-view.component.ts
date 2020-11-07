@@ -9,6 +9,8 @@ import { IVendorInvoiceItemResponse } from 'src/app/core/interfaces/responses/ve
 export class VendorInvoiceViewComponent implements OnInit {
   
   @Input() vendorInvoice: IVendorInvoiceItemResponse;
+  @Input() flagEdit: boolean;
+
 
   constructor() { }
 

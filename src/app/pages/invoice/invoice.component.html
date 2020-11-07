@@ -40,8 +40,11 @@
                   <tr *ngFor="let f of facturas | filter: filterMatch | paginate: { itemsPerPage: 15, currentPage: page }; let i = index">
                     <td>{{f.numero}} </td>
                     <td>{{f.fecha | date: 'dd/MM/yyyy'}} </td> 
-                    <td>Cliente: {{f.cliente.apellido}}, {{f.cliente.nombre}}</td>
+                    <td>Cliente: {{f.cliente.razonSocial}} | {{f.cliente.apellido}}, {{f.cliente.nombre}}</td>
                     <td>Total: {{f.total }}</td>
+                    <td *ngIf="f.cobrada">
+                      <span class="badge badge-success">Cobrada</span>
+                    </td>
                     <td class="td-actions text-right">
                       <button type="button" rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editInvoice(f.id)">
                         <i class="material-icons">visibility</i>

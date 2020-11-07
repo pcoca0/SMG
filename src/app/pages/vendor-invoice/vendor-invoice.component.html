@@ -24,6 +24,9 @@
                     <td>{{f.fecha | date: 'dd/MM/yyyy'}} </td>
                     <td>Proveedor: {{f.proveedor.apellido}}, {{f.proveedor.nombre}}</td>
                     <td>Total: {{f.total }}</td>
+                    <td *ngIf="f.pagada">
+                      <span class="badge badge-success">Pagada</span>
+                    </td>
                     <td class="td-actions text-right">
                       <button type="button"  *ngIf="f.productos.length != 0"  rel="tooltip" title="Edit Task" class="btn btn-info btn-link btn-s btn-link btn-sm" (click)="editVendorInvoice(f.id)">
                         <i class="material-icons">visibility</i>

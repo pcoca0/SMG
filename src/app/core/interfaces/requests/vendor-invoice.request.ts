@@ -12,4 +12,6 @@ export interface IVendorInvoiceRequest {
     totalIva?: number;
     total?: number;
     concepto?: string;
+    saldoAPagar?: number;
+    saldoAFavor?: number;
   }

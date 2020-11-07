@@ -15,6 +15,6 @@ export interface IProductRequest {
   proveedor: IVendorRequest;
   comentario: string;
   seguimiento: boolean;
-  seguimientoInfo: Array<ITrackInfo>;
- 
+  seguimientoInfo?: Array<ITrackInfo>;
+  codigosSeguimiento?: Array<string>;
 }

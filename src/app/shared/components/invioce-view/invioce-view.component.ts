@@ -9,6 +9,7 @@ import { IInvoiceItemResponse } from 'src/app/core/interfaces/responses/invoice.
 export class InvioceViewComponent implements OnInit {
   
   @Input() invoice: IInvoiceItemResponse;
+  @Input() flagEdit: boolean;
 
   constructor() { }
 

@@ -1,5 +1,6 @@
 import { IClientItemResponse } from '../responses/client.response';
 import { IProductItemResponse } from '../responses/product.response';
+import { ITrackInfoItemResponse } from '../responses/track.response';
 
 export interface IInvoiceRequest {
     id?: string;
@@ -15,5 +16,8 @@ export interface IInvoiceRequest {
     totalIva10?: number;
     total?: number;
     comentario?: string;
+    seguimientoInfo?: ITrackInfoItemResponse[];
+    saldoACobrar?: number;
+    saldoAFavorDelCliente?: number;
 
   }

@@ -19,4 +19,6 @@ export interface IVendorInvoiceItemResponse {
     subTotal: number;
     totalIva: number;
     total: number;
+    saldoAPagar?: number;
+    saldoAFavor?: number;
   }

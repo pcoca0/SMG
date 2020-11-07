@@ -83,7 +83,7 @@ producto: IProductRequest;
 
 export interface IClientItemMovement {
   factura: IVendorItemResponse;
-  pago: IBillItemResponse;
+  pago: Array<IBillItemResponse>;
   }
 
 export interface IClientMovementResponse {
@@ -95,7 +95,7 @@ export interface IClientMovementResponse {
 
 export interface IVendorItemMovement {
   factura: IVendorInvoiceItemResponse;
-  pago: IPayOrderItemResponse;
+  pagos: Array<IPayOrderItemResponse>;
   }
 
 export interface IVendorMovementResponse {

@@ -54,6 +54,6 @@ export class VendorMovementComponent implements OnInit {
   }
 
   payOrderVendor(id: string) {
-    this.router.navigate(['ordenesDePago', id]);
+    this.router.navigate(['editarOrdenDePago', id]);
   }
 }
