@@ -133,7 +133,11 @@ selectInvoice() {
 this.invoiceView = this.listForm.value.invoice;
 this.invoiceSelected = true;
 this.billRequest.factura = this.invoiceView;
-this.totalFactura = this.invoiceView.total;
+if (this.invoiceView.saldoACobrar === 0 ) {
+this.totalFactura = Number(this.invoiceView.total);
+} else {
+  this.totalFactura = Number(this.invoiceView.saldoACobrar);
+}
 console.log(this.invoiceView);
 }
 
@@ -142,8 +146,10 @@ updateTotalizador() {
   console.log("subida");
   this.totalizador = 0.00;
   this.billRequest.pagosRecibidos.forEach( i => {
+  console.log(Number(i.importe)),
   this.totalizador = this.totalizador + Number(i.importe);
   });
+  console.log(this.totalizador)
 }
 
 removeElement(i: number) {

@@ -6,11 +6,11 @@
       <h6 class="card-title">Cliente:  <small>{{invoice.cliente.razonSocial}} </small></h6>
 
       <div *ngIf="!flagEdit">
-        <h3 class="card-title" *ngIf="invoice?.saldoACobrar == 0"><small>Total a Factura:  {{invoice.total}} </small></h3>
-        <h3 class="card-title" *ngIf="invoice?.saldoACobrar > 0"><small>Total a Pagar:  {{invoice.saldoACobrar}} </small></h3>
+        <h3 class="card-title" *ngIf="invoice?.saldoACobrar === 0"><small>Total a Factura:  {{invoice.total  | number:'2.1-2'}} </small></h3>
+        <h3 class="card-title" *ngIf="invoice?.saldoACobrar > 0"><small>Total a Cobrar:  {{invoice.saldoACobrar  | number:'2.1-2'}} </small></h3>
       </div>
       <div *ngIf="flagEdit">
-        <h3 class="card-title"><small>Total Factura:  {{invoice.total}} </small></h3>
+        <h3 class="card-title"><small>Total Factura:  {{invoice.total  | number:'2.1-2'}} </small></h3>
       </div>
 
     </div>

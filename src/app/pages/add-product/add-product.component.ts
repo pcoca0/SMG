@@ -95,7 +95,7 @@ export class AddProductComponent implements OnInit {
       stock: ['', Validators.required],
       comentario: [''],
       precios: this.fb.array([]),
-      seguimiento: ['', Validators.required],
+      seguimiento: [''],
       seguimientoInfo: this.fb.array([])
     });
   }
@@ -126,7 +126,6 @@ export class AddProductComponent implements OnInit {
 
 
   addNewVendor(){
-
     console.log('Por agregar una Proveedor');
     this.bsModalRef = this.modalService.vendorAdd('Proveedor', 'proveedores', this.vendorNew, this.perfilesAFIP,
                                                   this.localidades, this.categoriasCliente);

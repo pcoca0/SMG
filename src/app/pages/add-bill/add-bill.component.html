@@ -67,9 +67,9 @@
                   </tr>
                 <tr>
                   <td class="text-center" *ngIf="!flagEdit">
-                    <span class="badge badge-warning" *ngIf="totalizador > 0 && totalizador == totalFactura">Saldo: {{totalizador - totalFactura}} </span>
-                    <span class="badge badge-success" *ngIf="totalizador > 0 && totalizador > totalFactura">Saldo a Favor: {{totalizador - totalFactura}} </span>
-                    <span class="badge badge-danger" *ngIf="totalizador > 0 &&  totalizador < totalFactura">Faltan agregar pagos por: {{totalFactura - totalizador}} </span>
+                    <span class="badge badge-warning" *ngIf="totalizador > 0 && totalizador == totalFactura">Saldo: {{totalizador - totalFactura | number:'2.1-2' }} </span>
+                    <span class="badge badge-success" *ngIf="totalizador > 0 && totalizador > totalFactura">Saldo a Favor: {{totalizador - totalFactura  | number:'2.1-2'}} </span>
+                    <span class="badge badge-danger" *ngIf="totalizador > 0 &&  totalizador < totalFactura">Faltan agregar pagos por: {{totalFactura - totalizador  | number:'2.1-2'}} </span>
                   </td>
                   <td class="text-center"></td>
                   <td class="text-right">

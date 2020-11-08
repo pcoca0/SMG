@@ -46,6 +46,7 @@ export class TrackComponent implements OnInit {
 
   ngOnInit(): void {
     this.idProducto = this.activateRoute.snapshot.paramMap.get('idProducto');
+    console.log("entro de nuevo");
     this.suscriptions.push(
                       this.productService.getProduct(this.idProducto).subscribe(p => {console.log(p), this.product = p.data.productos[0]}),
                       this.trackService.getInStockTrackingByProduct(this.idProducto).subscribe(s =>
@@ -108,7 +109,6 @@ export class TrackComponent implements OnInit {
   }
 
   deleteTrack(id: string, c: FormGroupName, i: number){
-    console.log("te lo borro a la concha de tu madre");
     console.log(id);
     console.log(c);
     console.log(i);
@@ -127,8 +127,12 @@ export class TrackComponent implements OnInit {
         if (result.value) { // Llamar servicio
           this.suscriptions.push( this.trackService.deleteTrack(id).subscribe(
             response => {
-                this.swalService.success(`Seguimiento eliminado con éxito`),
-                this.seguimientoInfo.removeAt(pos)
+                this.swalService.success(`Seguimiento eliminado con éxito`);
+                this.seguimientoInfo.removeAt(pos);
+                this.seguimientos.splice(pos);
+                // const stock = Number(this.productRequest.stock) - 1;
+                // this.formProduct.controls.stock.setValue(stock);
+                this.router.navigate(['seguimientoProducto', id])
               },
               error => {
                 this.swalService.error(`No se ha podido eliminar el Seguimiento.`)
