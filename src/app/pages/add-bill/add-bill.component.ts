@@ -112,7 +112,7 @@ addPaymentItem() {
   this.bsModalRef.content.event.subscribe(
   resp => {
         if (this.billRequest.pagosRecibidos.find(p => p.tipoDePago.id === resp.data.tipoDePago.id )){
-          if (this.billRequest.pagosRecibidos.find(p => p.cheque.nroCheque === resp.data.cheque.nroCheque)) {
+          if (resp.data.tipoDePago.referencia === 'CHEQUE' && this.billRequest.pagosRecibidos.find(p => p.cheque.nroCheque === resp.data.cheque.nroCheque)) {
             this.swalService.warning(`El cheque seleccionado ya esta ingresado como forma de pago.`);
            } else if(resp.data.tipoDePago.referencia === 'EFECTIVO') {
             this.swalService.warning(`Ya agrego efectivo como forma pago, edite el importe de la existente`); 
